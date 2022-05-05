@@ -1,4 +1,16 @@
+.body{
+    position: absolute;
+}
+
+.navbar{
+    background-color: brown;
+  
+}
+.navbar a{
+    color: black;
+}
+
 .inicioSesion{
     position: relative;
-    align-items: center;
+    padding:5%;
 }

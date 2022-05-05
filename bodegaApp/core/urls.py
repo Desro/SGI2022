@@ -18,4 +18,6 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='index'),
+    path('registroUsuario/', registroUsuario, name='registroUsuario'),
+
 ]
