@@ -36,6 +36,8 @@ class Comuna(models.Model):
     class Meta:
         managed = False
         db_table = 'comuna'
+    def __str__(self):
+        return self.nmbcomuna
 
 
 class CuentaUsuario(models.Model):
@@ -59,6 +61,8 @@ class Pais(models.Model):
         managed = False
         db_table = 'pais'
 
+    def __str__(self):
+        return self.nmbpais
 
 class Pedido(models.Model):
     idpedido = models.BigIntegerField(primary_key=True)
@@ -94,6 +98,8 @@ class Producto(models.Model):
     class Meta:
         managed = False
         db_table = 'producto'
+    def __str__(self):
+        return self.marca
 
 
 class ProductoLine(models.Model):
@@ -118,6 +124,8 @@ class Proveedor(models.Model):
     class Meta:
         managed = False
         db_table = 'proveedor'
+    def __str__(self):
+        return self.nmbproveedor
 
 
 class Region(models.Model):
@@ -128,6 +136,8 @@ class Region(models.Model):
     class Meta:
         managed = False
         db_table = 'region'
+    def __str__(self):
+        return self.nmbregion
 
 
 class TipoProducto(models.Model):
@@ -148,3 +158,5 @@ class TipoUsuario(models.Model):
     class Meta:
         managed = False
         db_table = 'tipo_usuario'
+    def __str__(self):
+        return self.nmbtipousuario

@@ -19,5 +19,11 @@ from .views import *
 urlpatterns = [
     path('', index, name='index'),
     path('registroUsuario/', registroUsuario, name='registroUsuario'),
-    path('menuProveedor/', menuProveedor, name='menuProveedor')
+    path('menuProveedor/', menuProveedor, name='proveedorMenu'),
+    path('proveedorNew/', proveedor_New, name='proveedorNew'),
+    path('prooveedorDelete/<idproveedor>', proveedor_delete, name='proveedorDelete'),
+    path('proveedorUpdate/<idproveedor>', proveedor_update, name='proveedorUpdate'),
+
+
+  
 ]
