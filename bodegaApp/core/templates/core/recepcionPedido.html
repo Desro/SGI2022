@@ -1,0 +1,27 @@
+{% extends 'core/plantilla.html' %}
+{% load static %}
+
+{% block title %}Recepcion de pedido{% endblock %}
+
+{% block content %}
+
+<label for="pedidos">Selecciona un pedido:</label>
+<select name="pedidos" id="pedidos">
+    <!-- cargar datos al combobox desde la bdd -->
+</select>
+
+<label for="fecha">Fecha de recibo</label>
+<input type="date" name="fecha" id="fecha"> 
+<!-- insertar sysdate -->
+
+<div name="ingreso">
+<label for="seleccionado">Producto seleccionado</label>
+<input type="text" name="seleccionado" id="seleccionado" disabled>
+
+<label for="cantidad">Cantidad recibida</label>
+<input type="number" name="cantidad" id="cantidad">
+<button type="button" form="cantidad">Actualizar</button>
+
+</div>
+
+{% endblock %}

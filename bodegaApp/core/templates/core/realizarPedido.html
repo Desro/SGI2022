@@ -1,0 +1,55 @@
+
+
+{% extends 'core/plantilla.html' %}
+{% load static %}
+
+{% block title %}Realizar pedido{% endblock %}
+
+{% block content %}
+
+<label for="proveedores">Elige un proveedor:</label>
+<select name="proveedores" id="proveedores">
+    <option value="nestle">Nestle</option>
+    <option value="soprole">Soprole</option>
+    <!-- ver si se cargarán desde la bdd o colocar opciones de manera manual -->
+</select>
+
+<label for="productos">Elige un producto:</label>
+<select name="productos" id="productos">
+    <!-- cargar datos desde bdd -->
+</select>
+
+<label for="cantidad">Cantidad:</label>
+<input type="number" name="cantidad" id="cantidad">
+
+<button type="button" name="agregar" id="agregar" form="cantidad">Agregar</button>
+
+<table title="Pedido a realizar">
+    <tr>
+        <td></td>
+        <td><strong>Cantidad</strong></td>
+        <td><strong>Producto</strong></td>
+        <td><strong>Valor compra</strong></td>
+        <td><strong>Total</strong></td>
+    </tr>
+
+    <tr>
+        <input type="checkbox">
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td><Strong>Valor total:</Strong></td>
+        <td></td>
+    </tr>
+
+<!-- Solo son los encabezados, hay que cargar los otros datos -->
+</table>
+
+<button type="button" name="eliminar" id="eliminar"></button>
+
+<button type="button" name="realizar" id="realizar">Realizar pedido</button>
