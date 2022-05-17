@@ -29,3 +29,40 @@ class ProveedorForm(forms.ModelForm):
             'fono':forms.TextInput(attrs={'class':'form-control','type':'text'}),
 
         }
+
+class ProductoForm(forms.ModelForm):
+    
+    class Meta:
+        model = Producto
+
+        fields = [
+            'marca',
+            'stockminimo',
+            'stockmaximo',
+            'preciocompra',
+            'precioventa',
+            'idtipoproducto',
+            'idproveedor',
+
+        ]        
+        
+        labels = {
+            'marca':'Marca',
+            'stockminimo':'Stock Minimo',
+            'stockmaximo':'Stock Maximo',
+            'preciocompra':'Precio Compra',
+            'precioventa':'Precio Venta',
+            'idtipoproducto':'Tipo Producto',
+            'idproveedor':'Proveedor',
+           
+        }
+        widgets = {
+            'marca':forms.TextInput(attrs={'class':'form-control'}),
+            'stockminimo':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'stockmaximo':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'preciocompra':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'precioventa':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'idtipoproducto':forms.Select(attrs={'class':'form-control'}),
+            'idproveedor':forms.Select(attrs={'class':'form-control'}),
+
+        }
