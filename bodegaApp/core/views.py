@@ -6,3 +6,6 @@ def index(request):
 
 def registroUsuario(request):
     return render(request,"core/registroUsuario.html")
+
+def realizarPedido(request):
+    return render(request,"core/realizarPedido.html")

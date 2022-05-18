@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'bodegaApp.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': '127.0.0.1:1522/xe',
+        'NAME': '127.0.0.1:1521/xe',
         'USER': 'c##portafolio',
         'PASSWORD': '123',
         'TEST': {
