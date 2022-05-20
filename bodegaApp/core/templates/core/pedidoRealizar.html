@@ -1,0 +1,23 @@
+{% extends 'core/plantilla.html' %}
+{% load static %}
+
+{% block title %}Realizar pedido{% endblock %}
+
+{% block content %}
+<div>
+    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
+        <h1>Realizar pedido</h1>  
+    </div>
+    <div class="select-group">
+        <label for="proveedores">Elige un proveedor:</label>
+        <select name="proveedores" id="proveedores">
+
+        </select>
+
+        <label for="productos">Elige un producto:</label>
+        <select name="productos" id="productos">
+            <!-- cargar datos desde bdd -->
+        </select>
+    </div>
+
+</div>
