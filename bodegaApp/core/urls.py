@@ -19,5 +19,5 @@ from .views import *
 urlpatterns = [
     path('', index, name='index'),
     path('registroUsuario/', registroUsuario, name='registroUsuario'),
-    path('realizarPedido/', realizarPedido, name='realizarPedido'),
+    path('pedidoRealizar/', pedidoRealizar, name='pedidoRealizar'),
 ]
