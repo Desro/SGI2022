@@ -36,7 +36,7 @@ class ProductoForm(forms.ModelForm):
         model = Producto
 
         fields = [
-            'marca',
+            'nmbproducto',
             'stockminimo',
             'stockmaximo',
             'preciocompra',
@@ -47,7 +47,7 @@ class ProductoForm(forms.ModelForm):
         ]        
         
         labels = {
-            'marca':'Marca',
+            'nmbproducto':'Nombre Producto',
             'stockminimo':'Stock Minimo',
             'stockmaximo':'Stock Maximo',
             'preciocompra':'Precio Compra',
@@ -57,7 +57,7 @@ class ProductoForm(forms.ModelForm):
            
         }
         widgets = {
-            'marca':forms.TextInput(attrs={'class':'form-control'}),
+            'nmbproducto':forms.TextInput(attrs={'class':'form-control'}),
             'stockminimo':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'stockmaximo':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'preciocompra':forms.TextInput(attrs={'class':'form-control','type':'text'}),

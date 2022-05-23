@@ -87,7 +87,7 @@ class PedidoLine(models.Model):
 
 class Producto(models.Model):
     codigo = models.CharField(primary_key=True, max_length=100)
-    marca = models.CharField(max_length=50)
+    nmbproducto = models.CharField(max_length=50)
     stockminimo = models.BigIntegerField()
     stockmaximo = models.BigIntegerField()
     preciocompra = models.BigIntegerField()
@@ -99,7 +99,7 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
     def __str__(self):
-        return self.marca
+        return self.nmbproducto
 
 
 class ProductoLine(models.Model):

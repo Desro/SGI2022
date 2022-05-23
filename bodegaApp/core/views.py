@@ -66,7 +66,7 @@ def producto_New(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST or None,request.FILES or None)
         if form.is_valid():
-            marca = form.cleaned_data.get("marca")
+            nmbproducto = form.cleaned_data.get("nmbproducto")
             stockmin = form.cleaned_data.get("stockminimo")
             stockmax = form.cleaned_data.get("stockminimo")
             preciocompra = form.cleaned_data.get("preciocompra")
@@ -77,7 +77,7 @@ def producto_New(request):
             ntipoproducto= TipoProducto.objects.get(nmbtipoproducto=tipoproducto)
             nidproveedor = Proveedor.objects.get(nmbproveedor=proveedor)
 
-            agregarProductos(marca,stockmin,stockmax,preciocompra,precioventa,ntipoproducto.idtipoproducto,nidproveedor.idproveedor)
+            agregarProductos(nmbproducto,stockmin,stockmax,preciocompra,precioventa,ntipoproducto.idtipoproducto,nidproveedor.idproveedor)
             return redirect(reverse('productoMenu')+ "?ok")
         else:
             return redirect(reverse('productoNew')+ "?fail")
@@ -92,6 +92,54 @@ def producto_delete(request, codigo):
     return redirect(to="productoMenu")
 
 def producto_update(request, codigo):
+    producto = Producto.objects.get(codigo = codigo)
+    form = ProductoForm(instance = producto)
+
+    if request.method == 'POST':
+        form = ProductoForm(request.POST,request.FILES,instance=producto)
+        if form.is_valid():
+            form.save()                
+            return redirect(reverse('productoMenu')+ "?ok")
+        else:
+            return redirect(reverse('productoUpdate')+ codigo)
+
+    return render(request,'core/productoUpdate.html',{'form':form})
+
+#----------------------------------
+def menuPedido(request):
+    pedido = Pedido.objects.all()
+    return render(request,"core/pedidoMenu.html",{'pedido':pedido})
+
+def pedido_New(request):         
+    if request.method == 'POST':
+        form = ProductoForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            nmbproducto = form.cleaned_data.get("nmbproducto")
+            stockmin = form.cleaned_data.get("stockminimo")
+            stockmax = form.cleaned_data.get("stockminimo")
+            preciocompra = form.cleaned_data.get("preciocompra")
+            precioventa = form.cleaned_data.get("precioventa")
+            tipoproducto = form.cleaned_data.get("idtipoproducto")
+            proveedor = form.cleaned_data.get("idproveedor")
+
+            ntipoproducto= TipoProducto.objects.get(nmbtipoproducto=tipoproducto)
+            nidproveedor = Proveedor.objects.get(nmbproveedor=proveedor)
+
+            agregarProductos(nmbproducto,stockmin,stockmax,preciocompra,precioventa,ntipoproducto.idtipoproducto,nidproveedor.idproveedor)
+            return redirect(reverse('productoMenu')+ "?ok")
+        else:
+            return redirect(reverse('productoNew')+ "?fail")
+    else:
+        form = ProductoForm()
+
+    return render(request,'core/productoNew.html',{'form':form})
+
+def pedido_delete(request, codigo):
+    producto = Producto.objects.get(codigo = codigo)
+    producto.delete()
+    return redirect(to="productoMenu")
+
+def pedido_update(request, codigo):
     producto = Producto.objects.get(codigo = codigo)
     form = ProductoForm(instance = producto)
 
