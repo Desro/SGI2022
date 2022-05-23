@@ -11,3 +11,6 @@ def pedidoRealizar(request):
     
 
     return render(request,"core/pedidoRealizar.html")
+
+def pedidoRecibir(request):
+    return render(request,"core/pedidoRecibir.html")
