@@ -4,10 +4,84 @@
 {% block title %}Realizar pedido{% endblock %}
 
 {% block content %}
-<div>
+<div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
         <h1>Realizar pedido</h1>  
     </div>
+    <div class="row">
+        {% if 'ok' in request.GET %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Listo! </strong>Pedido realizado  satisfactoriamente
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% if 'fail' in request.GET %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        <!-- formulario -->
+        <form action="" method="" id="formulario" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label class="fw-bold">Elegir proveedor: </label>
+                <div class="input-group">
+                    {{form.idproveedor}}
+                </div>
+                {{form.idproveedor.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Elegir producto: </label>
+                <div class="input-group">
+                {{form.}}
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Cantidad: </label>
+                <div class="input-group" id="cantidad" name="cantidad">
+                    {{form.cantidad}}
+                </div>
+                {{form.cantidad.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" class="btn btn-primary btn-block py-2" id="agregar" value="Agregar">
+            </div>
+        </form>
+        <!-- tabla -->
+        <div class="table-responsive">
+            <table id="tablaRecibo" class="table table-striped table-hover">
+                <thead>
+                    <tr class="table-dark">
+                        <th>Selector</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Valor compra</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in producto %}
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>{{producto.codigo}}</td>
+                            <td></td>
+                            <td>{{producto.preciocompra}}</td>
+
+                            <td>
+                                <button class="btn btn-primary btn-block py-2" id="eliminar" name="eliminar">Eliminar seleccionado</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+
+
     <div class="select-group">
         <label for="proveedores">Elige un proveedor:</label>
         <select name="proveedores" id="proveedores">

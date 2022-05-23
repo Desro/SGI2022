@@ -8,4 +8,6 @@ def registroUsuario(request):
     return render(request,"core/registroUsuario.html")
 
 def pedidoRealizar(request):
+    
+
     return render(request,"core/pedidoRealizar.html")
