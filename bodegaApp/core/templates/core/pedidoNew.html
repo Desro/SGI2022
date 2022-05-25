@@ -8,6 +8,27 @@
         <h1>Registro nuevos Pedido</h1>
     </div>
     <div class="row">
+        <div class="col-6">
+        <!-- Formulario de contacto -->                            
+        <form action="" method="POST" id="formulario" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label class="fw-bold">Proveedor</label>
+                <div class="input-group">
+                    {{form.idproveedor}}
+                </div>                
+                {{form.idproveedor.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <label for="start">Fecha :</label>
+                <input type="date" id="start" name="trip-start" min="2018-01-01" max="2150-12-31">
+            </div>
+            <div class="text-center mt-4">
+                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+                <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
+            </div>
+        </form>
+        </div>
         {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Ok!!! </strong>Producto registrado satisfactoriamente
@@ -20,63 +41,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
-        <!-- Formulario de contacto -->                            
-        <form action="" method="POST" id="formulario" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group mb-3">
-                <label class="fw-bold">Marca: *</label>
-                <div class="input-group">
-                    {{form.nmbproducto}}
-                </div>                
-                {{form.nmbproducto.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Stock Minimo: *</label>
-                <div class="input-group">
-                    {{form.stockminimo}}
-                </div>                
-                {{form.stocminimo.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Stock Maximo: *</label>
-                <div class="input-group">
-                    {{form.stockmaximo}}
-                </div>                
-                {{form.stockmaximo.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Precio Compra: </label>
-                <div class="input-group">
-                    {{form.preciocompra}}
-                </div>                
-                {{form.preciocompra.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Precio Venta: </label>
-                <div class="input-group">
-                    {{form.precioventa}}
-                </div>                
-                {{form.precioventa.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Tipo Producto *</label>
-                <div class="input-group">
-                    {{form.idtipoproducto}}
-                </div>                
-                {{form.idtipoproducto.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Proveedor *</label>
-                <div class="input-group">
-                    {{form.idproveedor}}
-                </div>                
-                {{form.idproveedor.errors}}
-            </div>
-            <div class="text-center mt-4">
-                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
-                <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
-            </div>
-        </form>
+
     </div>
+
+   
+      
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/datepick.js' %}"></script>
 {% endblock %}

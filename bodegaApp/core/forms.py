@@ -73,15 +73,20 @@ class PedidoForm(forms.ModelForm):
         model = Pedido
 
         fields = [
-            'fechapedido',
+            'idproveedor',
+            'fechapedido'
             
-
         ]        
         
         labels = {
-            'fecha pedido':'Fecha del Pedido'
+            'idproveedor':'Proveedor',
+            'fechapedido':'Fecha del Pedido',
+            
+
            
         }
         widgets = {
-            'fechapedido': forms.DateField(initial=datetime.date.today),
+            'idproveedor':forms.Select(attrs={'class':'form-control'}),
+            'fechapedido': forms.DateInput(attrs={'class':'form-control'}),
+            
         }

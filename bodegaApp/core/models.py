@@ -63,6 +63,7 @@ class Pais(models.Model):
 
 class Pedido(models.Model):
     idpedido = models.BigIntegerField(primary_key=True)
+    idproveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='idproveedor')
     fechapedido = models.DateField()
     pedidoanulado = models.CharField(max_length=1, blank=True, null=True)
     pedidorecibido = models.CharField(max_length=1, blank=True, null=True)
@@ -76,7 +77,6 @@ class PedidoLine(models.Model):
     lineid = models.BigIntegerField()
     idpedido = models.OneToOneField(Pedido, models.DO_NOTHING, db_column='idpedido', primary_key=True)
     codigo = models.ForeignKey('Producto', models.DO_NOTHING, db_column='codigo')
-    idproveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='idproveedor')
     cantidad = models.BigIntegerField()
 
     class Meta:
