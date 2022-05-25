@@ -112,27 +112,26 @@ def menuPedido(request):
 
 def pedido_New(request):         
     if request.method == 'POST':
-        form = ProductoForm(request.POST or None,request.FILES or None)
+        form = PedidoForm(request.POST or None,request.FILES or None)
         if form.is_valid():
-            nmbproducto = form.cleaned_data.get("nmbproducto")
-            stockmin = form.cleaned_data.get("stockminimo")
-            stockmax = form.cleaned_data.get("stockminimo")
-            preciocompra = form.cleaned_data.get("preciocompra")
-            precioventa = form.cleaned_data.get("precioventa")
-            tipoproducto = form.cleaned_data.get("idtipoproducto")
-            proveedor = form.cleaned_data.get("idproveedor")
-
-            ntipoproducto= TipoProducto.objects.get(nmbtipoproducto=tipoproducto)
-            nidproveedor = Proveedor.objects.get(nmbproveedor=proveedor)
-
-            agregarProductos(nmbproducto,stockmin,stockmax,preciocompra,precioventa,ntipoproducto.idtipoproducto,nidproveedor.idproveedor)
-            return redirect(reverse('productoMenu')+ "?ok")
+            idpedido = form.cleaned_data.get("idproveedor")
+            fechapedido = form.cleaned_data.get("fechapedido")
+            pedidoanulado = 0
+            pedidorecibido = 0
+            obj = Pedido.objects.create(
+                idpedido=idpedido,
+                fechapedido=fechapedido,
+                pedidoanulado=pedidoanulado,
+                pedidorecibido=pedidorecibido,
+            )
+            obj.save()            
+            return redirect(reverse('pedidoNew')+ "?ok")
         else:
-            return redirect(reverse('productoNew')+ "?fail")
+            return redirect(reverse('pedidoNew')+ "?fail")
     else:
-        form = ProductoForm()
+        form = PedidoForm()
 
-    return render(request,'core/productoNew.html',{'form':form})
+    return render(request,'core/pedidoNew.html',{'form':form})
 
 def pedido_delete(request, codigo):
     producto = Producto.objects.get(codigo = codigo)
