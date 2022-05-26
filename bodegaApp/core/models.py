@@ -124,6 +124,8 @@ class Proveedor(models.Model):
         managed = False
         db_table = 'proveedor'
 
+    def __str__(self):
+        return self.nmbproveedor
 
 class Region(models.Model):
     idregion = models.BigIntegerField(primary_key=True)

@@ -29,6 +29,7 @@ urlpatterns = [
     path('productoUpdate/<codigo>', producto_update, name='productoUpdate'),
     path('menuPedido/', menuPedido, name='pedidoMenu'),
     path('pedidoNew/', pedido_New, name='pedidoNew'),
+    path('pedidoNew/<proveedor>', pedido_New1, name='pedidoNew1'),
     path('pedidoDelete/<codigo>', pedido_delete, name='pedidoDelete'),
     path('pedidoUpdate/<codigo>', pedido_update, name='pedidoUpdate'),
 ]

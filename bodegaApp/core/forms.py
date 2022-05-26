@@ -3,7 +3,6 @@ from pyexpat import model
 from django import forms
 from django.forms import ModelForm
 from .models import *
-import datetime
 class ProveedorForm(forms.ModelForm):
     
     class Meta:
@@ -67,26 +66,23 @@ class ProductoForm(forms.ModelForm):
 
         }
 
-class PedidoForm(forms.ModelForm):
+class PedidoFormP(forms.ModelForm):
     
     class Meta:
         model = Pedido
 
         fields = [
-            'idproveedor',
-            'fechapedido'
+            'idproveedor'
             
         ]        
         
         labels = {
-            'idproveedor':'Proveedor',
-            'fechapedido':'Fecha del Pedido',
+            'idproveedor':'Proveedor'
             
 
            
         }
         widgets = {
             'idproveedor':forms.Select(attrs={'class':'form-control'}),
-            'fechapedido': forms.DateInput(attrs={'class':'form-control'}),
             
         }

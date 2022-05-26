@@ -112,26 +112,19 @@ def menuPedido(request):
 
 def pedido_New(request):         
     if request.method == 'POST':
-        form = PedidoForm(request.POST or None,request.FILES or None)
+        form = PedidoFormP(request.POST or None,request.FILES or None)
         if form.is_valid():
-            idpedido = form.cleaned_data.get("idproveedor")
-            fechapedido = form.cleaned_data.get("fechapedido")
-            pedidoanulado = 0
-            pedidorecibido = 0
-            obj = Pedido.objects.create(
-                idpedido=idpedido,
-                fechapedido=fechapedido,
-                pedidoanulado=pedidoanulado,
-                pedidorecibido=pedidorecibido,
-            )
-            obj.save()            
-            return redirect(reverse('pedidoNew')+ "?ok")
+            idproveedor = form.cleaned_data.get("idproveedor")
+            return redirect(reverse('pedidoNew1'+"?ok"))
         else:
             return redirect(reverse('pedidoNew')+ "?fail")
     else:
-        form = PedidoForm()
-
+        form = PedidoFormP()
     return render(request,'core/pedidoNew.html',{'form':form})
+
+def pedido_New1(request,proveedorE):
+    proveedorElegido= Proveedor.objects.get(nmproveedor= proveedorE)
+    return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido})
 
 def pedido_delete(request, codigo):
     producto = Producto.objects.get(codigo = codigo)

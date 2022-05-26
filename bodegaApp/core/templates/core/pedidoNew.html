@@ -2,34 +2,16 @@
 
 {% load static %}
 {% block title %}REGISTRO PRODUCTO{% endblock %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/pedido.css' %}">
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
         <h1>Registro nuevos Pedido</h1>
     </div>
     <div class="row">
-        <div class="col-6">
-        <!-- Formulario de contacto -->                            
-        <form action="" method="POST" id="formulario" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group mb-3">
-                <label class="fw-bold">Proveedor</label>
-                <div class="input-group">
-                    {{form.idproveedor}}
-                </div>                
-                {{form.idproveedor.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label for="start">Fecha :</label>
-                <input type="date" id="start" name="trip-start" min="2018-01-01" max="2150-12-31">
-            </div>
-            <div class="text-center mt-4">
-                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
-                <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
-            </div>
-        </form>
-        </div>
-        {% if 'ok' in request.GET %}
+       {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Ok!!! </strong>Producto registrado satisfactoriamente
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -41,7 +23,59 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
+    </div>
+    <div class="row">
+            <!-- Formulario de contacto -->                            
+            <form action="" method="POST" id="formulario" enctype="multipart/form-data" class="formPedidoProv">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fw-bold">Elegir Proveedor:</label>
+                            <div class="input-group">
+                                {{form.idproveedor}}
+                            </div>                
+                            {{form.idproveedor.errors}}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mt-4">
+                            <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Elegir">
+                        </div>
+                    </div>
+                </div>
+            </form>
+    </div>
 
+    <div class="row mt-5">
+            <div class="row">
+                <div class="row bg-dark text-white rounded p-2 mb-4">
+                    <h3>Datos del Proveedor</h3>
+                </div> 
+            </div>
+            {%for proveedorElegido in proveedorElegido%}
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Nombre Proveedor: </label>
+                     <input class="form-control" type="text" value={{proveedorElegido.nmbproveedor}} aria-label="Disabled input example" disabled readonly>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        <label class="fw-bold">Email:</label>
+                        <input class="form-control" type="text" value={{proveedorElegido.email}} aria-label="Disabled input example" disabled readonly>
+                    </div>   
+                </div>
+                <div class="col">                  
+                     <div for="disabledTextInput" class="form-group mb-3">
+                        <label class="fw-bold">Telefono: </label>
+                        <input class="form-control" type="text" value={{proveedorElegido.fono}} aria-label="Disabled input example" disabled readonly>
+                        </div>                
+                </div>
+            </div> 
+            {%endfor%}        
     </div>
 
    
