@@ -115,7 +115,8 @@ def pedido_New(request):
         form = PedidoFormP(request.POST or None,request.FILES or None)
         if form.is_valid():
             idproveedor = form.cleaned_data.get("idproveedor")
-            return redirect(reverse('pedidoNew1'+"?ok"))
+            proveedorElegido = Proveedor.objects.get(nmbproveedor=idproveedor)
+            return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido}) 
         else:
             return redirect(reverse('pedidoNew')+ "?fail")
     else:
