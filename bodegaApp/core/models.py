@@ -145,6 +145,9 @@ class TipoProducto(models.Model):
         managed = False
         db_table = 'tipo_producto'
 
+    def __str__(self):
+        return self.nmbtipoproducto
+
 
 class TipoUsuario(models.Model):
     idtipousuario = models.BigIntegerField(primary_key=True)

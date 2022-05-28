@@ -19,16 +19,18 @@ def proveedor_New(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST or None,request.FILES or None)
         if form.is_valid():
-            idproveedor = form.cleaned_data.get("idproveedor")
+            idproveedor1 = Proveedor.objects.count()+1
             nmbproveedor = form.cleaned_data.get("nmbproveedor")
             email = form.cleaned_data.get("email")
             fono = form.cleaned_data.get("fono")
             obj = Proveedor.objects.create(
-                idproveedor=idproveedor,
+                idproveedor=idproveedor1,
                 nmbproveedor=nmbproveedor,
                 email=email,
                 fono=fono,
             )
+            print(idproveedor1)
+
             obj.save()            
             return redirect(reverse('proveedorMenu')+ "?ok")
         else:
@@ -111,21 +113,17 @@ def menuPedido(request):
     return render(request,"core/pedidoMenu.html",{'pedido':pedido})
 
 def pedido_New(request):         
+    form = PedidoFormP()
     if request.method == 'POST':
-        form = PedidoFormP(request.POST or None,request.FILES or None)
+        form = PedidoFormP(request.POST,request.FILES)
         if form.is_valid():
             idproveedor = form.cleaned_data.get("idproveedor")
-            proveedorElegido = Proveedor.objects.get(nmbproveedor=idproveedor)
-            return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido}) 
-        else:
-            return redirect(reverse('pedidoNew')+ "?fail")
-    else:
-        form = PedidoFormP()
+            proveedorElegido= Proveedor.objects.get(nmbproveedor= idproveedor)
+            productos=Producto.objects.get(idproveedor=proveedorElegido.idproveedo)
+            return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido},{'productos':productos})
+
     return render(request,'core/pedidoNew.html',{'form':form})
 
-def pedido_New1(request,proveedorE):
-    proveedorElegido= Proveedor.objects.get(nmproveedor= proveedorE)
-    return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido})
 
 def pedido_delete(request, codigo):
     producto = Producto.objects.get(codigo = codigo)

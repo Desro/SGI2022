@@ -9,20 +9,17 @@ class ProveedorForm(forms.ModelForm):
         model = Proveedor
 
         fields = [
-            'idproveedor',
             'nmbproveedor',
             'email',
             'fono'
         ]        
         
         labels = {
-            'idproveedor':'id Proveedro',
             'nmbproveedor':'Nombre Proveedor',
             'email':'Email',
             'fono':'Telefono'
         }
         widgets = {
-            'idproveedor':forms.TextInput(attrs={'class':'form-control'}),
             'nmbproveedor':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'email':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'fono':forms.TextInput(attrs={'class':'form-control','type':'text'}),
