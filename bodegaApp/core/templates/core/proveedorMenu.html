@@ -19,13 +19,19 @@
     <div class="row">
         {% if 'ok' in request.GET %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Oh yeah!!! </strong>Producto actualizado satisfactoriamente
+            <strong>Ok!!! </strong>Producto actualizado satisfactoriamente
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endif %}
         {% if 'fail' in request.GET %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% if 'errorPK' in request.GET %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Ups!!! </strong>No se ha podido eliminar porque este Proveedor porque presenta productos 
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endif %}

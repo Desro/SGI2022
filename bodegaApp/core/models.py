@@ -17,6 +17,8 @@ class Almacen(models.Model):
         managed = False
         db_table = 'almacen'
 
+    def __str__(self):
+        return self.nmbalmacen
 
 class Bodega(models.Model):
     idalmacen = models.ForeignKey(Almacen, models.DO_NOTHING, db_column='idalmacen')
@@ -86,7 +88,7 @@ class PedidoLine(models.Model):
 
 
 class Producto(models.Model):
-    codigo = models.BigIntegerField(primary_key=True)
+    codigo = models.CharField(primary_key=True,max_length=100)
     idtipoproducto = models.ForeignKey('TipoProducto', models.DO_NOTHING, db_column='idtipoproducto')
     idproveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='idproveedor')
     nmbproducto = models.CharField(max_length=50)
@@ -99,6 +101,8 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
+    def __str__(self):
+        return self.nmbproducto
 
 class ProductoLine(models.Model):
     idbodega = models.ForeignKey(Bodega, models.DO_NOTHING, db_column='idbodega')

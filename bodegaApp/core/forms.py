@@ -3,6 +3,7 @@ from pyexpat import model
 from django import forms
 from django.forms import ModelForm
 from .models import *
+
 class ProveedorForm(forms.ModelForm):
     
     class Meta:
@@ -82,4 +83,23 @@ class PedidoFormP(forms.ModelForm):
         widgets = {
             'idproveedor':forms.Select(attrs={'class':'form-control'}),
             
+        }
+
+class BodegaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Bodega
+
+        fields = [
+            'idalmacen',
+            'capacidadmaxima'
+        ]        
+        
+        labels = {
+            'idalmacen':'Almacen',
+            'capacidadmaxima':'Capacidad Maxima',
+        }
+        widgets = {
+            'idalmacen':forms.Select(attrs={'class':'form-control'}),
+            'capacidadmaxima':forms.TextInput(attrs={'class':'form-control','type':'text'}),
         }

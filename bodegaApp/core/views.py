@@ -19,7 +19,13 @@ def proveedor_New(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST or None,request.FILES or None)
         if form.is_valid():
-            idproveedor1 = Proveedor.objects.count()+1
+            idproveedor1 = Proveedor.objects.count()+1                      
+            try:
+                bb = Proveedor.objects.get(idproveedor=idproveedor1)
+                if bb.idproveedor == idproveedor1:
+                    idproveedor1= idproveedor1+10
+            except:
+                idproveedor1=idproveedor1
             nmbproveedor = form.cleaned_data.get("nmbproveedor")
             email = form.cleaned_data.get("email")
             fono = form.cleaned_data.get("fono")
@@ -29,7 +35,6 @@ def proveedor_New(request):
                 email=email,
                 fono=fono,
             )
-            print(idproveedor1)
 
             obj.save()            
             return redirect(reverse('proveedorMenu')+ "?ok")
@@ -42,8 +47,13 @@ def proveedor_New(request):
 
 def proveedor_delete(request, idproveedor):
     proveedor = Proveedor.objects.get(idproveedor = idproveedor)
-    proveedor.delete()
-    return redirect(to="proveedorMenu")
+    try:
+        proveedor.delete()
+        return redirect(to="proveedorMenu")
+    except:
+       return redirect(reverse('proveedorMenu')+ "?errorPK")
+       
+
 
 def proveedor_update(request, idproveedor):
     proveedor = Proveedor.objects.get(idproveedor = idproveedor)
@@ -143,3 +153,61 @@ def pedido_update(request, codigo):
             return redirect(reverse('productoUpdate')+ codigo)
 
     return render(request,'core/productoUpdate.html',{'form':form})
+#--------------------------------------------
+def menuBodega(request):
+    bodega = Bodega.objects.all()
+    return render(request,"core/bodegaMenu.html",{'bodega':bodega})
+
+def bodega_New(request):         
+    if request.method == 'POST':
+        form = BodegaForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            idbodega = Bodega.objects.count()+1
+            try:
+                bb = Bodega.objects.get(idbodega=idbodega)
+                if bb.idbodega == idbodega:
+                    idbodega= idbodega+10
+            except:
+                idbodega=idbodega
+            idalmacen = form.cleaned_data.get("idalmacen")
+            capacidadmaxima = form.cleaned_data.get("capacidadmaxima")            
+            obj = Bodega.objects.create(
+                idbodega=idbodega,
+                idalmacen=idalmacen,
+                capacidadmaxima=capacidadmaxima,
+            )
+
+            obj.save()           
+            return redirect(reverse('bodegaMenu')+ "?ok")
+        else:
+            return redirect(reverse('bodegaNew')+ "?fail")
+       
+    else:
+        form = BodegaForm()
+
+    return render(request,'core/bodegaNew.html',{'form':form})
+
+def bodega_delete(request, idbodega):
+    producto = Bodega.objects.get(idbodega = idbodega)
+    try:
+        producto.delete()
+        return redirect(to="bodegaMenu")
+    except:
+        return redirect(reverse('bodegaMenu')+ "?errorPK")
+    
+
+def bodega_update(request, idbodega):
+    bodega = Bodega.objects.get(idbodega = idbodega)
+    form = BodegaForm(instance = bodega)
+
+    if request.method == 'POST':
+        form = BodegaForm(request.POST,request.FILES,instance=bodega)
+        if form.is_valid():
+            form.save()                
+            return redirect(reverse('bodegaMenu')+ "?ok")
+        else:
+            return redirect(reverse('bodegaUpdate')+ idbodega)
+
+    return render(request,'core/bodegaUpdate.html',{'form':form})
+
+#----------------------------------
