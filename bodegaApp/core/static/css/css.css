@@ -1,16 +1,21 @@
-.body{
-    position: absolute;
+html, body{
+    margin:0px;
+    height:100%;
 }
 
+
 .navbar{
-    background-color: brown;
-  
+    background-color: #DAF7A6;
 }
 .navbar a{
     color: black;
 }
 
 .inicioSesion{
-    position: relative;
-    padding:5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin:0px;  
+        height:100%;
+        
 }
