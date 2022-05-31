@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(_file_).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'bodegaApp.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': '127.0.0.1:1521/xe',
+        'NAME': '127.0.0.1:1522/xe',
         'USER': 'c##portafolio',
         'PASSWORD': '123',
         'TEST': {

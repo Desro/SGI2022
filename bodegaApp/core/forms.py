@@ -10,20 +10,17 @@ class ProveedorForm(forms.ModelForm):
         model = Proveedor
 
         fields = [
-            'idproveedor',
             'nmbproveedor',
             'email',
             'fono'
         ]        
         
         labels = {
-            'idproveedor':'id Proveedro',
             'nmbproveedor':'Nombre Proveedor',
             'email':'Email',
             'fono':'Telefono'
         }
         widgets = {
-            'idproveedor':forms.TextInput(attrs={'class':'form-control'}),
             'nmbproveedor':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'email':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'fono':forms.TextInput(attrs={'class':'form-control','type':'text'}),
@@ -36,7 +33,7 @@ class ProductoForm(forms.ModelForm):
         model = Producto
 
         fields = [
-            'marca',
+            'nmbproducto',
             'stockminimo',
             'stockmaximo',
             'preciocompra',
@@ -47,7 +44,7 @@ class ProductoForm(forms.ModelForm):
         ]        
         
         labels = {
-            'marca':'Marca',
+            'nmbproducto':'Nombre Producto',
             'stockminimo':'Stock Minimo',
             'stockmaximo':'Stock Maximo',
             'preciocompra':'Precio Compra',
@@ -57,7 +54,7 @@ class ProductoForm(forms.ModelForm):
            
         }
         widgets = {
-            'marca':forms.TextInput(attrs={'class':'form-control'}),
+            'nmbproducto':forms.TextInput(attrs={'class':'form-control'}),
             'stockminimo':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'stockmaximo':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'preciocompra':forms.TextInput(attrs={'class':'form-control','type':'text'}),
@@ -67,20 +64,42 @@ class ProductoForm(forms.ModelForm):
 
         }
 
-class PedidoForm(forms.ModelForm):
+class PedidoFormP(forms.ModelForm):
     
     class Meta:
         model = Pedido
 
         fields = [
+            'idproveedor'
             
-
         ]        
         
         labels = {
+            'idproveedor':'Proveedor'
             
+
            
         }
         widgets = {
+            'idproveedor':forms.Select(attrs={'class':'form-control'}),
             
+        }
+
+class BodegaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Bodega
+
+        fields = [
+            'idalmacen',
+            'capacidadmaxima'
+        ]        
+        
+        labels = {
+            'idalmacen':'Almacen',
+            'capacidadmaxima':'Capacidad Maxima',
+        }
+        widgets = {
+            'idalmacen':forms.Select(attrs={'class':'form-control'}),
+            'capacidadmaxima':forms.TextInput(attrs={'class':'form-control','type':'text'}),
         }
