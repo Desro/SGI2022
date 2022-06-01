@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from enum import auto
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
@@ -19,18 +20,22 @@ def proveedor_New(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST or None,request.FILES or None)
         if form.is_valid():
-            idproveedor1 = Proveedor.objects.count()+1                      
+            idproveedor = Proveedor.objects.count()+1                      
             try:
-                bb = Proveedor.objects.get(idproveedor=idproveedor1)
-                if bb.idproveedor == idproveedor1:
-                    idproveedor1= idproveedor1+10
+                pp = Proveedor.objects.get(idproveedor=idproveedor).idproveedor
+                while pp != NULL:
+                    idbodega= idbodega+10
+                    pp = Proveedor.objects.get(idproveedor=idproveedor).idproveedor
             except:
-                idproveedor1=idproveedor1
+                idproveedor=idproveedor
+
+            idbodega = Bodega.objects.count()+1
+           
             nmbproveedor = form.cleaned_data.get("nmbproveedor")
             email = form.cleaned_data.get("email")
             fono = form.cleaned_data.get("fono")
             obj = Proveedor.objects.create(
-                idproveedor=idproveedor1,
+                idproveedor=idproveedor,
                 nmbproveedor=nmbproveedor,
                 email=email,
                 fono=fono,
@@ -53,7 +58,6 @@ def proveedor_delete(request, idproveedor):
     except:
        return redirect(reverse('proveedorMenu')+ "?errorPK")
        
-
 
 def proveedor_update(request, idproveedor):
     proveedor = Proveedor.objects.get(idproveedor = idproveedor)
@@ -164,9 +168,10 @@ def bodega_New(request):
         if form.is_valid():
             idbodega = Bodega.objects.count()+1
             try:
-                bb = Bodega.objects.get(idbodega=idbodega)
-                if bb.idbodega == idbodega:
+                bb = Bodega.objects.get(idbodega=idbodega).idbodega
+                while bb != NULL:
                     idbodega= idbodega+10
+                    bb = Bodega.objects.get(idbodega=idbodega).idbodega
             except:
                 idbodega=idbodega
             idalmacen = form.cleaned_data.get("idalmacen")
