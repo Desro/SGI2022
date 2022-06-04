@@ -103,3 +103,36 @@ class BodegaForm(forms.ModelForm):
             'idalmacen':forms.Select(attrs={'class':'form-control'}),
             'capacidadmaxima':forms.TextInput(attrs={'class':'form-control','type':'text'}),
         }
+
+class EmpleadosForm(forms.ModelForm):
+    
+    class Meta:
+        model = CuentaUsuario
+
+        fields = [
+            
+            'idtipousuario',
+            'idalmacen',
+            'nmbusuario',
+            'apellidousuario',
+            'email',
+
+        ]        
+        
+        labels = {
+            'idtipousuario':'Tipo de Usuario : ',
+            'idalmacen':'Almacen : ',
+            'nmbusuario':'Nombre : ',
+            'apellidousuario':'Apellido :',
+            'email':'Email :',
+           
+        }
+        widgets = {
+            'idtipousuario':forms.Select(attrs={'class':'form-control'}),
+            'idalmacen':forms.Select(attrs={'class':'form-control'}),
+            'nmbusuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'apellidousuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'email':forms.EmailInput(attrs={'class':'form-control','type':'email'}),
+            
+
+        }

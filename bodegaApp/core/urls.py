@@ -18,7 +18,6 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='index'),
-    path('registroUsuario/', registroUsuario, name='registroUsuario'),
     path('menuProveedor/', menuProveedor, name='proveedorMenu'),
     path('proveedorNew/', proveedor_New, name='proveedorNew'),
     path('prooveedorDelete/<idproveedor>', proveedor_delete, name='proveedorDelete'),
@@ -35,4 +34,8 @@ urlpatterns = [
     path('bodegaNew/', bodega_New, name='bodegaNew'),
     path('bodegaDelete/<idbodega>', bodega_delete, name='bodegaDelete'),
     path('bodegaUpdate/<idbodega>', bodega_update, name='bodegaUpdate'),
+    path('menuEmpleado/', menuEmpleado, name='empleadoaMenu'),
+    path('empleadoNew/', empleado_New, name='empleadoNew'),
+    path('empleadoDelete/<idcuentaUsuario>', empleado_delete, name='empleadoDelete'),
+    path('empleadoUpdate/<idCuentaUsuario>', empleado_update, name='empleadoUpdate'),
 ]

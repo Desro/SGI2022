@@ -1,0 +1,76 @@
+{% extends 'core/plantilla.html' %}
+
+{% load static %}
+{% block title %}REGISTRO PROVEEDOR{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
+        <h1>Registro nuevo Empleado</h1>
+    </div>
+    <div class="row">
+        {% if 'ok' in request.GET %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Ok!!! </strong>Producto registrado satisfactoriamente
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        {% if 'fail' in request.GET %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        <!-- Formulario de contacto -->                            
+        <form action="" method="POST" id="formulario" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
+                <h3>Almacen:</h3>
+            </div>
+            <div class="form-group mb-3">
+                <div class="input-group">
+                    {{form.idalmacen}}
+                </div>                
+                {{form.idalmacen.errors}}
+            </div>
+            <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
+                <h3>Tipo de Usuario:</h3>
+            </div>
+            <div class="form-group mb-3">
+                <div class="input-group">
+                    {{form.idtipousuario}}
+                </div>                
+                {{form.idtipousuario.errors}}
+            </div>
+            <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
+                <h3>Datos Personales</h3>
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Nombre: *</label>
+                <div class="input-group">
+                    {{form.nmbusuario}}
+                </div>                
+                {{form.nmbusuario.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Apellido: *</label>
+                <div class="input-group">
+                    {{form.apellidousuario}}
+                </div>                
+                {{form.apellidousuario.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Email: *</label>
+                <div class="input-group">
+                    {{form.email}}
+                </div>                
+                {{form.email.errors}}
+            </div>
+           
+            <div class="text-center mt-4">
+                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+                <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

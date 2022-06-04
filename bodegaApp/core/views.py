@@ -9,9 +9,8 @@ from .funciones import *
 def index(request):
     return render(request,"core/index.html")
 
-def registroUsuario(request):
-    return render(request,"core/registroUsuario.html")
 
+#------PROVEEDOR
 def menuProveedor(request):
     proveedor = Proveedor.objects.all()
     return render(request,"core/proveedorMenu.html",{'proveedor':proveedor})
@@ -28,8 +27,6 @@ def proveedor_New(request):
                     pp = Proveedor.objects.get(idproveedor=idproveedor).idproveedor
             except:
                 idproveedor=idproveedor
-
-            idbodega = Bodega.objects.count()+1
            
             nmbproveedor = form.cleaned_data.get("nmbproveedor")
             email = form.cleaned_data.get("email")
@@ -216,3 +213,68 @@ def bodega_update(request, idbodega):
     return render(request,'core/bodegaUpdate.html',{'form':form})
 
 #----------------------------------
+
+#------USUARIO---------------------
+def menuEmpleado(request):
+    cuentaUsuario = CuentaUsuario.objects.all()
+    return render(request,"core/empleadoMenu.html",{'cuentaUsuario':cuentaUsuario})
+
+def empleado_New(request):         
+    if request.method == 'POST':
+        form = EmpleadosForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            idcuentausuario = CuentaUsuario.objects.count()+1                      
+            try:
+                cu = CuentaUsuario.objects.get(idcuentausuario=idcuentausuario).idcuentausuario
+                while cu != NULL:
+                    idcuentausuario= idcuentausuario+10
+                    cu = CuentaUsuario.objects.get(idcuentausuario=idcuentausuario).idcuentausuario
+            except:
+                idcuentausuario=idcuentausuario
+
+            idalmacen = form.cleaned_data.get("idalmacen")
+            apellidousuario = form.cleaned_data.get("apellidousuario")
+            nmbusuario = form.cleaned_data.get("nmbusuario")
+            email = form.cleaned_data.get("email")
+            idtipousuario = form.cleaned_data.get("idtipousuario")
+            obj = Proveedor.objects.create(
+                idcuentausuario=idcuentausuario,
+                nmbusuario=nmbusuario,
+                apellidousuario=apellidousuario,
+                email=email,
+                idtipousuario=idtipousuario,
+                idalmacen=idalmacen,
+                password=""
+            )
+
+            obj.save()            
+            return redirect(reverse('empleadoMenu')+ "?ok")
+        else:
+            return redirect(reverse('empleadorNew')+ "?fail")
+    else:
+        form = EmpleadosForm()
+
+    return render(request,'core/empleadoNew.html',{'form':form})
+
+def empleado_delete(request, idproveedor):
+    proveedor = Proveedor.objects.get(idproveedor = idproveedor)
+    try:
+        proveedor.delete()
+        return redirect(to="proveedorMenu")
+    except:
+       return redirect(reverse('proveedorMenu')+ "?errorPK")
+       
+
+def empleado_update(request, idproveedor):
+    proveedor = Proveedor.objects.get(idproveedor = idproveedor)
+    form = ProveedorForm(instance = proveedor)
+
+    if request.method == 'POST':
+        form = ProveedorForm(request.POST,request.FILES,instance=proveedor)
+        if form.is_valid():
+            form.save()                
+            return redirect(reverse('proveedorMenu')+ "?ok")
+        else:
+            return redirect(reverse('proveedorUpdate')+ idproveedor)
+
+    return render(request,'core/proveedorUpdate.html',{'form':form})
