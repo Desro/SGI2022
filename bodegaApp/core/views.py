@@ -232,38 +232,51 @@ def empleado_New(request):
             except:
                 idcuentausuario=idcuentausuario
 
-            idalmacen = form.cleaned_data.get("idalmacen")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
             idtipousuario = form.cleaned_data.get("idtipousuario")
-            obj = Proveedor.objects.create(
+            obj = CuentaUsuario.objects.create(
                 idcuentausuario=idcuentausuario,
                 nmbusuario=nmbusuario,
                 apellidousuario=apellidousuario,
                 email=email,
                 idtipousuario=idtipousuario,
-                idalmacen=idalmacen,
+                idalmacen=Almacen.objects.get(idalmacen=1),
                 password=""
             )
 
             obj.save()            
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
-            return redirect(reverse('empleadorNew')+ "?fail")
+            return redirect(reverse('empleadoNew')+ "?fail")
     else:
         form = EmpleadosForm()
 
     return render(request,'core/empleadoNew.html',{'form':form})
 
-def empleado_delete(request, idproveedor):
-    proveedor = Proveedor.objects.get(idproveedor = idproveedor)
+def empleado_delete(request, idcuentausuario):
+    cuentaUsuario = CuentaUsuario.objects.get(idcuentausuario = idcuentausuario)
     try:
-        proveedor.delete()
-        return redirect(to="proveedorMenu")
+        cuentaUsuario.delete()
+        return redirect(to="empleadoMenu")
     except:
-       return redirect(reverse('proveedorMenu')+ "?errorPK")
+       return redirect(reverse('empleadoMenu')+ "?errorPK")
        
+
+def empleado_updateAdmin(request, idcuentausuario):
+    cuentaUsuario = CuentaUsuario.objects.get(idcuentausuario = idcuentausuario)
+    form = EmpleadosForm(instance = cuentaUsuario)
+
+    if request.method == 'POST':
+        form = EmpleadosForm(request.POST,request.FILES,instance=cuentaUsuario)
+        if form.is_valid():
+            form.save()                
+            return redirect(reverse('empleadoMenu')+ "?ok")
+        else:
+            return redirect(reverse('empleadoUpdate')+ idcuentausuario)
+
+    return render(request,'core/empleadoUpdate.html',{'form':form})
 
 def empleado_update(request, idproveedor):
     proveedor = Proveedor.objects.get(idproveedor = idproveedor)
@@ -277,4 +290,6 @@ def empleado_update(request, idproveedor):
         else:
             return redirect(reverse('proveedorUpdate')+ idproveedor)
 
-    return render(request,'core/proveedorUpdate.html',{'form':form})
+    return render(request,'core/proveedorUpdateAdmin.html',{'form':form})
+
+

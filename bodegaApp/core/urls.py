@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from .views import *
-
+from .email import *
 urlpatterns = [
     path('', index, name='index'),
     path('menuProveedor/', menuProveedor, name='proveedorMenu'),
@@ -34,8 +34,11 @@ urlpatterns = [
     path('bodegaNew/', bodega_New, name='bodegaNew'),
     path('bodegaDelete/<idbodega>', bodega_delete, name='bodegaDelete'),
     path('bodegaUpdate/<idbodega>', bodega_update, name='bodegaUpdate'),
-    path('menuEmpleado/', menuEmpleado, name='empleadoaMenu'),
+    path('menuEmpleado/', menuEmpleado, name='empleadoMenu'),
     path('empleadoNew/', empleado_New, name='empleadoNew'),
-    path('empleadoDelete/<idcuentaUsuario>', empleado_delete, name='empleadoDelete'),
-    path('empleadoUpdate/<idCuentaUsuario>', empleado_update, name='empleadoUpdate'),
+    path('empleadoDelete/<idcuentausuario>', empleado_delete, name='empleadoDelete'),
+    path('empleadoUpdate/<idcuentausuario>', empleado_updateAdmin, name='empleadoUpdateAdmin'),
+    path('empleadoUpdate/<idcuentausuario>', empleado_update, name='empleadoUpdate'),
+    path('correoPrueba/', correoP, name='correoPrueba'),
+
 ]

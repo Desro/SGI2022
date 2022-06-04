@@ -1,7 +1,7 @@
 {% extends 'core/plantilla.html' %}
 
 {% load static %}
-{% block title %}REGISTRO PROVEEDOR{% endblock %}
+{% block title %}REGISTRO EMPLEADOS{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
@@ -23,15 +23,7 @@
         <!-- Formulario de contacto -->                            
         <form action="" method="POST" id="formulario" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
-                <h3>Almacen:</h3>
-            </div>
-            <div class="form-group mb-3">
-                <div class="input-group">
-                    {{form.idalmacen}}
-                </div>                
-                {{form.idalmacen.errors}}
-            </div>
+
             <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
                 <h3>Tipo de Usuario:</h3>
             </div>

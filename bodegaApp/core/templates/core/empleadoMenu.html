@@ -1,7 +1,7 @@
 {% extends 'core/plantilla.html' %}
 
 {% load static %}
-{% block title %}Bodegas{% endblock %}
+{% block title %}EMPLEADO{% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/menuP.css' %}" type="text/css">
 {% endblock %}
@@ -40,7 +40,7 @@
                 <thead >
                     <tr class="table-dark">
                         <th>ID</th>
-                        <th>Almacen</th>
+                        <th>Tipo de Usuario</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
@@ -51,14 +51,14 @@
                 <tbody>
                     {% for cuentaUsuario in cuentaUsuario %}
                         <tr>
-                            <td>{{cuentaUsuario.idCuentaUsuario}}</td>
-                            <td>{{cuentaUsuario.idalmacen}}</td>
+                            <td>{{cuentaUsuario.idcuentausuario}}</td>
+                            <td>{{cuentaUsuario.idtipousuario}}</td>
                             <td>{{cuentaUsuario.nmbusuario}}</td>
                             <td>{{cuentaUsuario.apellidousuario}}</td>
-                            <td>{{cuentaUsuario.Email}}</td>
+                            <td>{{cuentaUsuario.email}}</td>
                             <td>
-                                <a class="btn btn-primary" href="#">Modificar</a>
-                                <a class="btn btn-warning"  href="#">Eliminar</a>
+                                <a class="btn btn-primary" href="{% url 'empleadoUpdateAdmin' cuentaUsuario.idcuentausuario %}">Modificar</a>
+                                <a class="btn btn-warning"  href="{% url 'empleadoDelete' cuentaUsuario.idcuentausuario %}">Eliminar</a>
                             </td>
                         </tr>
                     {% endfor %}

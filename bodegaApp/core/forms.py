@@ -22,7 +22,7 @@ class ProveedorForm(forms.ModelForm):
         }
         widgets = {
             'nmbproveedor':forms.TextInput(attrs={'class':'form-control','type':'text'}),
-            'email':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'email':forms.EmailInput(attrs={'class':'form-control','type':'email'}),
             'fono':forms.TextInput(attrs={'class':'form-control','type':'text'}),
 
         }
@@ -112,26 +112,26 @@ class EmpleadosForm(forms.ModelForm):
         fields = [
             
             'idtipousuario',
-            'idalmacen',
             'nmbusuario',
             'apellidousuario',
             'email',
+            'password',
 
         ]        
         
         labels = {
             'idtipousuario':'Tipo de Usuario : ',
-            'idalmacen':'Almacen : ',
             'nmbusuario':'Nombre : ',
             'apellidousuario':'Apellido :',
             'email':'Email :',
+            'password':'Contraseña :',
            
         }
         widgets = {
             'idtipousuario':forms.Select(attrs={'class':'form-control'}),
-            'idalmacen':forms.Select(attrs={'class':'form-control'}),
             'nmbusuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'apellidousuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'password':forms.PasswordInput(attrs={'class':'form-control','type':'password'}),
             'email':forms.EmailInput(attrs={'class':'form-control','type':'email'}),
             
 
