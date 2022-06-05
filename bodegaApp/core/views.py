@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.shortcuts import reverse
 from .forms import *
 from .funciones import *
+from .email import *
+
 
 # Create your views here.
 def index(request):
@@ -227,17 +229,17 @@ def empleado_New(request):
             try:
                 cu = CuentaUsuario.objects.get(idcuentausuario=idcuentausuario).idcuentausuario
                 while cu != NULL:
-                    idcuentausuario= idcuentausuario+10
+                    idcuentausuarion= idcuentausuario+10
                     cu = CuentaUsuario.objects.get(idcuentausuario=idcuentausuario).idcuentausuario
             except:
-                idcuentausuario=idcuentausuario
+                idcuentausuarion=idcuentausuario
 
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
             idtipousuario = form.cleaned_data.get("idtipousuario")
             obj = CuentaUsuario.objects.create(
-                idcuentausuario=idcuentausuario,
+                idcuentausuario=idcuentausuarion,
                 nmbusuario=nmbusuario,
                 apellidousuario=apellidousuario,
                 email=email,
@@ -246,7 +248,8 @@ def empleado_New(request):
                 password=""
             )
 
-            obj.save()            
+            obj.save()
+            send_emailNewEmpleado(email,idcuentausuarion)         
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
             return redirect(reverse('empleadoNew')+ "?fail")
@@ -274,9 +277,9 @@ def empleado_updateAdmin(request, idcuentausuario):
             form.save()                
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
-            return redirect(reverse('empleadoUpdate')+ idcuentausuario)
+            return redirect(reverse('empleadoUpdateAdmin')+ idcuentausuario)
 
-    return render(request,'core/empleadoUpdate.html',{'form':form})
+    return render(request,'core/empleadoUpdateAdmin.html',{'form':form})
 
 def empleado_update(request, idproveedor):
     proveedor = Proveedor.objects.get(idproveedor = idproveedor)
@@ -286,10 +289,15 @@ def empleado_update(request, idproveedor):
         form = ProveedorForm(request.POST,request.FILES,instance=proveedor)
         if form.is_valid():
             form.save()                
-            return redirect(reverse('proveedorMenu')+ "?ok")
+            return redirect(reverse('empleadoMenu')+ "?ok")
         else:
             return redirect(reverse('proveedorUpdate')+ idproveedor)
 
-    return render(request,'core/proveedorUpdateAdmin.html',{'form':form})
+    return render(request,'core/proveedorUpdate.html',{'form':form})
+
+
+def menuInicio(request):
+    return render(request,'core/MenuInicial.html')
+
 
 

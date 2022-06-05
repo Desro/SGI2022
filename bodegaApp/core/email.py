@@ -1,19 +1,24 @@
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.core.mail import *
+from .views import *
+from core.models import CuentaUsuario
+from .urls import *
 
-def send_email(mail):
-    context={'mail':mail}
 
-    template = get_template('core/correo/correo.html')
+def send_emailNewEmpleado(mail,idcuentausuario):
+   
+    cuentaUsuario= CuentaUsuario.objects.get(idcuentausuario=idcuentausuario)
+    context={'mail':cuentaUsuario.email,'nombre': cuentaUsuario.nmbusuario,'apellido':cuentaUsuario.apellidousuario,'idusuario':cuentaUsuario.idcuentausuario}
+    template = get_template('core/correo/correoNuevoEmpleado.html')
     content= template.render(context)
 
     email= EmailMultiAlternatives(
-        'Un correo de prueba',
-        'Mensaje Correo',
+        'Nuevo Registro de Empleado',
+        'SOPORTE AL MAYOREO 10',
         settings.EMAIL_HOST_USER,
         [mail],
 
@@ -23,8 +28,3 @@ def send_email(mail):
     email.fail_silently= False
     email.send()
 
-def correoP(request):
-    if request.method == 'POST':
-        mail = request.POST.get('mail')
-        send_email(mail)
-    return render(request,'core/correo/correoPrueba.html',{})

@@ -37,8 +37,9 @@ urlpatterns = [
     path('menuEmpleado/', menuEmpleado, name='empleadoMenu'),
     path('empleadoNew/', empleado_New, name='empleadoNew'),
     path('empleadoDelete/<idcuentausuario>', empleado_delete, name='empleadoDelete'),
-    path('empleadoUpdate/<idcuentausuario>', empleado_updateAdmin, name='empleadoUpdateAdmin'),
+    path('empleadoUpdateAdmin/<idcuentausuario>', empleado_updateAdmin, name='empleadoUpdateAdmin'),
     path('empleadoUpdate/<idcuentausuario>', empleado_update, name='empleadoUpdate'),
-    path('correoPrueba/', correoP, name='correoPrueba'),
+    path('menuInicio/', menuInicio, name='menuInicio'),
+    
 
 ]
