@@ -297,7 +297,12 @@ def empleado_update(request, idproveedor):
 
 
 def menuInicio(request):
-    return render(request,'core/MenuInicial.html')
+    productoCant= ProductoLine.objects.all()
+    
+    for productoCant  in productoCant:
+        print(productoCant.cantidad)
+
+    return render(request,'core/menuInicio.html')
 
 
 
