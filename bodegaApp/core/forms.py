@@ -110,7 +110,7 @@ class EmpleadosForm(forms.ModelForm):
         model = CuentaUsuario
 
         fields = [
-            
+            'idcuentausuario',
             'idtipousuario',
             'nmbusuario',
             'apellidousuario',
@@ -120,6 +120,7 @@ class EmpleadosForm(forms.ModelForm):
         ]        
         
         labels = {
+            'idcuentausuario':'Rut',
             'idtipousuario':'Tipo de Usuario : ',
             'nmbusuario':'Nombre : ',
             'apellidousuario':'Apellido :',
@@ -128,6 +129,7 @@ class EmpleadosForm(forms.ModelForm):
            
         }
         widgets = {
+            'idcuentausuario':forms.TextInput(attrs={'class':'form-control'}),
             'idtipousuario':forms.Select(attrs={'class':'form-control'}),
             'nmbusuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'apellidousuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),

@@ -225,21 +225,14 @@ def empleado_New(request):
     if request.method == 'POST':
         form = EmpleadosForm(request.POST or None,request.FILES or None)
         if form.is_valid():
-            idcuentausuario = CuentaUsuario.objects.count()+1                      
-            try:
-                cu = CuentaUsuario.objects.get(idcuentausuario=idcuentausuario).idcuentausuario
-                while cu != NULL:
-                    idcuentausuarion= idcuentausuario+10
-                    cu = CuentaUsuario.objects.get(idcuentausuario=idcuentausuario).idcuentausuario
-            except:
-                idcuentausuarion=idcuentausuario
-
+            
+            idcuentausuario =form.cleaned_data.get("idcuentausuario")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
             idtipousuario = form.cleaned_data.get("idtipousuario")
             obj = CuentaUsuario.objects.create(
-                idcuentausuario=idcuentausuarion,
+                idcuentausuario=idcuentausuario,
                 nmbusuario=nmbusuario,
                 apellidousuario=apellidousuario,
                 email=email,
@@ -249,7 +242,7 @@ def empleado_New(request):
             )
 
             obj.save()
-            send_emailNewEmpleado(email,idcuentausuarion)         
+            send_emailNewEmpleado(email,idcuentausuario)         
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
             return redirect(reverse('empleadoNew')+ "?fail")
