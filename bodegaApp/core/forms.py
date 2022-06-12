@@ -111,8 +111,8 @@ class EmpleadosForm(forms.ModelForm):
 
         fields = [
             'idcuentausuario',
-            'idtipousuario',
             'nmbusuario',
+            'idalmacen',
             'apellidousuario',
             'email',
             'password',
@@ -121,20 +121,20 @@ class EmpleadosForm(forms.ModelForm):
         
         labels = {
             'idcuentausuario':'Rut',
-            'idtipousuario':'Tipo de Usuario : ',
             'nmbusuario':'Nombre : ',
             'apellidousuario':'Apellido :',
             'email':'Email :',
             'password':'Contraseña :',
+            'idalmacen':'Almacen :',
            
         }
         widgets = {
             'idcuentausuario':forms.TextInput(attrs={'class':'form-control'}),
-            'idtipousuario':forms.Select(attrs={'class':'form-control'}),
             'nmbusuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'apellidousuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
-            'password':forms.PasswordInput(attrs={'class':'form-control','type':'password'}),
+            'password':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'email':forms.EmailInput(attrs={'class':'form-control','type':'email'}),
+            'idalmacen':forms.Select(attrs={'class':'form-control'}),
             
 
         }

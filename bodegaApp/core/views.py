@@ -224,25 +224,24 @@ def menuEmpleado(request):
 def empleado_New(request):         
     if request.method == 'POST':
         form = EmpleadosForm(request.POST or None,request.FILES or None)
-        if form.is_valid():
+        if form.is_valid():        
+            idcuentausuario =form.cleaned_data.get("idcuentausuario")
+            apellidousuario = form.cleaned_data.get("apellidousuario")
+            nmbusuario = form.cleaned_data.get("nmbusuario")
+            email = form.cleaned_data.get("email")
+            idalmacen=form.cleaned_data.get("idalmacen")
             
             idcuentausuario =form.cleaned_data.get("idcuentausuario")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
-            idtipousuario = form.cleaned_data.get("idtipousuario")
-            obj = CuentaUsuario.objects.create(
-                idcuentausuario=idcuentausuario,
-                nmbusuario=nmbusuario,
-                apellidousuario=apellidousuario,
-                email=email,
-                idtipousuario=idtipousuario,
-                idalmacen=Almacen.objects.get(idalmacen=1),
-                password=""
-            )
-
-            obj.save()
-            send_emailNewEmpleado(email,idcuentausuario)         
+            idalmacen=form.cleaned_data.get("idalmacen")
+            
+            nidalmacen = Almacen.objects.get(nmbalmacen=idalmacen)
+            print(nidalmacen)
+            crearUsuario(idcuentausuario,2,nidalmacen.idalmacen,nmbusuario,apellidousuario,email)
+            send_emailNewEmpleado(email,idcuentausuario)   
+   
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
             return redirect(reverse('empleadoNew')+ "?fail")

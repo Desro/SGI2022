@@ -13,4 +13,8 @@ def crearPedido(opcion,idpedido,cantidad,producto):
     cursor  = django_cursor.connection.cursor()
     cursor.callproc("SP_CREAR_PEDIDO",[opcion,idpedido,cantidad,producto])
 
+def crearUsuario(idusuario,idtipousuario,idalmacen,nmbusuario,apellido,email):
+    django_cursor=connection.cursor()
+    cursor  = django_cursor.connection.cursor()
+    cursor.callproc("SP_CREAR_USUARIO",[idusuario,idtipousuario,idalmacen,nmbusuario,apellido,email])
     
