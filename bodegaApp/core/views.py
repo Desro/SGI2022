@@ -2,6 +2,7 @@ from asyncio.windows_events import NULL
 from enum import auto
 from operator import ge
 from traceback import print_tb
+from urllib import response
 from webbrowser import get
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
@@ -11,7 +12,29 @@ from .email import *
 
 
 # Create your views here.
+
 def index(request):
+    if request.method == 'GET':
+        return render(request,"core/index.html")
+        
+    if request.method == 'POST':
+        email = request.POST.get("email")
+        password=  request.POST.get("password")        
+        emailbd= CuentaUsuario.objects.get(email=email).email        
+        if emailbd != NULL:
+            contrabb=CuentaUsuario.objects.get(email=email).password 
+            print("pasa")
+            print(contrabb)
+            if password == CuentaUsuario.objects.get(email=email).password :
+                print(emailbd.password)
+                request.session['email']=email
+                tipoUsuario=emailbd.idtipousuario
+                response.set_cookie('tipoUsuario',tipoUsuario)
+                response.set_cookie('login_status',True)
+            
+
+        
+      
     return render(request,"core/index.html")
 
 
@@ -228,13 +251,13 @@ def empleado_New(request):
     if request.method == 'POST':
         form = EmpleadosForm(request.POST or None,request.FILES or None)
         if form.is_valid():        
-            idcuentausuario =form.cleaned_data.get("idcuentausuario")
+            rutusuario =form.cleaned_data.get("rutusuario")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
             idalmacen=form.cleaned_data.get("idalmacen")
             
-            idcuentausuario =form.cleaned_data.get("idcuentausuario")
+            rutusuario =form.cleaned_data.get("rutusuario")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
@@ -242,8 +265,8 @@ def empleado_New(request):
             
             nidalmacen = Almacen.objects.get(nmbalmacen=idalmacen)
             print(nidalmacen)
-            crearUsuario(idcuentausuario,2,nidalmacen.idalmacen,nmbusuario,apellidousuario,email)
-            send_emailNewEmpleado(email,idcuentausuario)   
+            crearUsuario(rutusuario,2,nidalmacen.idalmacen,nmbusuario,apellidousuario,email)
+            send_emailNewEmpleado(email,rutusuario)   
    
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
@@ -253,8 +276,8 @@ def empleado_New(request):
 
     return render(request,'core/empleadoNew.html',{'form':form})
 
-def empleado_delete(request, idcuentausuario):
-    cuentaUsuario = CuentaUsuario.objects.get(idcuentausuario = idcuentausuario)
+def empleado_delete(request, rutusuario):
+    cuentaUsuario = CuentaUsuario.objects.get(rutusuario = rutusuario)
     try:
         cuentaUsuario.delete()
         return redirect(to="empleadoMenu")
@@ -262,8 +285,8 @@ def empleado_delete(request, idcuentausuario):
        return redirect(reverse('empleadoMenu')+ "?errorPK")
        
 
-def empleado_updateAdmin(request, idcuentausuario):
-    cuentaUsuario = CuentaUsuario.objects.get(idcuentausuario = idcuentausuario)
+def empleado_updateAdmin(request, rutusuario):
+    cuentaUsuario = CuentaUsuario.objects.get(rutusuario = rutusuario)
     form = EmpleadosForm(instance = cuentaUsuario)
 
     if request.method == 'POST':
@@ -272,7 +295,7 @@ def empleado_updateAdmin(request, idcuentausuario):
             form.save()                
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
-            return redirect(reverse('empleadoUpdateAdmin')+ idcuentausuario)
+            return redirect(reverse('empleadoUpdateAdmin')+ rutusuario)
 
     return render(request,'core/empleadoUpdateAdmin.html',{'form':form})
 
@@ -290,6 +313,65 @@ def empleado_update(request, idproveedor):
 
     return render(request,'core/proveedorUpdate.html',{'form':form})
 
+#--------------------------------
+#EMPRESA
+def menuEmpresa(request):
+    empresa = Empresa.objects.all()
+    return render(request,"core/empresaMenu.html",{'empresa':empresa})
+
+def empresa_New(request):         
+    if request.method == 'POST':
+        form = EmpresaForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            rutempresa = form.cleaned_data.get("rutempresa")
+            nmbempresa = form.cleaned_data.get("nmbempresa")    
+            direccion = form.cleaned_data.get("direccion")   
+            idcomuna = form.cleaned_data.get("idcomuna")           
+            obj = Empresa.objects.create(
+                rutempresa=rutempresa,
+                nmbempresa=nmbempresa,
+                direccion=direccion,
+                idcomuna=idcomuna,
+            )
+
+            obj.save()           
+            return redirect(reverse('empresaMenu')+ "?ok")
+        else:
+            return redirect(reverse('empresaNew')+ "?fail")
+       
+    else:
+        form = EmpresaForm()
+
+    return render(request,'core/empresaNew.html',{'form':form})
+
+def empresa_delete(request, rutempresa):
+    empresa = Empresa.objects.get(rutempresa = rutempresa)
+    try:
+        empresa.delete()
+        return redirect(to="empresaMenu")
+    except:
+        return redirect(reverse('empresaMenu')+ "?errorPK")
+    
+
+def empresa_update(request, rutempresa):
+    empresa = Empresa.objects.get(rutempresa = rutempresa)
+    form = EmpresaForm(instance = empresa)
+
+    if request.method == 'POST':
+        form = EmpresaForm(request.POST,request.FILES,instance=empresa)
+        if form.is_valid():
+            form.save()                
+            return redirect(reverse('empresaMenu')+ "?ok")
+        else:
+            return redirect(reverse('empresaUpdate')+ rutempresa)
+
+    return render(request,'core/empresaUpdate.html',{'form':form})
+
+
+
+
+
+#---------------
 
 def menuInicio(request):
     listaProductoMax = []

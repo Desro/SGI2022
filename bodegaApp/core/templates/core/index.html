@@ -4,45 +4,24 @@
 {% block title %}INICIO{% endblock %}
 
 {% block content %}
-<div class="container" >
-    <div class="row">
-        <div class="col inicioSesion">         
-            <form style="width:50%;">
-              <div>
-                <h1>Incio de Sesion</h1>
-              </div>
-
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                  <input type="email" id="form2Example1" class="form-control" />
-                  <label class="form-label" for="form2Example1">Usuario</label>
-                </div>
-              
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                  <input type="password" id="form2Example2" class="form-control" />
-                  <label class="form-label" for="form2Example2">Constraseña</label>
-                </div>
-              
-                <!-- 2 column grid layout for inline styling -->
-                <div class="row mb-4">
-                  <div class="col d-flex justify-content-center">
-                    <!-- Checkbox -->
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                      <label class="form-check-label" for="form2Example31"> Remember me </label>
-                    </div>
-                  </div>
-
-              
-                <!-- Submit button -->
-                <button type="button" class="btn btn-primary btn-block mb-4">Iniciar</button>
-              
-                <!-- Register buttons -->
-                
-              </form>
-           </div>
-        </div>
+<div class="container justify-content-center mt-5" style="width: fit-conten;">
+  <form method="post">
+    {% csrf_token%}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password"name="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 </div>
+
 {% endblock %}

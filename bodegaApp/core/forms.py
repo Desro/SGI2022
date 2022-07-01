@@ -1,3 +1,4 @@
+from cProfile import label
 from dataclasses import field
 from pyexpat import model
 from django import forms
@@ -120,3 +121,35 @@ class EmpleadosForm(forms.ModelForm):
         }
 
 
+class EmpresaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Empresa
+
+        fields = [
+            'rutempresa',
+            'nmbempresa',
+            'direccion',
+            'idcomuna',
+
+        ]        
+        
+        labels = {
+            'rutempresa':'Rut Empresa :',
+            'nmbempresa':'Nombre Empresa : ',
+            'direccion':'Direccion :',
+            'idcomuna':'Comuna :',
+           
+        }
+        widgets = {
+            'rutempresa':forms.TextInput(attrs={'class':'form-control'}),
+            'nmbempresa':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'direccion':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'idcomuna':forms.Select(attrs={'class':'form-control'}),
+
+        }
+
+
+class InicioSesion(forms.ModelForm):
+        email = forms.CharField(label=("Email"),required=True)
+        password = forms.PasswordInput()

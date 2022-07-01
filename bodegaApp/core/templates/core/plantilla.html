@@ -16,7 +16,7 @@
 <body style="background: linear-gradient(to bottom, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1))">
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5BE9E1">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">SGinv</a>
+      <a class="navbar-brand" href="{% url 'menuInicio'%} ">SGinv</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,6 +36,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link"  href="{% url 'empleadoMenu'%}">Empleado</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"  href="{% url 'empresaMenu'%}">Empresa</a>
               </li>
           </li>
         </ul>
