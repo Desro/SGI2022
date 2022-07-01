@@ -17,4 +17,34 @@ def crearUsuario(idusuario,idtipousuario,idalmacen,nmbusuario,apellido,email):
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
     cursor.callproc("SP_CREAR_USUARIO",[idusuario,idtipousuario,idalmacen,nmbusuario,apellido,email])
+
+def estadoBodega():
+    django_cursor=connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur=django_cursor.connection.cursor()
+
+    cursor.callproc("SP_ESTADO_BODEGA",[out_cur])
+
+    lista = []
+
+    for fila in out_cur:
+        lista.append(fila)
+
+    return lista
+
+def estadoProducto():
+    django_cursor=connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur=django_cursor.connection.cursor()
+
+    cursor.callproc("SP_ESTADO_PRODUCTO",[out_cur])
+
+    lista = []
+
+    for fila in out_cur:
+        lista.append(fila)
+
+    return lista
+
+
     

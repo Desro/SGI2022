@@ -1,5 +1,8 @@
 from asyncio.windows_events import NULL
 from enum import auto
+from operator import ge
+from traceback import print_tb
+from webbrowser import get
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
 from .forms import *
@@ -126,16 +129,16 @@ def menuPedido(request):
     return render(request,"core/pedidoMenu.html",{'pedido':pedido})
 
 def pedido_New(request):         
-    form = PedidoFormP()
-    if request.method == 'POST':
-        form = PedidoFormP(request.POST,request.FILES)
-        if form.is_valid():
-            idproveedor = form.cleaned_data.get("idproveedor")
-            proveedorElegido= Proveedor.objects.get(nmbproveedor= idproveedor)
-            productos=Producto.objects.get(idproveedor=proveedorElegido.idproveedo)
-            return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido},{'productos':productos})
+    #form = PedidoFormP()
+    #if request.method == 'POST':
+    #    form = PedidoFormP(request.POST,request.FILES)
+    #    if form.is_valid():
+    #        idproveedor = form.cleaned_data.get("idproveedor")
+     #       proveedorElegido= Proveedor.objects.get(nmbproveedor= idproveedor)
+     #       productos=Producto.objects.get(idproveedor=proveedorElegido.idproveedo)
+     #       return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido},{'productos':productos})
 
-    return render(request,'core/pedidoNew.html',{'form':form})
+    return render(request,'core/pedidoNew.html')
 
 
 def pedido_delete(request, codigo):
@@ -289,12 +292,25 @@ def empleado_update(request, idproveedor):
 
 
 def menuInicio(request):
-    productoCant= ProductoLine.objects.all()
-    
-    for productoCant  in productoCant:
-        print(productoCant.cantidad)
+    listaProductoMax = []
+    listaProductoMin = []
+    listaBodega=[]
 
-    return render(request,'core/menuInicio.html')
+    for fila in estadoBodega():
+        if fila[1]  >= Bodega.objects.get(idbodega=fila[0]).capacidadmaxima -100:
+            listaBodega.append(fila)
+
+    for fila in estadoProducto():
+        if fila[1]  >= Producto.objects.get(codigo=fila[0]).stockmaximo -100:
+            listaProductoMax.append(fila)
+        if fila[1]  <= Producto.objects.get(codigo=fila[0]).stockminimo +100:
+            listaProductoMin.append(fila)
+    data = {
+        'estadoBodega':listaBodega,
+        'stockMax':listaProductoMax,
+        'stockMin':listaProductoMin
+    } 
+    return render(request,'core/menuInicio.html',data)
 
 
 

@@ -9,30 +9,28 @@ from django.db import models
 
 
 class Almacen(models.Model):
-    idalmacen = models.BigIntegerField(primary_key=True)
     idcomuna = models.ForeignKey('Comuna', models.DO_NOTHING, db_column='idcomuna')
+    idalmacen = models.BigIntegerField(primary_key=True)
     nmbalmacen = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=100)
 
     class Meta:
         managed = False
         db_table = 'almacen'
-    
+
     def __str__(self):
         return self.nmbalmacen
-
-
 class Bodega(models.Model):
-    idbodega = models.BigIntegerField(primary_key=True)
     idalmacen = models.ForeignKey(Almacen, models.DO_NOTHING, db_column='idalmacen')
+    idbodega = models.BigIntegerField(primary_key=True)
     capacidadmaxima = models.BigIntegerField()
 
     class Meta:
         managed = False
         db_table = 'bodega'
-    
-    def __str__(self):
-        return self.idalmacen
 
+    def __str__(self):
+        return self.idbodega
 
 class Comuna(models.Model):
     idcomuna = models.BigIntegerField(primary_key=True)
@@ -44,25 +42,39 @@ class Comuna(models.Model):
         db_table = 'comuna'
 
     def __str__(self):
-        return self.descripcion
-
+            return self.descripcion
+            
 class CuentaUsuario(models.Model):
-    idcuentausuario = models.BigIntegerField(primary_key=True)
+    rutusuario = models.CharField(primary_key=True, max_length=11)
     idtipousuario = models.ForeignKey('TipoUsuario', models.DO_NOTHING, db_column='idtipousuario')
     idalmacen = models.ForeignKey(Almacen, models.DO_NOTHING, db_column='idalmacen')
     nmbusuario = models.CharField(max_length=50)
     apellidousuario = models.CharField(max_length=100)
     email = models.CharField(max_length=320)
-    password = models.CharField(max_length=50, blank=True, null=True)
+    password = models.CharField(max_length=50)
 
     class Meta:
         managed = False
         db_table = 'cuenta_usuario'
 
+    def __str__(self):
+        return self.email
+
+class Empresa(models.Model):
+    rutempresa = models.CharField(primary_key=True, max_length=11)
+    nmbempresa = models.CharField(max_length=50)
+    idcomuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='idcomuna')
+    direccion = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'empresa'
+
+    def __str__(self):
+            return self.nmbempresa
 
 class Pedido(models.Model):
     idpedido = models.BigIntegerField(primary_key=True)
-    idproveedor = models.ForeignKey('Proveedor', models.DO_NOTHING, db_column='idproveedor')
     fechapedido = models.DateField()
     pedidoanulado = models.CharField(max_length=1, blank=True, null=True)
     pedidorecibido = models.CharField(max_length=1, blank=True, null=True)
@@ -71,6 +83,8 @@ class Pedido(models.Model):
         managed = False
         db_table = 'pedido'
 
+    def __str__(self):
+            return self.idpedido
 
 class PedidoLine(models.Model):
     idpedido = models.OneToOneField(Pedido, models.DO_NOTHING, db_column='idpedido', primary_key=True)
@@ -97,38 +111,39 @@ class Producto(models.Model):
     class Meta:
         managed = False
         db_table = 'producto'
-    
-    def __str__(self):
-        return self.nmbproducto
 
+    def __str__(self):
+            return self.codigo
 
 class ProductoLine(models.Model):
-    idpedido = models.OneToOneField(Pedido, models.DO_NOTHING, db_column='idpedido', primary_key=True)
+    nrolote = models.BigIntegerField(primary_key=True)
     codigo = models.ForeignKey(Producto, models.DO_NOTHING, db_column='codigo')
     idbodega = models.ForeignKey(Bodega, models.DO_NOTHING, db_column='idbodega')
-    nrolote = models.BigIntegerField()
+    idpedido = models.ForeignKey(Pedido, models.DO_NOTHING, db_column='idpedido')
     fechavenc = models.DateField()
     cantidad = models.BigIntegerField()
 
     class Meta:
         managed = False
         db_table = 'producto_line'
-        unique_together = (('idpedido', 'codigo'),)
 
+    def __str__(self):
+            return str(self.nrolote)
 
 class Proveedor(models.Model):
     idproveedor = models.BigIntegerField(primary_key=True)
+    rutempresa = models.ForeignKey(Empresa, models.DO_NOTHING, db_column='rutempresa')
     nmbproveedor = models.CharField(max_length=50)
     email = models.CharField(max_length=320)
     fono = models.CharField(max_length=50)
+    personadecontacto = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'proveedor'
-    
-    def __str__(self):
-        return self.nmbproveedor
 
+    def __str__(self):
+            return self.nmbproveedor
 
 class Provincia(models.Model):
     idprovincia = models.BigIntegerField(primary_key=True)
@@ -156,8 +171,9 @@ class TipoProducto(models.Model):
     class Meta:
         managed = False
         db_table = 'tipo_producto'
+
     def __str__(self):
-        return self.nmbtipoproducto
+            return self.nmbtipoproducto 
 
 class TipoUsuario(models.Model):
     idtipousuario = models.BigIntegerField(primary_key=True)
@@ -166,6 +182,6 @@ class TipoUsuario(models.Model):
     class Meta:
         managed = False
         db_table = 'tipo_usuario'
-    
+
     def __str__(self):
-        return self.nmbtipousuario
+            return self.nmbtipousuario

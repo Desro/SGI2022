@@ -64,26 +64,6 @@ class ProductoForm(forms.ModelForm):
 
         }
 
-class PedidoFormP(forms.ModelForm):
-    
-    class Meta:
-        model = Pedido
-
-        fields = [
-            'idproveedor'
-            
-        ]        
-        
-        labels = {
-            'idproveedor':'Proveedor'
-            
-
-           
-        }
-        widgets = {
-            'idproveedor':forms.Select(attrs={'class':'form-control'}),
-            
-        }
 
 class BodegaForm(forms.ModelForm):
     
@@ -110,7 +90,7 @@ class EmpleadosForm(forms.ModelForm):
         model = CuentaUsuario
 
         fields = [
-            'idcuentausuario',
+            'rutusuario',
             'nmbusuario',
             'idalmacen',
             'apellidousuario',
@@ -120,7 +100,7 @@ class EmpleadosForm(forms.ModelForm):
         ]        
         
         labels = {
-            'idcuentausuario':'Rut',
+            'rutusuario':'Rut',
             'nmbusuario':'Nombre : ',
             'apellidousuario':'Apellido :',
             'email':'Email :',
@@ -129,7 +109,7 @@ class EmpleadosForm(forms.ModelForm):
            
         }
         widgets = {
-            'idcuentausuario':forms.TextInput(attrs={'class':'form-control'}),
+            'rutusuario':forms.TextInput(attrs={'class':'form-control'}),
             'nmbusuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'apellidousuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'password':forms.TextInput(attrs={'class':'form-control','type':'text'}),
@@ -138,3 +118,5 @@ class EmpleadosForm(forms.ModelForm):
             
 
         }
+
+
