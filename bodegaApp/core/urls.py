@@ -18,28 +18,39 @@ from .views import *
 from .email import *
 urlpatterns = [
     path('', index, name='index'),
+    path('menuInicio/', menuInicio, name='menuInicio'),
+    #proveedor
     path('menuProveedor/', menuProveedor, name='proveedorMenu'),
     path('proveedorNew/', proveedor_New, name='proveedorNew'),
     path('prooveedorDelete/<idproveedor>', proveedor_delete, name='proveedorDelete'),
     path('proveedorUpdate/<idproveedor>', proveedor_update, name='proveedorUpdate'),
+    #producto
     path('menuProducto/', menuProducto, name='productoMenu'),
     path('productoNew/', producto_New, name='productoNew'),
     path('productoDelete/<codigo>', producto_delete, name='productoDelete'),
     path('productoUpdate/<codigo>', producto_update, name='productoUpdate'),
+    #pedido
     path('menuPedido/', menuPedido, name='pedidoMenu'),
     #path('pedidoNew/', pedido_New, name='pedidoNew'),
     path('pedidoDelete/<codigo>', pedido_delete, name='pedidoDelete'),
     path('pedidoUpdate/<codigo>', pedido_update, name='pedidoUpdate'),
+    #bodfega
     path('menuBodega/', menuBodega, name='bodegaMenu'),
     path('bodegaNew/', bodega_New, name='bodegaNew'),
     path('bodegaDelete/<idbodega>', bodega_delete, name='bodegaDelete'),
     path('bodegaUpdate/<idbodega>', bodega_update, name='bodegaUpdate'),
+    #empleado
     path('menuEmpleado/', menuEmpleado, name='empleadoMenu'),
     path('empleadoNew/', empleado_New, name='empleadoNew'),
     path('empleadoDelete/<rutusuario>', empleado_delete, name='empleadoDelete'),
     path('empleadoUpdateAdmin/<rutusuario>', empleado_updateAdmin, name='empleadoUpdateAdmin'),
     path('empleadoUpdate/<rutusuario>', empleado_update, name='empleadoUpdate'),
-    path('menuInicio/', menuInicio, name='menuInicio'),
+    #empresa
+    path('menuEmpresa/', menuEmpresa, name='empresaMenu'),
+    path('empresaNew/', empresa_New, name='empresaNew'),
+    path('empresaDelete/<rutempresa>', empresa_delete, name='empresaDelete'),
+    path('empresaUpdate/<rutempresa>', empresa_update, name='empresaUpdate'),
+  
     
 
 ]

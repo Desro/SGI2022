@@ -1,11 +1,11 @@
 {% extends 'core/plantilla.html' %}
 
 {% load static %}
-{% block title %}REGISTRO EMPLEADOS{% endblock %}
+{% block title %}EDITAR EMPRESA{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Registro nuevo Empleado</h1>
+        <h1>Editar  Empresa de distribucion</h1>
     </div>
     <div class="row">
         {% if 'ok' in request.GET %}
@@ -23,48 +23,35 @@
         <!-- Formulario de contacto -->                            
         <form action="" method="POST" id="formulario" enctype="multipart/form-data">
             {% csrf_token %}
-
-            <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
-                <h3>Sucursal :</h3>
+        
+            <div class="form-group mb-3">
+                <label class="fw-bold">Rut Empresa: *</label>
+                <div class="input-group">
+                    {{form.rutempresa}}
+                </div>                
+                {{form.rutempresa.errors}}
             </div>
             <div class="form-group mb-3">
+                <label class="fw-bold">Nombre:</label>
                 <div class="input-group">
-                    {{form.idalmacen}}
+                    {{form.nmbempresa}}
                 </div>                
-                {{form.idalmacen.errors}}
-            </div>
-            <div class="row bg-dark text-white rounded p-1 mt-1 mb-1">
-                <h3>Datos Personales</h3>
+                {{form.nmbempresa.errors}}
             </div>
             <div class="form-group mb-3">
-                <label class="fw-bold">RUT: *</label>
+                <label class="fw-bold">Comuna:</label>
                 <div class="input-group">
-                    {{form.rutusuario}}
+                    {{form.idcomuna}}
                 </div>                
-                {{form.rutusuario.errors}}
+                {{form.idcomuna.errors}}
             </div>
             <div class="form-group mb-3">
-                <label class="fw-bold">Nombre: *</label>
+                <label class="fw-bold">Direccion:</label>
                 <div class="input-group">
-                    {{form.nmbusuario}}
+                    {{form.direccion}}
                 </div>                
-                {{form.nmbusuario.errors}}
+                {{form.direccion.errors}}
             </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Apellido: *</label>
-                <div class="input-group">
-                    {{form.apellidousuario}}
-                </div>                
-                {{form.apellidousuario.errors}}
-            </div>
-            <div class="form-group mb-3">
-                <label class="fw-bold">Email: *</label>
-                <div class="input-group">
-                    {{form.email}}
-                </div>                
-                {{form.email.errors}}
-            </div>
-           
             <div class="text-center mt-4">
                 <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
                 <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
