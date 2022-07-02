@@ -18,6 +18,8 @@ class Almacen(models.Model):
         managed = False
         db_table = 'almacen'
 
+    def __str__(self):
+        return self.nmbalmacen
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150, blank=True, null=True)
@@ -96,6 +98,9 @@ class Bodega(models.Model):
     class Meta:
         managed = False
         db_table = 'bodega'
+    
+    def __str__(self):
+        return self.idbodega
 
 
 class Comuna(models.Model):
@@ -107,6 +112,8 @@ class Comuna(models.Model):
         managed = False
         db_table = 'comuna'
 
+    def __str__(self):
+        return self.descripcion
 
 class CuentaUsuario(models.Model):
     rutusuario = models.CharField(primary_key=True, max_length=11)
@@ -121,6 +128,8 @@ class CuentaUsuario(models.Model):
         managed = False
         db_table = 'cuenta_usuario'
 
+        def __str__(self):
+            return self.rutuuario
 
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
@@ -177,6 +186,9 @@ class Empresa(models.Model):
         managed = False
         db_table = 'empresa'
 
+    def __str__(self):
+            return self.nmbempresa
+
 
 class Pedido(models.Model):
     idpedido = models.BigIntegerField(primary_key=True)
@@ -188,6 +200,8 @@ class Pedido(models.Model):
         managed = False
         db_table = 'pedido'
 
+    def __str__(self):
+            return self.idpedido
 
 class PedidoLine(models.Model):
     idpedido = models.OneToOneField(Pedido, models.DO_NOTHING, db_column='idpedido', primary_key=True)
@@ -214,7 +228,9 @@ class Producto(models.Model):
     class Meta:
         managed = False
         db_table = 'producto'
-
+   
+    def __str__(self):
+            return self.codigo  
 
 class ProductoLine(models.Model):
     nrolote = models.BigIntegerField(primary_key=True)
@@ -228,6 +244,8 @@ class ProductoLine(models.Model):
         managed = False
         db_table = 'producto_line'
 
+    def __str__(self):
+            return self.nrolote
 
 class Proveedor(models.Model):
     idproveedor = models.BigIntegerField(primary_key=True)
@@ -241,6 +259,8 @@ class Proveedor(models.Model):
         managed = False
         db_table = 'proveedor'
 
+    def __str__(self):
+            return self.nmbproveedor
 
 class Provincia(models.Model):
     idprovincia = models.BigIntegerField(primary_key=True)
@@ -269,6 +289,8 @@ class TipoProducto(models.Model):
         managed = False
         db_table = 'tipo_producto'
 
+    def __str__(self):
+            return self.nmbtipoproducto
 
 class TipoUsuario(models.Model):
     idtipousuario = models.BigIntegerField(primary_key=True)
@@ -277,3 +299,6 @@ class TipoUsuario(models.Model):
     class Meta:
         managed = False
         db_table = 'tipo_usuario'
+
+    def __str__(self):
+            return self.nmbtipousuario
