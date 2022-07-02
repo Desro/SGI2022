@@ -2,7 +2,7 @@ from dataclasses import field
 from pyexpat import model
 from django import forms
 from django.forms import ModelForm
-from .models import *
+from .model import *
 
 class ProveedorForm(forms.ModelForm):
     
@@ -118,5 +118,37 @@ class EmpleadosForm(forms.ModelForm):
             
 
         }
+
+class EmpresaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Empresa
+
+        fields = [
+            'rutempresa',
+            'nmbempresa',
+            'direccion',
+            'idcomuna',
+
+        ]        
+        
+        labels = {
+            'rutempresa':'Rut Empresa:',
+            'nmbempresa':'Nombre Empresa : ',
+            'direccion':'Direccion :',
+            'idcomuna':'Comuna :',
+            'password':'Contraseña :',
+            'idalmacen':'Almacen :',
+           
+        }
+        widgets = {
+            'rutempresa':forms.TextInput(attrs={'class':'form-control'}),
+            'nmbempresa':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'direccion':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'idcomuna':forms.Select(attrs={'class':'form-control'}),
+            
+
+        }
+
 
 

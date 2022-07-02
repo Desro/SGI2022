@@ -5,7 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.core.mail import *
 from .views import *
-from core.models import CuentaUsuario
+from core.model import CuentaUsuario
 from .urls import *
 
 

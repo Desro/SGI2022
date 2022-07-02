@@ -18,8 +18,76 @@ class Almacen(models.Model):
         managed = False
         db_table = 'almacen'
 
-    def __str__(self):
-        return self.nmbalmacen
+
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=150, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
+
+
+class AuthGroupPermissions(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128, blank=True, null=True)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150, blank=True, null=True)
+    first_name = models.CharField(max_length=150, blank=True, null=True)
+    last_name = models.CharField(max_length=150, blank=True, null=True)
+    email = models.CharField(max_length=254, blank=True, null=True)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class AuthUserGroups(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
+
+
+class AuthUserUserPermissions(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
+
+
 class Bodega(models.Model):
     idalmacen = models.ForeignKey(Almacen, models.DO_NOTHING, db_column='idalmacen')
     idbodega = models.BigIntegerField(primary_key=True)
@@ -29,8 +97,6 @@ class Bodega(models.Model):
         managed = False
         db_table = 'bodega'
 
-    def __str__(self):
-        return self.idbodega
 
 class Comuna(models.Model):
     idcomuna = models.BigIntegerField(primary_key=True)
@@ -41,9 +107,7 @@ class Comuna(models.Model):
         managed = False
         db_table = 'comuna'
 
-    def __str__(self):
-            return self.descripcion
-            
+
 class CuentaUsuario(models.Model):
     rutusuario = models.CharField(primary_key=True, max_length=11)
     idtipousuario = models.ForeignKey('TipoUsuario', models.DO_NOTHING, db_column='idtipousuario')
@@ -51,14 +115,57 @@ class CuentaUsuario(models.Model):
     nmbusuario = models.CharField(max_length=50)
     apellidousuario = models.CharField(max_length=100)
     email = models.CharField(max_length=320)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'cuenta_usuario'
 
-    def __str__(self):
-        return self.email
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200, blank=True, null=True)
+    action_flag = models.IntegerField()
+    change_message = models.TextField(blank=True, null=True)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100, blank=True, null=True)
+    model = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    app = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField(blank=True, null=True)
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
 
 class Empresa(models.Model):
     rutempresa = models.CharField(primary_key=True, max_length=11)
@@ -70,8 +177,6 @@ class Empresa(models.Model):
         managed = False
         db_table = 'empresa'
 
-    def __str__(self):
-            return self.nmbempresa
 
 class Pedido(models.Model):
     idpedido = models.BigIntegerField(primary_key=True)
@@ -83,8 +188,6 @@ class Pedido(models.Model):
         managed = False
         db_table = 'pedido'
 
-    def __str__(self):
-            return self.idpedido
 
 class PedidoLine(models.Model):
     idpedido = models.OneToOneField(Pedido, models.DO_NOTHING, db_column='idpedido', primary_key=True)
@@ -112,8 +215,6 @@ class Producto(models.Model):
         managed = False
         db_table = 'producto'
 
-    def __str__(self):
-            return self.codigo
 
 class ProductoLine(models.Model):
     nrolote = models.BigIntegerField(primary_key=True)
@@ -127,8 +228,6 @@ class ProductoLine(models.Model):
         managed = False
         db_table = 'producto_line'
 
-    def __str__(self):
-            return str(self.nrolote)
 
 class Proveedor(models.Model):
     idproveedor = models.BigIntegerField(primary_key=True)
@@ -142,8 +241,6 @@ class Proveedor(models.Model):
         managed = False
         db_table = 'proveedor'
 
-    def __str__(self):
-            return self.nmbproveedor
 
 class Provincia(models.Model):
     idprovincia = models.BigIntegerField(primary_key=True)
@@ -172,8 +269,6 @@ class TipoProducto(models.Model):
         managed = False
         db_table = 'tipo_producto'
 
-    def __str__(self):
-            return self.nmbtipoproducto 
 
 class TipoUsuario(models.Model):
     idtipousuario = models.BigIntegerField(primary_key=True)
@@ -182,6 +277,3 @@ class TipoUsuario(models.Model):
     class Meta:
         managed = False
         db_table = 'tipo_usuario'
-
-    def __str__(self):
-            return self.nmbtipousuario

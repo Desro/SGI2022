@@ -57,8 +57,8 @@
                             <td>{{cuentaUsuario.apellidousuario}}</td>
                             <td>{{cuentaUsuario.email}}</td>
                             <td>
-                                <a class="btn btn-primary" href="{% url 'empleadoUpdateAdmin' cuentaUsuario.idcuentausuario %}">Modificar</a>
-                                <a class="btn btn-warning"  href="{% url 'empleadoDelete' cuentaUsuario.idcuentausuario %}">Eliminar</a>
+                                <a class="btn btn-primary" href="{% url 'empleadoUpdateAdmin' cuentaUsuario.rutusuario %}">Modificar</a>
+                                <a class="btn btn-warning"  href="{% url 'empleadoDelete' cuentaUsuario.rutusuario %}">Eliminar</a>
                             </td>
                         </tr>
                     {% endfor %}

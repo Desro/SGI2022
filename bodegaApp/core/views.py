@@ -1,24 +1,100 @@
 from asyncio.windows_events import NULL
 from enum import auto
+from multiprocessing import context
 from operator import ge
+from pickle import TRUE
 from traceback import print_tb
+from urllib import response
 from webbrowser import get
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
 from .forms import *
 from .funciones import *
 from .email import *
-
+from django.http import HttpResponse
+from django.shortcuts import render
 
 # Create your views here.
+
 def index(request):
+    if request.method == 'GET':
+        return render(request,"core/index.html")
+        
+    if request.method == 'POST':
+        email = request.POST.get("email")
+        password=  request.POST.get("password")        
+        emailbd= CuentaUsuario.objects.get(email=email).email        
+        if emailbd != NULL:
+
+            if password == CuentaUsuario.objects.get(email=email).password :
+                request.session['email']=email
+                tipoUsuario= CuentaUsuario.objects.get(email=email).idtipousuario
+                store =  CuentaUsuario.objects.get(email=email).idalmacen
+                tipousuarionro=TipoUsuario.objects.get(nmbtipousuario=tipoUsuario).idtipousuario
+                storenro=Almacen.objects.get(nmbalmacen=store).idalmacen
+                nmbusuario =CuentaUsuario.objects.get(email=email).nmbusuario
+                apellidousuario=CuentaUsuario.objects.get(email=email).apellidousuario
+
+                request.session['tipo_usuario']=[tipousuarionro]
+                request.session['login_status']=[True]
+                request.session['store']=[storenro]
+                request.session['nmbusuario']=[nmbusuario]
+                request.session['apellidousuario']=[apellidousuario]
+                
+                response= redirect(reverse('menuInicio'))
+                response.set_cookie('tipo_usuario',tipousuarionro)
+                response.set_cookie('login_status',True)
+                response.set_cookie('store',storenro)
+                response.set_cookie('nmbusuario',nmbusuario)
+                response.set_cookie('apellidousuario',apellidousuario)
+
+
+                return response
+                #return redirect(reverse('menuInicio'),{'tipoUsuario':tipoUsuario})
+            else:
+                response.set_cookie('login_status',False)
     return render(request,"core/index.html")
 
+#---------------
+
+def menuInicio(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:        
+        listaProductoMax = []
+        listaProductoMin = []
+        listaBodega=[]
+
+        for fila in estadoBodega():
+            if fila[1]  >= Bodega.objects.get(idbodega=fila[0]).capacidadmaxima -100:
+                listaBodega.append(fila)
+
+        for fila in estadoProducto():
+            if fila[1]  >= Producto.objects.get(codigo=fila[0]).stockmaximo -100:
+                listaProductoMax.append(fila)
+            if fila[1]  <= Producto.objects.get(codigo=fila[0]).stockminimo +100:
+                listaProductoMin.append(fila)
+        data = {
+            'estadoBodega':listaBodega,
+            'stockMax':listaProductoMax,
+            'stockMin':listaProductoMin,
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    return render(request,'core/menuInicio.html',data)
 
 #------PROVEEDOR
 def menuProveedor(request):
-    proveedor = Proveedor.objects.all()
-    return render(request,"core/proveedorMenu.html",{'proveedor':proveedor})
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        proveedor = Proveedor.objects.all()
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'proveedor':proveedor
+        }    
+    return render(request,"core/proveedorMenu.html",data)
 
 def proveedor_New(request):         
     if request.method == 'POST':
@@ -75,10 +151,18 @@ def proveedor_update(request, idproveedor):
 
     return render(request,'core/proveedorUpdate.html',{'form':form})
 
-#--------------------------------------------
+#--------PRODUCTO------------------------
 def menuProducto(request):
-    producto = Producto.objects.all()
-    return render(request,"core/productoMenu.html",{'producto':producto})
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        producto = Producto.objects.all()
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'producto':producto
+        }    
+        
+    return render(request,"core/productoMenu.html",data)
 
 def producto_New(request):         
     if request.method == 'POST':
@@ -123,10 +207,17 @@ def producto_update(request, codigo):
 
     return render(request,'core/productoUpdate.html',{'form':form})
 
-#----------------------------------
+#------PEDIDO------------------
 def menuPedido(request):
-    pedido = Pedido.objects.all()
-    return render(request,"core/pedidoMenu.html",{'pedido':pedido})
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        pedido = Pedido.objects.all()
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'pedido':pedido
+        }  
+    return render(request,"core/pedidoMenu.html",data)
 
 def pedido_New(request):         
     #form = PedidoFormP()
@@ -159,10 +250,19 @@ def pedido_update(request, codigo):
             return redirect(reverse('productoUpdate')+ codigo)
 
     return render(request,'core/productoUpdate.html',{'form':form})
-#--------------------------------------------
+#------BODEGA-----------------------
 def menuBodega(request):
-    bodega = Bodega.objects.all()
-    return render(request,"core/bodegaMenu.html",{'bodega':bodega})
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        bodega = Bodega.objects.all()
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'bodega':bodega
+        }  
+    return render(request,"core/bodegaMenu.html",data) 
+
+        
 
 def bodega_New(request):         
     if request.method == 'POST':
@@ -221,20 +321,28 @@ def bodega_update(request, idbodega):
 
 #------USUARIO---------------------
 def menuEmpleado(request):
-    cuentaUsuario = CuentaUsuario.objects.all()
-    return render(request,"core/empleadoMenu.html",{'cuentaUsuario':cuentaUsuario})
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        cuentaUsuario = CuentaUsuario.objects.all()
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'cuentaUsuario':cuentaUsuario
+        }  
+    return render(request,"core/empleadoMenu.html",data)
 
 def empleado_New(request):         
     if request.method == 'POST':
         form = EmpleadosForm(request.POST or None,request.FILES or None)
-        if form.is_valid():        
-            idcuentausuario =form.cleaned_data.get("idcuentausuario")
+        if form.is_valid():
+            print("pasa")        
+            rutusuario =form.cleaned_data.get("rutusuario")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
             idalmacen=form.cleaned_data.get("idalmacen")
             
-            idcuentausuario =form.cleaned_data.get("idcuentausuario")
+            rutusuario =form.cleaned_data.get("rutusuario")
             apellidousuario = form.cleaned_data.get("apellidousuario")
             nmbusuario = form.cleaned_data.get("nmbusuario")
             email = form.cleaned_data.get("email")
@@ -242,8 +350,8 @@ def empleado_New(request):
             
             nidalmacen = Almacen.objects.get(nmbalmacen=idalmacen)
             print(nidalmacen)
-            crearUsuario(idcuentausuario,2,nidalmacen.idalmacen,nmbusuario,apellidousuario,email)
-            send_emailNewEmpleado(email,idcuentausuario)   
+            #crearUsuario(rutusuario,2,nidalmacen.idalmacen,nmbusuario.upper(),apellidousuario.upper(),email)
+            #send_emailNewEmpleado(email,rutusuario)   
    
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
@@ -253,8 +361,8 @@ def empleado_New(request):
 
     return render(request,'core/empleadoNew.html',{'form':form})
 
-def empleado_delete(request, idcuentausuario):
-    cuentaUsuario = CuentaUsuario.objects.get(idcuentausuario = idcuentausuario)
+def empleado_delete(request, rutusuario):
+    cuentaUsuario = CuentaUsuario.objects.get(rutusuario = rutusuario)
     try:
         cuentaUsuario.delete()
         return redirect(to="empleadoMenu")
@@ -262,8 +370,8 @@ def empleado_delete(request, idcuentausuario):
        return redirect(reverse('empleadoMenu')+ "?errorPK")
        
 
-def empleado_updateAdmin(request, idcuentausuario):
-    cuentaUsuario = CuentaUsuario.objects.get(idcuentausuario = idcuentausuario)
+def empleado_updateAdmin(request, rutusuario):
+    cuentaUsuario = CuentaUsuario.objects.get(rutusuario = rutusuario)
     form = EmpleadosForm(instance = cuentaUsuario)
 
     if request.method == 'POST':
@@ -272,7 +380,7 @@ def empleado_updateAdmin(request, idcuentausuario):
             form.save()                
             return redirect(reverse('empleadoMenu')+ "?ok")
         else:
-            return redirect(reverse('empleadoUpdateAdmin')+ idcuentausuario)
+            return redirect(reverse('empleadoUpdateAdmin')+ rutusuario)
 
     return render(request,'core/empleadoUpdateAdmin.html',{'form':form})
 
@@ -290,27 +398,64 @@ def empleado_update(request, idproveedor):
 
     return render(request,'core/proveedorUpdate.html',{'form':form})
 
+#--------------------------------
+#EMPRESA
+def menuEmpresa(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        empresa = Empresa.objects.all()
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'empresa':empresa
+        } 
+    return render(request,"core/empresaMenu.html",data)
 
-def menuInicio(request):
-    listaProductoMax = []
-    listaProductoMin = []
-    listaBodega=[]
+def empresa_New(request):         
+    if request.method == 'POST':
+        form = EmpresaForm(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            rutempresa = form.cleaned_data.get("rutempresa")
+            nmbempresa = form.cleaned_data.get("nmbempresa")    
+            direccion = form.cleaned_data.get("direccion")   
+            idcomuna = form.cleaned_data.get("idcomuna")           
+            obj = Empresa.objects.create(
+                rutempresa=rutempresa,
+                nmbempresa=nmbempresa,
+                direccion=direccion,
+                idcomuna=idcomuna,
+            )
 
-    for fila in estadoBodega():
-        if fila[1]  >= Bodega.objects.get(idbodega=fila[0]).capacidadmaxima -100:
-            listaBodega.append(fila)
+            obj.save()           
+            return redirect(reverse('empresaMenu')+ "?ok")
+        else:
+            return redirect(reverse('empresaNew')+ "?fail")
+       
+    else:
+        form = EmpresaForm()
 
-    for fila in estadoProducto():
-        if fila[1]  >= Producto.objects.get(codigo=fila[0]).stockmaximo -100:
-            listaProductoMax.append(fila)
-        if fila[1]  <= Producto.objects.get(codigo=fila[0]).stockminimo +100:
-            listaProductoMin.append(fila)
-    data = {
-        'estadoBodega':listaBodega,
-        'stockMax':listaProductoMax,
-        'stockMin':listaProductoMin
-    } 
-    return render(request,'core/menuInicio.html',data)
+    return render(request,'core/empresaNew.html',{'form':form})
 
+def empresa_delete(request, rutempresa):
+    empresa = Empresa.objects.get(rutempresa = rutempresa)
+    try:
+        empresa.delete()
+        return redirect(to="empresaMenu")
+    except:
+        return redirect(reverse('empresaMenu')+ "?errorPK")
+    
 
+def empresa_update(request, rutempresa):
+    empresa = Empresa.objects.get(rutempresa = rutempresa)
+    form = EmpresaForm(instance = empresa)
+
+    if request.method == 'POST':
+        form = EmpresaForm(request.POST,request.FILES,instance=empresa)
+        if form.is_valid():
+            form.save()                
+            return redirect(reverse('empresaMenu')+ "?ok")
+        else:
+            return redirect(reverse('empresaUpdate')+ rutempresa)
+
+    return render(request,'core/empresaUpdate.html',{'form':form})
 

@@ -36,9 +36,9 @@ urlpatterns = [
     path('bodegaUpdate/<idbodega>', bodega_update, name='bodegaUpdate'),
     path('menuEmpleado/', menuEmpleado, name='empleadoMenu'),
     path('empleadoNew/', empleado_New, name='empleadoNew'),
-    path('empleadoDelete/<idcuentausuario>', empleado_delete, name='empleadoDelete'),
-    path('empleadoUpdateAdmin/<idcuentausuario>', empleado_updateAdmin, name='empleadoUpdateAdmin'),
-    path('empleadoUpdate/<idcuentausuario>', empleado_update, name='empleadoUpdate'),
+    path('empleadoDelete/<rutusuario>', empleado_delete, name='empleadoDelete'),
+    path('empleadoUpdateAdmin/<rutusuario>', empleado_updateAdmin, name='empleadoUpdateAdmin'),
+    path('empleadoUpdate/<rutusuario>', empleado_update, name='empleadoUpdate'),
     path('menuInicio/', menuInicio, name='menuInicio'),
     
 
