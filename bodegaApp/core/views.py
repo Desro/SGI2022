@@ -82,7 +82,11 @@ def menuInicio(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         } 
-
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
     return render(request,'core/menuInicio.html',data)
 
 #----LOGOUT
@@ -108,7 +112,11 @@ def menuProveedor(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         }
-
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
     return render(request,"core/proveedorMenu.html",data)
 
 def proveedor_New(request):         
@@ -178,7 +186,11 @@ def menuProducto(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         }    
-        
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }     
     return render(request,"core/productoMenu.html",data)
 
 def producto_New(request):         
@@ -236,6 +248,11 @@ def menuPedido(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         }  
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
     return render(request,"core/pedidoMenu.html",data)
 
 def pedido_New(request):         
@@ -280,7 +297,12 @@ def menuBodega(request):
             'bodega':bodega,
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
-        }  
+        } 
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
     return render(request,"core/bodegaMenu.html",data) 
 
         
@@ -352,6 +374,11 @@ def menuEmpleado(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         }  
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
     return render(request,"core/empleadoMenu.html",data)
 
 def empleado_New(request):         
@@ -434,6 +461,11 @@ def menuEmpresa(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         } 
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
     return render(request,"core/empresaMenu.html",data)
 
 def empresa_New(request):         
