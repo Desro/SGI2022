@@ -19,6 +19,7 @@ from .email import *
 urlpatterns = [
     path('', index, name='index'),
     path('menuInicio/', menuInicio, name='menuInicio'),
+    path('logout', logout, name='logout'),
     #proveedor
     path('menuProveedor/', menuProveedor, name='proveedorMenu'),
     path('proveedorNew/', proveedor_New, name='proveedorNew'),

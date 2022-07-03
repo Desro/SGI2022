@@ -11,7 +11,7 @@ from django.shortcuts import reverse
 from .forms import *
 from .funciones import *
 from .email import *
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .model import *
 # Create your views here.
@@ -82,8 +82,20 @@ def menuInicio(request):
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         } 
+
     return render(request,'core/menuInicio.html',data)
 
+#----LOGOUT
+def logout(request):
+    response = HttpResponseRedirect(reverse('index'))
+
+    response.delete_cookie('tipo_usuario')
+    response.set_cookie('login_status',False)
+    response.delete_cookie('store')
+    response.delete_cookie('nmbusuario')
+    response.delete_cookie('apellidousuario')
+    
+    return response
 #------PROVEEDOR
 def menuProveedor(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
@@ -92,8 +104,11 @@ def menuProveedor(request):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'proveedor':proveedor
-        }    
+            'proveedor':proveedor,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        }
+
     return render(request,"core/proveedorMenu.html",data)
 
 def proveedor_New(request):         
@@ -159,7 +174,9 @@ def menuProducto(request):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'producto':producto
+            'producto':producto,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
         }    
         
     return render(request,"core/productoMenu.html",data)
@@ -215,7 +232,9 @@ def menuPedido(request):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'pedido':pedido
+            'pedido':pedido,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
         }  
     return render(request,"core/pedidoMenu.html",data)
 
@@ -258,7 +277,9 @@ def menuBodega(request):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'bodega':bodega
+            'bodega':bodega,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
         }  
     return render(request,"core/bodegaMenu.html",data) 
 
@@ -327,7 +348,9 @@ def menuEmpleado(request):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'cuentaUsuario':cuentaUsuario
+            'cuentaUsuario':cuentaUsuario,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
         }  
     return render(request,"core/empleadoMenu.html",data)
 
@@ -407,7 +430,9 @@ def menuEmpresa(request):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'empresa':empresa
+            'empresa':empresa,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
         } 
     return render(request,"core/empresaMenu.html",data)
 
