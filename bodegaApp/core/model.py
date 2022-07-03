@@ -128,8 +128,8 @@ class CuentaUsuario(models.Model):
         managed = False
         db_table = 'cuenta_usuario'
 
-        def __str__(self):
-            return self.rutuuario
+    def __str__(self):
+        return self.nmbusuario
 
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()

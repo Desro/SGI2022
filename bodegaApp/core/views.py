@@ -13,7 +13,7 @@ from .funciones import *
 from .email import *
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from .model import *
 # Create your views here.
 
 def index(request):
@@ -23,9 +23,9 @@ def index(request):
     if request.method == 'POST':
         email = request.POST.get("email")
         password=  request.POST.get("password")        
-        emailbd= CuentaUsuario.objects.get(email=email).email        
+        emailbd= CuentaUsuario.objects.get(email=email)
+          
         if emailbd != NULL:
-
             if password == CuentaUsuario.objects.get(email=email).password :
                 request.session['email']=email
                 tipoUsuario= CuentaUsuario.objects.get(email=email).idtipousuario
@@ -51,8 +51,8 @@ def index(request):
 
                 return response
                 #return redirect(reverse('menuInicio'),{'tipoUsuario':tipoUsuario})
-            else:
-                response.set_cookie('login_status',False)
+        else:
+            response.set_cookie('login_status',False)
     return render(request,"core/index.html")
 
 #---------------
