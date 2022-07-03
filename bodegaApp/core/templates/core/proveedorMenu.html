@@ -7,11 +7,13 @@
 {% endblock %}
 {% block content %}
 
+{% if tipo_usuario == '1'%}
 <div class="menuProveedor">
     <div class="btnP  agregarProveedor text-center">
         <a class="btn btn-primary btn-lg" href="{% url 'proveedorNew'%}">Agregar Nuevo Proveedor</a>
     </div>
 </div>
+{% endif %}
 <div class="container justify-content-center">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
         <h1>Listado de Proveedor</h1>
@@ -41,24 +43,35 @@
                 <thead >
                     <tr class="table-dark">
                         <th>ID</th>
+                        <th>Empresa</th>
                         <th>Nombre Proveedor</th>
                         <th>Email</th>
                         <th>Telefono</th>
+                        <th>Persona de Contacto</th>
+                        {% if tipo_usuario == '1'%}
                         <th>Opciones</th>
+                        {% endif %}
+
                     </tr>
                 </thead>
                 <tbody>
                     {% for proveedor in proveedor %}
                         <tr>
                             <td>{{proveedor.idproveedor}}</td>
+                            <td>{{proveedor.rutempresa}}</td>
                             <td>{{proveedor.nmbproveedor}}</td>
                             <td>{{proveedor.email}}</td>
                             <td>{{proveedor.fono}}</td>
-                           
+                            <td>{{proveedor.personadecontacto}}</td>
+
+                            {% if tipo_usuario == '1'%}
+
                             <td>
                                 <a class="btn btn-primary" href="{% url 'proveedorUpdate' proveedor.idproveedor %}">Modificar</a>
                                 <a class="btn btn-warning"  href="{% url 'proveedorDelete' proveedor.idproveedor %}">Eliminar</a>
                             </td>
+                            {% endif %}
+
                         </tr>
                     {% endfor %}
                 </tbody>

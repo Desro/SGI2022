@@ -7,11 +7,13 @@
 {% endblock %}
 {% block content %}
 
+{% if tipo_usuario == '1'%}
 <div class="menuProveedor">
     <div class="btnP  agregarProveedor text-center">
         <a class="btn btn-primary btn-lg" href="{% url 'bodegaNew'%}">Agregar Nuevo Bodega para almacenar</a>
     </div>
 </div>
+{% endif %}
 <div class="container justify-content-center">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
         <h1>Listado de Bodegas</h1>
@@ -42,8 +44,9 @@
                         <th>ID</th>
                         <th>Almacen</th>
                         <th>Capacidad Maxima</th>
+                        {% if tipo_usuario == '1'%}
                         <th>Opciones</th>
-
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -52,11 +55,13 @@
                             <td>{{bodega.idbodega}}</td>
                             <td>{{bodega.idalmacen}}</td>
                             <td>{{bodega.capacidadmaxima}}</td>
-                           
+                            {% if tipo_usuario == '1'%}
                             <td>
                                 <a class="btn btn-primary" href="{% url 'bodegaUpdate' bodega.idbodega %}">Modificar</a>
                                 <a class="btn btn-warning"  href="{% url 'bodegaDelete' bodega.idbodega %}">Eliminar</a>
                             </td>
+                            {% endif %}
+
                         </tr>
                     {% endfor %}
                 </tbody>

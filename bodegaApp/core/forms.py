@@ -11,20 +11,26 @@ class ProveedorForm(forms.ModelForm):
 
         fields = [
             'nmbproveedor',
+            'rutempresa',
             'email',
-            'fono'
+            'fono',
+            'personadecontacto'
+
         ]        
         
         labels = {
             'nmbproveedor':'Nombre Proveedor',
             'email':'Email',
-            'fono':'Telefono'
+            'rutempresa':'Empresa',
+            'fono':'Telefono',
+            'personadecontacto':'Persona de Contacto',
         }
         widgets = {
             'nmbproveedor':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'email':forms.EmailInput(attrs={'class':'form-control','type':'email'}),
             'fono':forms.TextInput(attrs={'class':'form-control','type':'text'}),
-
+            'rutempresa':forms.Select(attrs={'class':'form-control'}),
+            'personadecontacto':forms.TextInput(attrs={'class':'form-control','type':'text'}),
         }
 
 class ProductoForm(forms.ModelForm):

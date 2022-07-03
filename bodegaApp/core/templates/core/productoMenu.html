@@ -7,11 +7,13 @@
 {% endblock %}
 {% block content %}
 
+{% if tipo_usuario == '1'%}
 <div class="menuProveedor">
     <div class="btnP  agregarProveedor text-center">
         <a class="btn btn-primary btn-lg" href="{% url 'productoNew'%}">Agregar Nuevo Producto</a>
     </div>
 </div>
+{% endif%}
 <div class="container justify-content-center">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
         <h1>Listado de Producto</h1>
@@ -42,7 +44,10 @@
                         <th>Precio de Venta</th>
                         <th>Tipo de Producto</th>
                         <th>Proveedor</th>
+                        {% if tipo_usuario == '1'%}
+
                         <th>Opciones</th>
+                        {%endif%}
                     </tr>
                 </thead>
                 <tbody>
@@ -56,11 +61,14 @@
                             <td>{{producto.precioventa}}</td>
                             <td>{{producto.idtipoproducto}}</td>
                             <td>{{producto.idproveedor}}</td>
-                           
+                            {% if tipo_usuario == '1'%}
+
                             <td>
                                 <a class="btn btn-primary" href="{% url 'productoUpdate' producto.codigo %}">Modificar</a>
                                 <a class="btn btn-warning" href="{% url 'productoDelete' producto.codigo %}">Eliminar</a>
                             </td>
+                            {%endif%}
+
                         </tr>
                     {% endfor %}
                 </tbody>

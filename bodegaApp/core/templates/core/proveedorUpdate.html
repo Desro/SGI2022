@@ -1,11 +1,11 @@
 {% extends 'core/plantilla.html' %}
 
 {% load static %}
-{% block title %}EDITAR PROVEEDOR{% endblock %}
+{% block title %}REGISTRO PROVEEDOR{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Registro nuevos productos</h1>
+        <h1>Registro nuevos Proveedores</h1>
     </div>
     <div class="row">
         {% if 'ok' in request.GET %}
@@ -24,13 +24,12 @@
         <form action="" method="POST" id="formulario" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group mb-3">
-                <label class="fw-bold">Codigo Proveedor *</label>
+                <label class="fw-bold">Empresa: *</label>
                 <div class="input-group">
-                    {{form.idproveedor}}
+                    {{form.rutempresa}}
                 </div>                
-                {{form.idproveedor.errors}}
+                {{form.rutempresa.errors}}
             </div>
-            
             <div class="form-group mb-3">
                 <label class="fw-bold">Nombre Proveedor: *</label>
                 <div class="input-group">
@@ -51,6 +50,13 @@
                     {{form.fono}}
                 </div>                
                 {{form.fono.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Persona de Contacto: </label>
+                <div class="input-group">
+                    {{form.personadecontacto}}
+                </div>                
+                {{form.personadecontacto.errors}}
             </div>
             <div class="text-center mt-4">
                 <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
