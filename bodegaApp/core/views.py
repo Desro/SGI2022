@@ -15,6 +15,7 @@ from .email import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .model import *
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 # Create your views here.
 
 def index(request):
@@ -79,6 +80,40 @@ def menuInicio(request):
                 listaProductoMax.append(fila)
             if fila[1]  <= Producto.objects.get(codigo=fila[0]).stockminimo +100:
                 listaProductoMin.append(fila)
+
+        page= request.GET.get('page',1)
+
+
+        paginatorProducMax= Paginator(listaProductoMax,3)
+        paginatorProducMin= Paginator(listaProductoMin,3)
+        paginatorBodega= Paginator(listaBodega,3)
+        
+        #PAGINACION PRODUCTOS MAXIMOS
+        try:
+            listaProductoMax=paginatorProducMax.page(page)
+        except PageNotAnInteger:
+            listaProductoMax=paginatorProducMax.page(1)
+        except EmptyPage:
+            listaProductoMax=paginatorProducMax.page(paginatorProducMax.num_pages)
+
+        #PAGINACION PRODUCTO MINIMO
+        try:
+            listaProductoMin=paginatorProducMin.page(page)
+        except PageNotAnInteger:
+            listaProductoMax=paginatorProducMin.page(1)
+        except EmptyPage:
+            listaProductoMax=paginatorProducMin.page(paginatorProducMin.num_pages)
+
+        #PAGINACION BODEGA
+        try:
+            listaBodega=paginatorBodega.page(page)
+        except PageNotAnInteger:
+            listaBodega=paginatorBodega.page(1)
+        except EmptyPage:
+            listaBodega=paginatorBodega.page(paginatorBodega.num_pages)
+
+
+
         data = {
             'estadoBodega':listaBodega,
             'stockMax':listaProductoMax,
@@ -111,6 +146,15 @@ def logout(request):
 def menuProveedor(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         proveedor = Proveedor.objects.all()
+        page = request.GET.get('page',1)
+        paginator = Paginator(proveedor,5)
+
+        try :
+            proveedor = paginator.page(page)
+        except PageNotAnInteger :
+            proveedor = paginator.page(1)
+        except EmptyPage:
+            proveedor = paginator.page(proveedor.num_pages)
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
@@ -135,7 +179,7 @@ def proveedor_New(request):
                 try:
                     pp = Proveedor.objects.get(idproveedor=idproveedor).idproveedor
                     while pp != NULL:
-                        idbodega= idbodega+10
+                        idproveedor= idproveedor+10
                         pp = Proveedor.objects.get(idproveedor=idproveedor).idproveedor
                 except:
                     idproveedor=idproveedor
@@ -220,6 +264,16 @@ def proveedor_update(request, idproveedor):
 def menuProducto(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         producto = Producto.objects.all()
+        page = request.GET.get('page',1)
+        paginator = Paginator(producto,5)
+
+        try :
+            producto = paginator.page(page)
+        except PageNotAnInteger :
+            producto = paginator.page(1)
+        except EmptyPage:
+            producto = paginator.page(producto.num_pages)
+        
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
@@ -314,6 +368,16 @@ def producto_update(request, codigo):
 def menuPedido(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         pedido = Pedido.objects.all()
+
+        page = request.GET.get('page',1)
+        paginator = Paginator(pedido,5)
+
+        try :
+            pedido = paginator.page(page)
+        except PageNotAnInteger :
+            pedido = paginator.page(1)
+        except EmptyPage:
+            pedido = paginator.page(pedido.num_pages)
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
@@ -363,7 +427,20 @@ def pedido_update(request, codigo):
 #------BODEGA-----------------------
 def menuBodega(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+
         bodega = Bodega.objects.all()
+
+
+        page = request.GET.get('page',1)
+        paginator = Paginator(bodega,5)
+
+        try :
+            bodega = paginator.page(page)
+        except PageNotAnInteger :
+            bodega = paginator.page(1)
+        except EmptyPage:
+            bodega = paginator.page(paginator.num_pages)
+
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
@@ -470,6 +547,15 @@ def bodega_update(request, idbodega):
 def menuEmpleado(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         cuentaUsuario = CuentaUsuario.objects.all()
+        page = request.GET.get('page',1)
+        paginator = Paginator(cuentaUsuario,5)
+
+        try :
+            cuentaUsuario = paginator.page(page)
+        except PageNotAnInteger :
+            cuentaUsuario = paginator.page(1)
+        except EmptyPage:
+            cuentaUsuario = paginator.page(cuentaUsuario.num_pages)
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
@@ -602,6 +688,15 @@ def empleado_update(request, idproveedor):
 def menuEmpresa(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         empresa = Empresa.objects.all()
+        page = request.GET.get('page',1)
+        paginator = Paginator(empresa,5)
+
+        try :
+            empresa = paginator.page(page)
+        except PageNotAnInteger :
+            empresa = paginator.page(1)
+        except EmptyPage:
+            empresa = paginator.page(empresa.num_pages)
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],

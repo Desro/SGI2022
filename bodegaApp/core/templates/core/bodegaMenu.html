@@ -37,36 +37,68 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endif %}
-        <div class="table-responsive">
-            <table id="tabla_productos" class="table table-striped table-hover" >
-                <thead >
-                    <tr class="table-dark">
-                        <th>ID</th>
-                        <th>Almacen</th>
-                        <th>Capacidad Maxima</th>
-                        {% if tipo_usuario == '1'%}
-                        <th>Opciones</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for bodega in bodega %}
-                        <tr>
-                            <td>{{bodega.idbodega}}</td>
-                            <td>{{bodega.idalmacen}}</td>
-                            <td>{{bodega.capacidadmaxima}}</td>
-                            {% if tipo_usuario == '1'%}
-                            <td>
-                                <a class="btn btn-primary" href="{% url 'bodegaUpdate' bodega.idbodega %}">Modificar</a>
-                                <a class="btn btn-warning"  href="{% url 'bodegaDelete' bodega.idbodega %}">Eliminar</a>
-                            </td>
+        <div class="container justify-content-center">
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="tabla_productos" class="table table-striped table-hover" >
+                        <thead >
+                            <tr class="table-dark">
+                                <th>ID</th>
+                                <th>Almacen</th>
+                                <th>Capacidad Maxima</th>
+                                {% if tipo_usuario == '1'%}
+                                <th>Opciones</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bodega in bodega %}
+                                <tr>
+                                    <td>{{bodega.idbodega}}</td>
+                                    <td>{{bodega.idalmacen}}</td>
+                                    <td>{{bodega.capacidadmaxima}}</td>
+                                    {% if tipo_usuario == '1'%}
+                                    <td>
+                                        <a class="btn btn-primary" href="{% url 'bodegaUpdate' bodega.idbodega %}">Modificar</a>
+                                        <a class="btn btn-warning"  href="{% url 'bodegaDelete' bodega.idbodega %}">Eliminar</a>
+                                    </td>
+                                    {% endif %}
+        
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-center text-dark mt-4 mb-4">
+                {% if bodega.has_other_pages %}
+                    <nav aria-label="Paginación Proyectos">
+                        <ul class="pagination">
+                            {% if bodega.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{ bodega.previous_page_number}}">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item disable"><span class="page-link">&laquo;</span></li>
                             {% endif %}
-
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        
+                            {% for i in bodega.paginator.page_range %}
+                                {% if bodega.number == i %}
+                                    <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></span></li>
+                                {% endif %}
+                            {% endfor %}
+        
+                            {% if bodega.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ bodega.next_page_number}}">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item disable"><span class="page-link">&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
         </div>
+
     </div>
 </div>
 {% endblock %}

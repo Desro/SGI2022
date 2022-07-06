@@ -11,25 +11,57 @@
         <div class="row bg-warning  rounded p-1 mt-1 mb-1">
             <h3>BODEGA CAPACIDAD:</h3>
         </div>
-        <div class="table-responsive">
-            <table id="tabla_productos" class="table table-striped table-hover" >
-                <thead >
-                    <tr class="table-dark">
-                        <th>Nro Bodega</th>
-                        <th>Estado Critico(Maxima CAPACIDAD)</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for estadoBodega in estadoBodega %}
-                        <tr>               
-                            <td>{{estadoBodega.0}}</td>
-                            <td>{{estadoBodega.1}}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="container">
+            <div class="row">
+                <div class="table-responsive">
+                    <table id="tabla_productos" class="table table-striped table-hover" >
+                        <thead >
+                            <tr class="table-dark">
+                                <th>Nro Bodega</th>
+                                <th>Estado Critico(Maxima CAPACIDAD)</th>
+        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for estadoBodega in estadoBodega %}
+                                <tr>               
+                                    <td>{{estadoBodega.0}}</td>
+                                    <td>{{estadoBodega.1}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>          
+            <div class="row justify-content-center text-dark mt-4 mb-4">
+                {% if estadoBodega.has_other_pages %}
+                    <nav aria-label="Paginación Proyectos">
+                        <ul class="pagination">
+                            {% if estadoBodega.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{ estadoBodega.previous_page_number}}">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item disable"><span class="page-link">&laquo;</span></li>
+                            {% endif %}
+        
+                            {% for i in estadoBodega.paginator.page_range %}
+                                {% if estadoBodega.number == i %}
+                                    <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></span></li>
+                                {% endif %}
+                            {% endfor %}
+        
+                            {% if estadoBodega.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ estadoBodega.next_page_number}}">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item disable"><span class="page-link">&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
         </div>
+        
     <div class="row mt-5">
         <div class="row bg-warning rounded p-2 mt-1 mb-1">
             <h3>ESTADO DE LOS PRODUCTOS</h3>
@@ -38,49 +70,113 @@
             <div class="row bg-dark text-white  mb-1 mt-1">
                 <h3>PRODUCTOS MAXIMO STOCK</h3>
             </div>
-            <div class="table-responsive">
-                <table id="tabla_productos" class="table table-striped table-hover" >
-                    <thead >
-                        <tr class="table-dark">
-                            <th>Nro Bodega</th>
-                            <th>Estado Critico(Maxima CAPACIDAD)</th>
-    
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for stockMax in stockMax %}
-                            <tr>               
-                                <td>{{stockMax.0}}</td>
-                                <td>{{stockMax.1}}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="container">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="tabla_productos" class="table table-striped table-hover" >
+                            <thead >
+                                <tr class="table-dark">
+                                    <th>Nro Bodega</th>
+                                    <th>Estado Critico(Maxima CAPACIDAD)</th>
+            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stockMax in stockMax %}
+                                    <tr>               
+                                        <td>{{stockMax.0}}</td>
+                                        <td>{{stockMax.1}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row justify-content-center text-dark mt-4 mb-4">
+                    {% if stockMax.has_other_pages %}
+                        <nav aria-label="Paginación Proyectos">
+                            <ul class="pagination">
+                                {% if stockMax.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ stockMax.previous_page_number}}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disable"><span class="page-link">&laquo;</span></li>
+                                {% endif %}
+            
+                                {% for i in stockMax.paginator.page_range %}
+                                    {% if stockMax.number == i %}
+                                        <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only">(current)</span></span></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></span></li>
+                                    {% endif %}
+                                {% endfor %}
+            
+                                {% if stockMax.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ stockMax.next_page_number}}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disable"><span class="page-link">&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                </div>
             </div>
+
         </div>
         <div class="col">
             <div class="row bg-dark text-white  mb-1 mt-1">
                 <h3>PRODUCTOS MINIMO STOCK</h3>
             </div>
-            <div class="table-responsive">
-                <table id="tabla_productos" class="table table-striped table-hover" >
-                    <thead >
-                        <tr class="table-dark">
-                            <th>Nro Bodega</th>
-                            <th>Estado Critico(Maxima CAPACIDAD)</th>
-    
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for stockMin in stockMin %}
-                            <tr>               
-                                <td>{{stockMin.0}}</td>
-                                <td>{{stockMin.1}}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="container">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="tabla_productos" class="table table-striped table-hover" >
+                            <thead >
+                                <tr class="table-dark">
+                                    <th>Nro Bodega</th>
+                                    <th>Estado Critico(Maxima CAPACIDAD)</th>
+            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stockMin in stockMin %}
+                                    <tr>               
+                                        <td>{{stockMin.0}}</td>
+                                        <td>{{stockMin.1}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row justify-content-center text-dark mt-4 mb-4">
+                    {% if stockMin.has_other_pages %}
+                        <nav aria-label="Paginación Proyectos">
+                            <ul class="pagination">
+                                {% if stockMin.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ stockMin.previous_page_number}}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disable"><span class="page-link">&laquo;</span></li>
+                                {% endif %}
+            
+                                {% for i in stockMin.paginator.page_range %}
+                                    {% if stockMin.number == i %}
+                                        <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only">(current)</span></span></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></span></li>
+                                    {% endif %}
+                                {% endfor %}
+            
+                                {% if stockMin.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ stockMin.next_page_number}}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disable"><span class="page-link">&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                </div>
             </div>
+
         </div>
     </div>
 
