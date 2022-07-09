@@ -51,7 +51,8 @@ urlpatterns = [
     path('empresaNew/', empresa_New, name='empresaNew'),
     path('empresaDelete/<rutempresa>', empresa_delete, name='empresaDelete'),
     path('empresaUpdate/<rutempresa>', empresa_update, name='empresaUpdate'),
-  
-    
+
+    path('list/', pdfCorreo, name='list'),
+
 
 ]

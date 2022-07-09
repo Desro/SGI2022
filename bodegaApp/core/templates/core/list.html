@@ -1,0 +1,31 @@
+{% extends 'core/plantilla.html' %}
+
+{% load static %}
+{% block title %}EMPLEADO{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/menuP.css' %}" type="text/css">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <form action="" method="POST" id="formulario" enctype="multipart/form-data" name="form">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label class="fw-bold">Marca: *</label>
+            <div class="input-group">
+                <input type="text" class="form-control"type="pp" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" name="pp" id="pp">
+
+            </div>                
+          
+        </div>
+
+        <div class="text-center mt-4">
+            <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+            <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock %}

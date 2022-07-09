@@ -1,5 +1,6 @@
 from asyncio.windows_events import NULL
 from dataclasses import dataclass
+from distutils.command.clean import clean
 from enum import auto
 from multiprocessing import context
 from operator import ge
@@ -789,4 +790,35 @@ def empresa_update(request, rutempresa):
     
 
     return render(request,'core/empresaUpdate.html',data)
+
+
+def pdfCorreo(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        
+        if request.method == 'POST':
+            pp= request.POST.get('pp')
+            email = CuentaUsuario.objects.get(rutusuario=pp).email
+            send_email(email,pp)
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
+    
+
+    return render(request,'core/list.html',data)
+
+
+
+
+
+
+
 

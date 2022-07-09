@@ -7,16 +7,19 @@ def agregarProductos(nmbproducto,stockmin,stockmax,preciocompra,precioventa,tipo
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
     cursor.callproc("SP_AGREGAR_PRODUCTO",[nmbproducto,stockmin,stockmax,preciocompra,precioventa,tipoproducto,idproveedor])
+    cursor.close()
 
 def crearPedido(opcion,idpedido,cantidad,producto):
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
     cursor.callproc("SP_CREAR_PEDIDO",[opcion,idpedido,cantidad,producto])
-
+    cursor.close()
+    
 def crearUsuario(idusuario,idtipousuario,idalmacen,nmbusuario,apellido,email):
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
     cursor.callproc("SP_CREAR_USUARIO",[idusuario,idtipousuario,idalmacen,nmbusuario,apellido,email])
+    cursor.close()
 
 def estadoBodega():
     django_cursor=connection.cursor()
