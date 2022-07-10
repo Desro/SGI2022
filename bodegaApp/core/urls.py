@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path
 from .views import *
 from .email import *
+from .pdf import *
 urlpatterns = [
     path('', index, name='index'),
     path('menuInicio/', menuInicio, name='menuInicio'),
@@ -54,5 +55,6 @@ urlpatterns = [
 
     path('list/', pdfCorreo, name='list'),
 
+    path('pdf/',render_pdf_view,name='pdf')
 
 ]

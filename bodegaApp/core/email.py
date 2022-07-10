@@ -36,7 +36,7 @@ def send_emailNewEmpleado(mail,idcuentausuario):
     email.send()
 
 
-def send_email(mail,idcuentausuario):
+def send_email(mail,idcuentausuario,file):
    
     cuentaUsuario= CuentaUsuario.objects.get(rutusuario=idcuentausuario)
     context={'mail':cuentaUsuario.email,'nombre': cuentaUsuario.nmbusuario,'apellido':cuentaUsuario.apellidousuario,'idusuario':cuentaUsuario.rutusuario,'pass':cuentaUsuario.password}
@@ -52,7 +52,7 @@ def send_email(mail,idcuentausuario):
     )
 
     email.attach_alternative(content,'text/html')
-    email.attach_file('core/static/doc/pp.pdf')
+    email.attach(file.name,file.read(),file.content_type)
     email.fail_silently= False
     email.send()
 

@@ -16,14 +16,24 @@
                 <input type="text" class="form-control"type="pp" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" name="pp" id="pp">
 
             </div>                
-          
+            <div class="form-group">
+                <label class="fw-bold">Archivo: *</label>
+                <input type="file" name="file" id="file"class="form-control">
+            </div>
+
         </div>
 
         <div class="text-center mt-4">
             <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
             <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
         </div>
+
+
     </form>
+
+    <div class="btnP  agregarProveedor text-center">
+        <a class="btn btn-primary btn-lg" href="{% url 'pdf' %}">Agregar Nuevo Pedido</a>
+    </div>
 
 </div>
 

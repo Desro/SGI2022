@@ -10,6 +10,7 @@ from urllib import response
 from webbrowser import get
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
+from django.views import View
 from .forms import *
 from .funciones import *
 from .email import *
@@ -798,7 +799,8 @@ def pdfCorreo(request):
         if request.method == 'POST':
             pp= request.POST.get('pp')
             email = CuentaUsuario.objects.get(rutusuario=pp).email
-            send_email(email,pp)
+            file = request.FILES['file']              
+            send_email(email,pp,file)
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
