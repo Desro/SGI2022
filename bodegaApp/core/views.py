@@ -394,7 +394,7 @@ def menuPedido(request):
         'login_status': False,
     }  
     return render(request,"core/pedidoMenu.html",data)
-
+####OSCAR
 def pedido_New(request): 
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:        
         proveedor = Proveedor.objects.all()
@@ -446,7 +446,7 @@ def pedido_New(request):
    
     return render(request,'core/pedidoNew.html',data)
 
-
+#OSCAR
 def pedido_producto(request):
     prov = request.GET.get('idproveedor')
     data ={
