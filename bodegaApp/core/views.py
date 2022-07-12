@@ -818,10 +818,6 @@ def pdfCorreo(request):
     return render(request,'core/list.html',data)
 
 
-def pedidopdf(request):
-    return render(request,'core/pdf/pedidopdf.html')
-
-
 
 
 

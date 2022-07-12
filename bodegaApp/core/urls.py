@@ -55,6 +55,6 @@ urlpatterns = [
 
     path('list/', pdfCorreo, name='list'),
 
-    path('pdf/',render_pdf_view,name='pdf'),
-    path('pedidopdf/',pedidopdf,name='pedidopdf'),
+    path('pdf/',render_pdf_view,name='pdf')
+
 ]
