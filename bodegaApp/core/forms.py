@@ -158,3 +158,23 @@ class EmpresaForm(forms.ModelForm):
 
 
 
+class PedidoNuevoForm(forms.ModelForm):
+    
+    class Meta:
+        model = Proveedor
+
+        fields = [
+            'idproveedor'
+            
+        ]        
+        
+        labels = {
+            'idproveedor':'Proveedor',
+            
+
+           
+        }
+        widgets = {
+            'idproveedor':forms.TextInput(attrs={'class':'form-control'}),
+            
+        }

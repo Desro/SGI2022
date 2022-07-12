@@ -33,7 +33,7 @@ urlpatterns = [
     path('productoUpdate/<codigo>', producto_update, name='productoUpdate'),
     #pedido
     path('menuPedido/', menuPedido, name='pedidoMenu'),
-    #path('pedidoNew/', pedido_New, name='pedidoNew'),
+    path('pedidoNew/', pedido_New, name='pedidoNew'),
     path('pedidoDelete/<codigo>', pedido_delete, name='pedidoDelete'),
     path('pedidoUpdate/<codigo>', pedido_update, name='pedidoUpdate'),
     #bodfega
@@ -55,6 +55,7 @@ urlpatterns = [
 
     path('list/', pdfCorreo, name='list'),
 
-    path('pdf/',render_pdf_view,name='pdf')
+    path('pdf/',render_pdf_view,name='pdf'),
+    path('cbxProductoProveedor/',pedido_producto , name='cbxProductoProveedor'),
 
 ]

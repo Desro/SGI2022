@@ -395,18 +395,64 @@ def menuPedido(request):
     }  
     return render(request,"core/pedidoMenu.html",data)
 
-def pedido_New(request):         
-    #form = PedidoFormP()
-    #if request.method == 'POST':
-    #    form = PedidoFormP(request.POST,request.FILES)
-    #    if form.is_valid():
-    #        idproveedor = form.cleaned_data.get("idproveedor")
-     #       proveedorElegido= Proveedor.objects.get(nmbproveedor= idproveedor)
-     #       productos=Producto.objects.get(idproveedor=proveedorElegido.idproveedo)
-     #       return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido},{'productos':productos})
+def pedido_New(request): 
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:        
+        proveedor = Proveedor.objects.all()
+        print(proveedor)
+        print("llega")
+        if request.method == 'POST':
+            #query = request.POST
+            #query = QueryDict(request.POST).appendlist()
+            #print(query)
 
-    return render(request,'core/pedidoNew.html')
+            total_bins = request.POST.getlist('2')
+            print(total_bins)
+            
+            print("llega al POST")
+            form = PedidoNuevoForm(request.POST,request.FILES)
 
+            #lista = form.
+            print(form)
+            #print(form[1])
+            if form.is_valid():
+                print("entra al form is valid")
+                #proveedorNom = form.cleaned_data.get("idproveedor")
+                #idProveedor= Proveedor.objects.get(nmbproveedor=proveedorNom)
+
+                
+                #nidproveedro = Proveedor.objects.get(nmbproveedor=idproveedor).idproveedor
+                #print(proveedorNom)
+                #print(idProveedor.idproveedor)
+                #idprov=idProveedor.idproveedor
+
+                #print(idprov)
+                #crearPedido(1,idprov,2,'1')
+                #agregarPedido(idprov)
+            #return render(request,'core/pedidoNew.html',{'form':form})
+
+        data ={
+                'tipo_usuario': request.COOKIES['tipo_usuario'],
+                'login_status': request.COOKIES['login_status'],
+                'store': request.COOKIES['store'],
+                'nmbusuario': request.COOKIES['nmbusuario'],
+                'apellidousuario': request.COOKIES['apellidousuario'],
+                'proveedor':proveedor,
+            } 
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+        }         
+   
+    return render(request,'core/pedidoNew.html',data)
+
+
+def pedido_producto(request):
+    prov = request.GET.get('idproveedor')
+    data ={
+        'producto': Producto.objects.filter(idproveedor = prov)
+    }
+    return render(request, 'core/cbxProductoProveedor.html', data)
 
 def pedido_delete(request, codigo):
     producto = Producto.objects.get(codigo = codigo)
