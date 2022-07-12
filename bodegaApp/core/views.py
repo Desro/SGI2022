@@ -2,12 +2,16 @@ from asyncio.windows_events import NULL
 from dataclasses import dataclass
 from distutils.command.clean import clean
 from enum import auto
+<<<<<<< Updated upstream
 from multiprocessing import context
 from operator import ge
 from pickle import TRUE
 from traceback import print_tb
 from urllib import response
 from webbrowser import get
+=======
+from django.http import QueryDict
+>>>>>>> Stashed changes
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
 from django.views import View
@@ -397,6 +401,7 @@ def menuPedido(request):
 
 def pedido_New(request):         
     #form = PedidoFormP()
+<<<<<<< Updated upstream
     #if request.method == 'POST':
     #    form = PedidoFormP(request.POST,request.FILES)
     #    if form.is_valid():
@@ -406,7 +411,49 @@ def pedido_New(request):
      #       return render(request,'core/pedidoNew.html',{'proveedorElegido':proveedorElegido},{'productos':productos})
 
     return render(request,'core/pedidoNew.html')
+=======
+    proveedor = Proveedor.objects.all()
+    print(proveedor)
+    print("llega")
+    if request.method == 'POST':
 
+        #query = request.POST
+        #query = QueryDict(request.POST).appendlist()
+        #print(query)
+>>>>>>> Stashed changes
+
+        total_bins = request.POST.getlist('2')
+        print(total_bins)
+        
+        print("llega al POST")
+        form = PedidoFormP(request.POST,request.FILES)
+
+        #lista = form.
+        print(form)
+        #print(form[1])
+        if form.is_valid():
+            print("entra al form is valid")
+            #proveedorNom = form.cleaned_data.get("idproveedor")
+            #idProveedor= Proveedor.objects.get(nmbproveedor=proveedorNom)
+
+            
+            #nidproveedro = Proveedor.objects.get(nmbproveedor=idproveedor).idproveedor
+            #print(proveedorNom)
+            #print(idProveedor.idproveedor)
+            #idprov=idProveedor.idproveedor
+
+            #print(idprov)
+            #crearPedido(1,idprov,2,'1')
+            #agregarPedido(idprov)
+        #return render(request,'core/pedidoNew.html',{'form':form})
+    return render(request,'core/pedidoNew.html',{'proveedor':proveedor})
+
+def pedido_producto(request):
+    prov = request.GET.get('idproveedor')
+    data ={
+        'producto': Producto.objects.filter(idproveedor = prov)
+    }
+    return render(request, 'core/cbxProductoProveedor.html', data)
 
 def pedido_delete(request, codigo):
     producto = Producto.objects.get(codigo = codigo)

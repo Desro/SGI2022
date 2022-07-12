@@ -50,4 +50,15 @@ def estadoProducto():
     return lista
 
 
+
+
+def agregarPedido(idproveedor):
+    idprov=str(idproveedor)
+    django_cursor=connection.cursor()
+    cursor  = django_cursor.connection.cursor()
+    query ="insert into pedido (idpedido,idproveedor,fechapedido,pedidoanulado,pedidorecibido) values (12,"+idprov+",SYSDATE,'1','1')"
+    cursor.execute(query)
+    #cursor.execute("insert into pedido (idpedido,idproveedor,fechapedido,pedidoanulado,pedidorecibido) values (12, %s,SYSDATE,'1','1')", [idprov])
+    
+
     

@@ -41,6 +41,7 @@ urlpatterns = [
     path('bodegaNew/', bodega_New, name='bodegaNew'),
     path('bodegaDelete/<idbodega>', bodega_delete, name='bodegaDelete'),
     path('bodegaUpdate/<idbodega>', bodega_update, name='bodegaUpdate'),
+<<<<<<< Updated upstream
     #empleado
     path('menuEmpleado/', menuEmpleado, name='empleadoMenu'),
     path('empleadoNew/', empleado_New, name='empleadoNew'),
@@ -57,4 +58,7 @@ urlpatterns = [
 
     path('pdf/',render_pdf_view,name='pdf')
 
+=======
+    path('cbxProductoProveedor/',pedido_producto , name='cbxProductoProveedor'),
+>>>>>>> Stashed changes
 ]

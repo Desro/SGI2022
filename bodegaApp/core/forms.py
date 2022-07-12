@@ -1,4 +1,4 @@
-from dataclasses import field
+from dataclasses import field, fields
 from pyexpat import model
 from django import forms
 from django.forms import ModelForm
@@ -68,7 +68,12 @@ class ProductoForm(forms.ModelForm):
             'idtipoproducto':forms.Select(attrs={'class':'form-control'}),
             'idproveedor':forms.Select(attrs={'class':'form-control'}),
 
-        }
+ 
+ 
+       }
+
+
+
 
 
 class BodegaForm(forms.ModelForm):
@@ -82,6 +87,7 @@ class BodegaForm(forms.ModelForm):
         ]        
         
         labels = {
+<<<<<<< Updated upstream
             'idalmacen':'Almacen',
             'capacidadmaxima':'Capacidad Maxima',
         }
@@ -102,6 +108,10 @@ class EmpleadosForm(forms.ModelForm):
             'apellidousuario',
             'email',
             'password',
+=======
+            'idproveedor':'Proveedor',
+            
+>>>>>>> Stashed changes
 
         ]        
         
@@ -115,17 +125,27 @@ class EmpleadosForm(forms.ModelForm):
            
         }
         widgets = {
+<<<<<<< Updated upstream
             'rutusuario':forms.TextInput(attrs={'class':'form-control'}),
             'nmbusuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'apellidousuario':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'password':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'email':forms.EmailInput(attrs={'class':'form-control','type':'email'}),
             'idalmacen':forms.Select(attrs={'class':'form-control'}),
+=======
+            'idproveedor':forms.TextInput(attrs={'class':'form-control'}),
+>>>>>>> Stashed changes
             
 
         }
 
+<<<<<<< Updated upstream
 class EmpresaForm(forms.ModelForm):
+=======
+
+
+class BodegaForm(forms.ModelForm):
+>>>>>>> Stashed changes
     
     class Meta:
         model = Empresa
@@ -148,13 +168,41 @@ class EmpresaForm(forms.ModelForm):
            
         }
         widgets = {
+<<<<<<< Updated upstream
             'rutempresa':forms.TextInput(attrs={'class':'form-control'}),
             'nmbempresa':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'direccion':forms.TextInput(attrs={'class':'form-control','type':'text'}),
             'idcomuna':forms.Select(attrs={'class':'form-control'}),
             
 
+=======
+            'idalmacen':forms.Select(attrs={'class':'form-control'}),
+            'capacidadmaxima':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+>>>>>>> Stashed changes
         }
 
 
 
+<<<<<<< Updated upstream
+=======
+class PedidoNuevoForm(forms.ModelForm):
+    
+    class Meta:
+        model = Pedido
+
+        fields = [
+            'idproveedor'
+            
+        ]        
+        
+        labels = {
+            'idproveedor':'Proveedor',
+            
+
+           
+        }
+        widgets = {
+            'idproveedor':forms.TextInput(attrs={'class':'form-control'}),
+            
+        }
+>>>>>>> Stashed changes
