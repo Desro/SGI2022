@@ -58,4 +58,10 @@ urlpatterns = [
     path('pdf/',render_pdf_view,name='pdf'),
     path('cbxProductoProveedor/',pedido_producto , name='cbxProductoProveedor'),
 
+
+    #recepcion
+    path('recepcionMenu/', menuRecepcion, name='recepcionMenu'),
+    path('recepcionNew/', recepcion_New, name='recepcionNew'),
+    path('recepcionDelete/<rutempresa>', recepcion_delete, name='recepcionDelete'),
+    path('recepcionUpdate/<rutempresa>', recepcion_update, name='recepcionUpdate'),
 ]

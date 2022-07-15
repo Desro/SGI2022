@@ -864,7 +864,112 @@ def pdfCorreo(request):
     return render(request,'core/list.html',data)
 
 
+#---------recepcion
 
+def menuRecepcion(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        empresa = Empresa.objects.all()
+        page = request.GET.get('page',1)
+        paginator = Paginator(empresa,5)
+
+        try :
+            empresa = paginator.page(page)
+        except PageNotAnInteger :
+            empresa = paginator.page(1)
+        except EmptyPage:
+            empresa = paginator.page(empresa.num_pages)
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'empresa':empresa,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
+    return render(request,"core/recepcionMenu.html",data)
+
+def recepcion_New(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        if request.method == 'POST':
+            form = EmpresaForm(request.POST or None,request.FILES or None)
+            if form.is_valid():
+                rutempresa = form.cleaned_data.get("rutempresa")
+                nmbempresa = form.cleaned_data.get("nmbempresa")    
+                direccion = form.cleaned_data.get("direccion")   
+                idcomuna = form.cleaned_data.get("idcomuna")           
+                obj = Empresa.objects.create(
+                    rutempresa=rutempresa,
+                    nmbempresa=nmbempresa,
+                    direccion=direccion,
+                    idcomuna=idcomuna,
+                )
+
+                obj.save()           
+                return redirect(reverse('empresaMenu')+ "?ok")
+            else:
+                return redirect(reverse('empresaNew')+ "?fail")
+       
+        else:
+            form = EmpresaForm()
+
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'form':form,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+        data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+            }          
+    
+    return render(request,'core/recepcionNew.html',data)
+
+def recepcion_delete(request, rutempresa):
+    empresa = Empresa.objects.get(rutempresa = rutempresa)
+    try:
+        empresa.delete()
+        return redirect(to="recepcionMenu")
+    except:
+        return redirect(reverse('recepcionMenu')+ "?errorPK")
+    
+
+def recepcion_update(request, rutempresa):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        empresa = Empresa.objects.get(rutempresa = rutempresa)
+        form = EmpresaForm(instance = empresa)
+
+        if request.method == 'POST':
+            form = EmpresaForm(request.POST,request.FILES,instance=empresa)
+            if form.is_valid():
+                form.save()                
+                return redirect(reverse('empresaMenu')+ "?ok")
+            else:
+                return redirect(reverse('empresaUpdate')+ rutempresa)
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'form':form ,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
+    
+
+    return render(request,'core/recepcionUpdate.html',data)
 
 
 
