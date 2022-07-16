@@ -974,6 +974,112 @@ def recepcion_update(request, rutempresa):
 def pedidopdf(request):
     return render(request,'core/pdf/pedidopdf.html')
 
+#----SUCURSAL
+def menuSucursal(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        almacen = Almacen.objects.all()
+        page = request.GET.get('page',1)
+        paginator = Paginator(almacen,5)
+
+        try :
+            almacen = paginator.page(page)
+        except PageNotAnInteger :
+            almacen = paginator.page(1)
+        except EmptyPage:
+            almacen = paginator.page(almacen.num_pages)
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'almacen':almacen,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
+    return render(request,"core/sucursalMenu.html",data)
+
+def sucursal_New(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        if request.method == 'POST':
+            form = AlmacenForm(request.POST or None,request.FILES or None)
+            if form.is_valid():
+                idcomuna = form.cleaned_data.get("idcomuna")
+                idalmacen = form.cleaned_data.get("idalmacen")    
+                direccion = form.cleaned_data.get("direccion")   
+                nmbalmacen = form.cleaned_data.get("nmbalmacen")           
+                obj = Almacen.objects.create(
+                    idcomuna=idcomuna,
+                    nmbalmacen=nmbalmacen,
+                    direccion=direccion,
+                    idalmacen=idalmacen,
+                )
+
+                obj.save()           
+                return redirect(reverse('sucursalMenu')+ "?ok")
+            else:
+                return redirect(reverse('sucursalNew')+ "?fail")
+       
+        else:
+            form = AlmacenForm()
+
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'form':form,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+        data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+            }          
+    
+    return render(request,'core/sucursalNew.html',data)
+
+def sucursal_delete(request, idalmacen):
+    empresa = Almacen.objects.get(idalmacen = idalmacen)
+    try:
+        empresa.delete()
+        return redirect(to="sucursalMenu")
+    except:
+        return redirect(reverse('sucursalMenu')+ "?errorPK")
+    
+
+def sucursal_update(request, idalmacen):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        empresa = Almacen.objects.get(idalmacen = idalmacen)
+        form = AlmacenForm(instance = empresa)
+
+        if request.method == 'POST':
+            form = AlmacenForm(request.POST,request.FILES,instance=empresa)
+            if form.is_valid():
+                form.save()                
+                return redirect(reverse('sucursalMenu')+ "?ok")
+            else:
+                return redirect(reverse('sucursalUpdate')+ idalmacen)
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'form':form ,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+            data = {
+            'tipo_usuario': 6666,
+            'login_status': False,
+        }  
+    
+
+    return render(request,'core/sucursalUpdate.html',data)
+
 
 
 

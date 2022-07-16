@@ -1,17 +1,17 @@
 {% extends 'core/plantilla.html' %}
 
 {% load static %}
-{% block title %}EDITAR PRODUCTOS{% endblock %}
+{% block title %}EDITAR SUCURSAL{% endblock %}
 {% block content %}
 {% if tipo_usuario == '1'%} 
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Registro nuevos productos</h1>
+        <h1>EDITAR nuevas Sucursal</h1>
     </div>
     <div class="row">
         {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Oh yeah!!! </strong>Producto registrado satisfactoriamente
+                <strong>Ok!!! </strong>Sucursal registrado satisfactoriamente
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
@@ -24,20 +24,36 @@
         <!-- Formulario de contacto -->                            
         <form action="" method="POST" id="formulario" enctype="multipart/form-data">
             {% csrf_token %}
+          
             <div class="form-group mb-3">
-                <label class="fw-bold">Almacen:</label>
+                <label class="fw-bold">Codigo Sucursal:</label>
                 <div class="input-group">
                     {{form.idalmacen}}
                 </div>                
                 {{form.idalmacen.errors}}
             </div>
             <div class="form-group mb-3">
-                <label class="fw-bold">Capacidad Maxima: *</label>
+                <label class="fw-bold">Nombre Sucursal: *</label>
                 <div class="input-group">
-                    {{form.capacidadmaxima}}
+                    {{form.nmbalmacen}}
                 </div>                
-                {{form.capacidadmaxima.errors}}
+                {{form.nmbalmacen.errors}}
             </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Comuna: *</label>
+                <div class="input-group">
+                    {{form.idcomuna}}
+                </div>                
+                {{form.idcomuna.errors}}
+            </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Direccion: *</label>
+                <div class="input-group">
+                    {{form.direccion}}
+                </div>                
+                {{form.direccion.errors}}
+            </div>
+           
             <div class="text-center mt-4">
                 <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
                 <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">

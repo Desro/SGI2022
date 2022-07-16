@@ -178,3 +178,33 @@ class PedidoNuevoForm(forms.ModelForm):
             'idproveedor':forms.TextInput(attrs={'class':'form-control'}),
             
         }
+
+
+class AlmacenForm(forms.ModelForm):
+    
+    class Meta:
+        model = Almacen
+
+        fields = [
+            'idcomuna',
+            'idalmacen',
+            'nmbalmacen',
+            'direccion',
+
+        ]        
+        
+        labels = {
+            'idcomuna':'Comuna:',
+            'idalmacen':'Codigo Almacen : ',
+            'nmnalmacen':'Nombre Almacen :',
+            'direccion':'Direccion :',
+           
+        }
+        widgets = {
+            'idalmacen':forms.TextInput(attrs={'class':'form-control'}),
+            'nmbalmacen':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'direccion':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'idcomuna':forms.Select(attrs={'class':'form-control'}),
+            
+
+        }

@@ -65,4 +65,10 @@ urlpatterns = [
     path('recepcionNew/', recepcion_New, name='recepcionNew'),
     path('recepcionDelete/<rutempresa>', recepcion_delete, name='recepcionDelete'),
     path('recepcionUpdate/<rutempresa>', recepcion_update, name='recepcionUpdate'),
+
+    #sucursal
+    path('sucursalMenu/', menuSucursal, name='sucursalMenu'),
+    path('sucursalNew/', sucursal_New, name='sucursalNew'),
+    path('sucursalDelete/<idalmacen>', sucursal_delete, name='sucursalDelete'),
+    path('sucursalUpdate/<idalmacen>', sucursal_update, name='sucursalUpdate'),
 ]

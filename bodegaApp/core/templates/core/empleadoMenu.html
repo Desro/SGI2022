@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{% static 'css/menuP.css' %}" type="text/css">
 {% endblock %}
 {% block content %}
-
+{% if tipo_usuario == '1'%} 
 <div class="menuProveedor">
     <div class="btnP  agregarProveedor text-center">
         <a class="btn btn-primary btn-lg" href="{% url 'empleadoNew'%}">Agregar Nuevo Empleado</a>
@@ -99,4 +99,5 @@
 
     </div>
 </div>
+{%endif%}
 {% endblock %}

@@ -3,6 +3,7 @@
 {% load static %}
 {% block title %}REGISTRO PROVEEDOR{% endblock %}
 {% block content %}
+{% if tipo_usuario == '1'%} 
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
         <h1>Registro nuevas Bodega de almacenaje</h1>
@@ -46,4 +47,5 @@
         </form>
     </div>
 </div>
+{%endif%}
 {% endblock %}
