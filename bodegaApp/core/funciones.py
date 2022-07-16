@@ -33,6 +33,7 @@ def estadoBodega():
     for fila in out_cur:
         lista.append(fila)
 
+    cursor.close()
     return lista
 
 def estadoProducto():
@@ -46,7 +47,8 @@ def estadoProducto():
 
     for fila in out_cur:
         lista.append(fila)
-
+        
+    cursor.close()
     return lista
 
 #######OSCAR
