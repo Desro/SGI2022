@@ -54,6 +54,7 @@ urlpatterns = [
     path('empresaUpdate/<rutempresa>', empresa_update, name='empresaUpdate'),
 
     path('list/', pdfCorreo, name='list'),
+    path('pedidopdf/',pedidopdf,name='pedidopdf'),
 
     path('pdf/',render_pdf_view,name='pdf'),
     path('cbxProductoProveedor/',pedido_producto , name='cbxProductoProveedor'),

@@ -971,6 +971,8 @@ def recepcion_update(request, rutempresa):
 
     return render(request,'core/recepcionUpdate.html',data)
 
+def pedidopdf(request):
+    return render(request,'core/pdf/pedidopdf.html')
 
 
 
