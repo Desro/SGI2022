@@ -401,35 +401,73 @@ def pedido_New(request):
         print(proveedor)
         print("llega")
         if request.method == 'POST':
-            #query = request.POST
-            #query = QueryDict(request.POST).appendlist()
-            #print(query)
-
-            total_bins = request.POST.getlist('2')
-            print(total_bins)
+            form = request.POST.get("idproveedor")
+            print(form)
             
+            
+            total_bins = request.POST.getlist('inputCodigo')
+            print(total_bins)
+
+            total_bin = request.POST.getlist('inputProducto')
+            print(total_bin)
+
+            total_bi = request.POST.getlist('inputCantidad')
+            print(total_bi)
+            
+
+            contador = request.POST.get("contador")
+            print (contador)
             print("llega al POST")
             form = PedidoNuevoForm(request.POST,request.FILES)
 
-            #lista = form.
+            
+            idpedidoNuevo = Pedido.objects.count()+1
+            try:
+                pedido = Pedido.objects.get(idpedido =idpedidoNuevo).idpedido 
+                while pedido != NULL:
+                    idpedidoNuevo = idpedidoNuevo +10
+                    pedido = Pedido.objects.get(idpedido =idpedidoNuevo).idpedido 
+            except:
+                idpedidoNuevo =idpedidoNuevo
+
+            print(idpedidoNuevo)
+
+            agregarPedido(idpedidoNuevo,form)
+
+
+            contador = int(request.POST.get("contador"))
+            ciclo = 0
+            print (contador)
+
+            #for total_bins in range(contador):
+                #agregarPedidoProducto(idpedidoNuevo,total_bins[ciclo],1,total_bi[ciclo])
+                #ciclo +=1
+            while ciclo < contador:
+                agregarPedidoProducto(idpedidoNuevo,total_bins[ciclo],(ciclo+1),total_bi[ciclo])
+                #print("el ciclo es"+ciclo)
+                ciclo=ciclo +1
+
+            #print("fueron " + ciclo+" inserts")
+            """
             print(form)
-            #print(form[1])
+            
             if form.is_valid():
                 print("entra al form is valid")
-                #proveedorNom = form.cleaned_data.get("idproveedor")
-                #idProveedor= Proveedor.objects.get(nmbproveedor=proveedorNom)
+           
+                proveedorNom = form.cleaned_data.get("idproveedor")
+                idProveedor= Proveedor.objects.get(nmbproveedor=proveedorNom)
 
                 
-                #nidproveedro = Proveedor.objects.get(nmbproveedor=idproveedor).idproveedor
-                #print(proveedorNom)
-                #print(idProveedor.idproveedor)
-                #idprov=idProveedor.idproveedor
+                nidproveedro = Proveedor.objects.get(nmbproveedor=idproveedor).idproveedor
+                print(proveedorNom)
+                print(idProveedor.idproveedor)
+                idprov=idProveedor.idproveedor
 
-                #print(idprov)
+                print(idprov)
                 #crearPedido(1,idprov,2,'1')
                 #agregarPedido(idprov)
             #return render(request,'core/pedidoNew.html',{'form':form})
-
+            """
         data ={
                 'tipo_usuario': request.COOKIES['tipo_usuario'],
                 'login_status': request.COOKIES['login_status'],

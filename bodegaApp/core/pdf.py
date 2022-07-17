@@ -1,3 +1,4 @@
+
 from distutils import core
 import imp
 import os
@@ -35,3 +36,4 @@ def render_pdf_view(request):
     if pdf.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+    

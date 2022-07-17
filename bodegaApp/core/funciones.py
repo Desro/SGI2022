@@ -52,11 +52,23 @@ def estadoProducto():
     return lista
 
 #######OSCAR
-def agregarPedido(idproveedor):
+def agregarPedido(idpedido, idproveedor):
     idprov=str(idproveedor)
+    idpedido = str(idpedido)
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
-    query ="insert into pedido (idpedido,idproveedor,fechapedido,pedidoanulado,pedidorecibido) values (12,"+idprov+",SYSDATE,'1','1')"
+    query ="insert into pedido (idPedido,fechaPedido,pedidoAnulado,pedidoRecibido) values ("+idpedido +",SYSDATE,'1','1')"
     cursor.execute(query)
     #cursor.execute("insert into pedido (idpedido,idproveedor,fechapedido,pedidoanulado,pedidorecibido) values (12, %s,SYSDATE,'1','1')", [idprov])
-    
+
+
+def agregarPedidoProducto(idpedido,codProduc,lineId,cantidad):
+    idpedido=int(idpedido)
+    codProduc = str(codProduc)
+    lineId = int(lineId)
+    cantidad = int(cantidad)
+    django_cursor=connection.cursor()
+    cursor  = django_cursor.connection.cursor()
+    cursor.callproc("SP_AGREGAR_PEDIDO_LINE",[idpedido,codProduc,lineId,cantidad])
+    #queryLine = "insert into pedido_line (idPedido, codigo, lineId, cantidad) values (" + idpedido + ", '" + codProduc + "', " + lineId + ", " + cantidad + ")"
+   #cursor.execute(queryLine)
