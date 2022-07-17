@@ -2,6 +2,8 @@ from asyncio.windows_events import NULL
 from dataclasses import dataclass
 from distutils.command.clean import clean
 from enum import auto
+from itertools import product
+from math import prod
 from multiprocessing import context
 from operator import ge
 from pickle import TRUE
@@ -471,9 +473,29 @@ def pedido_New(request):
             empresa = Empresa.objects.get(nmbempresa=proveedor.rutempresa)
             almacen = Almacen.objects.get(idalmacen=store)
             pedido= Pedido.objects.get(idpedido=idpedidoNuevo)
-            pedidoLine = PedidoLine.objects.get(idpedido=idpedidoNuevo)
-            producto =Producto.objects.all()
-            context = {'proveedor': proveedor,'almacen':almacen,'pedido':pedido,'pedidoLine':pedidoLine,'producto':producto,'empresa':empresa}
+            pedidoLine = PedidoLine.objects.filter(idpedido=idpedidoNuevo)
+
+            detalle=[]
+            sumaTotal= 0
+            for fila in pedidoLine:
+                detalle1=[]
+                detalle1.append(fila.lineid)
+                codigo=fila.codigo
+                detalle1.append(codigo)
+                nombreProducto=Producto.objects.get(codigo=fila.codigo).nmbproducto
+                detalle1.append(nombreProducto)
+                detalle1.append(fila.cantidad)
+                producto = Producto.objects.get(codigo=fila.codigo).preciocompra
+                
+                productoCant = fila.cantidad * producto
+                sumaTotal=sumaTotal + productoCant
+                detalle1.append(producto)
+                detalle1.append(productoCant)
+                detalle.append(detalle1)
+            
+            neto=  round(sumaTotal/1.19)
+            iva = round(neto * 0.19)
+            context = {'proveedor': proveedor,'almacen':almacen,'pedido':pedido,'detalle':detalle,'empresa':empresa,'sumaTotal':sumaTotal,'neto':neto,'iva':iva}
             
             # Create a Django response object, and specify content_type as pdf
             response = HttpResponse(content_type='application/pdf')

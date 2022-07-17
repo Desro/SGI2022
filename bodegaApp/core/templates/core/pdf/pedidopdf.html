@@ -51,9 +51,12 @@
                     <label>Codigo Almacen  :  </label>{{almacen.idalmacen}}
                 </div >
                 <div style="padding:25x ;margin-top: 5px;">
+                    <label>Comuna  :  </label>{{almacen.idcomuna}}
+                </div>
+                <div style="padding:25x ;margin-top: 5px;">
                     <label>Direccion  :  </label>{{almacen.direccion}}
                 </div>
-               
+                
                
             </div>
         </div>
@@ -86,38 +89,39 @@
                     <tr>
                         <th>#</th>
                         <th>Codigo</th>
-                        <th>Nombre</th>
+                        <th>Nombre Producto</th>
                         <th>Cantidad</th>
                         <th>Precio Unidad</th>
                         <th>Precio Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {for pedidoLine in pedidoLine}   
-                    <tr>
-                        <td>{{pedidoLine.lineid}}</td>
-                        <td>{{pedidoLine.codigo}}</td>
-                        <td>{{pedidoLine.cantidad}}</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
+                    {% for detalle in detalle %}                     
+                    <tr>                        
+                        <td>{{detalle.0}}</td>
+                        <td>{{detalle.1}}</td>
+                        <td>{{detalle.2}}</td>
+                        <td>{{detalle.3}} </td> 
+                        <td>{{detalle.4}} </td>}
+                        <td>{{detalle.5}} </td>                                                                                                                                                         
+                    </tr>                       
+                    {% endfor %}
                     </tbody>
                 </table>
                 <div class="montos">
                     <div style="padding-left: 2px;">
                         <p>
-                           Total Neto : 
+                           Total Neto : {{neto}}
                         </p>
                     </div> 
                     <div style="padding-left: 2px;">
                         <p>
-                           Total IVA : 
+                           Total IVA : {{iva}}
                         </p>
                     </div>
                     <div style="padding-left: 2px;">
                         <p>
-                           Total Bruto : 
+                           Total Bruto : {{sumaTotal}}
                         </p>
                     </div>  
                 </div>

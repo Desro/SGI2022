@@ -213,6 +213,9 @@ class PedidoLine(models.Model):
         managed = False
         db_table = 'pedido_line'
         unique_together = (('idpedido', 'lineid', 'codigo'),)
+    
+    def __str__(self):
+            return self.codigo
 
 
 class Producto(models.Model):
