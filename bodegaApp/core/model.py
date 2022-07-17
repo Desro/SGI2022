@@ -200,8 +200,8 @@ class Pedido(models.Model):
         managed = False
         db_table = 'pedido'
 
-    def __str__(self):
-            return self.idpedido
+    
+    
 
 class PedidoLine(models.Model):
     idpedido = models.OneToOneField(Pedido, models.DO_NOTHING, db_column='idpedido', primary_key=True)
@@ -215,7 +215,7 @@ class PedidoLine(models.Model):
         unique_together = (('idpedido', 'lineid', 'codigo'),)
     
     def __str__(self):
-            return self.codigo
+            return self.idpedido
 
 
 class Producto(models.Model):

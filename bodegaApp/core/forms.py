@@ -208,3 +208,30 @@ class AlmacenForm(forms.ModelForm):
             
 
         }
+
+class Pedido1Forms(forms.ModelForm):
+    
+    class Meta:
+        model = Pedido
+
+        fields = [
+            
+            'pedidoanulado',
+            'pedidorecibido',
+
+        ]        
+        
+        labels = {
+            
+            'pedidoanulado':'Pedido Anulado:',
+            'pedidorecibido':'Pedido Recibido : ',
+           
+        }
+        widgets = {
+            
+            'pedidoanulado':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            'pedidorecibido':forms.TextInput(attrs={'class':'form-control','type':'text'}),
+            
+        
+        }
+

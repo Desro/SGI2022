@@ -36,7 +36,7 @@
                         <thead >
                             <tr class="table-dark">
                                 <th>Codigo Pedido</th>
-                                <th>Proveedor</th>
+                                
                                 <th>Fecha del Pedido</th>
                                 <th>Pedido Anulado</th>
                                 <th>Pedido Recibido</th>
@@ -47,7 +47,7 @@
                             {% for pedido in pedido %}
                                 <tr>
                                     <td>{{pedido.idpedido}}</td>
-                                    <td>{{pedido.idproveedor}}</td>
+                                    
                                     <td>{{pedido.fechapedido}}</td>
                                     <td>{{pedido.pedidoanulado}}</td>
                                     <td>{{pedido.pedidorecibido}}</td>
@@ -55,7 +55,7 @@
                                    
                                     <td>
                                         <a class="btn btn-primary" href="#">Modificar</a>
-                                        <a class="btn btn-warning" href="{% url 'pedidoDelete' pedido.idpedido %}">Eliminar</a>
+                                        <a class="btn btn-warning" href="{% url 'pedidoUpdate1' pedido.idpedido %}">Cambiar Estado</a>
                                     </td>
                                 </tr>
                             {% endfor %}

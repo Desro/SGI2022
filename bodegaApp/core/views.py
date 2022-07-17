@@ -539,14 +539,37 @@ def pedido_producto(request):
     }
     return render(request, 'core/cbxProductoProveedor.html', data)
 
-def pedido_delete(request, idpedido):
-    pedidoLine= PedidoLine.objects.filter(idpedido=idpedido)
-    for fila in pedidoLine:
-        fila.delete()
-    pedido = Pedido.objects.get(idpedido = idpedido)
-    pedido.delete()
+def pedido_update1(request, idpedido):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        pedido = Pedido.objects.get(idpedido = idpedido)
+        form = Pedido1Forms(instance = pedido)
+        print(idpedido)  
+        if request.method == 'POST':
+            form = Pedido1Forms(request.POST,request.FILES,instance=pedido)
+            if form.is_valid():
+                form.save()                   
+                return redirect(reverse('pedidoMenu')+ "?ok")
+            else:
+                return redirect(reverse('pedidoUpdate1') + idpedido)
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'form':form,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
     
-    return redirect(to="pedidoMenu")
+
+    return render(request,'core/pedidoUpdate1.html',data)
+    
+
+
 
 def pedido_update(request, codigo):
     producto = Producto.objects.get(codigo = codigo)
