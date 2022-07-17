@@ -55,7 +55,7 @@
                                    
                                     <td>
                                         <a class="btn btn-primary" href="#">Modificar</a>
-                                        <a class="btn btn-warning" href="#">Eliminar</a>
+                                        <a class="btn btn-warning" href="{% url 'pedidoDelete' pedido.idpedido %}">Eliminar</a>
                                     </td>
                                 </tr>
                             {% endfor %}

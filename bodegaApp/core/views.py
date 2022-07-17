@@ -539,10 +539,14 @@ def pedido_producto(request):
     }
     return render(request, 'core/cbxProductoProveedor.html', data)
 
-def pedido_delete(request, codigo):
-    producto = Producto.objects.get(codigo = codigo)
-    producto.delete()
-    return redirect(to="productoMenu")
+def pedido_delete(request, idpedido):
+    pedidoLine= PedidoLine.objects.filter(idpedido=idpedido)
+    for fila in pedidoLine:
+        fila.delete()
+    pedido = Pedido.objects.get(idpedido = idpedido)
+    pedido.delete()
+    
+    return redirect(to="pedidoMenu")
 
 def pedido_update(request, codigo):
     producto = Producto.objects.get(codigo = codigo)

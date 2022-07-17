@@ -34,8 +34,8 @@ urlpatterns = [
     #pedido
     path('menuPedido/', menuPedido, name='pedidoMenu'),
     path('pedidoNew/', pedido_New, name='pedidoNew'),
-    path('pedidoDelete/<codigo>', pedido_delete, name='pedidoDelete'),
-    path('pedidoUpdate/<codigo>', pedido_update, name='pedidoUpdate'),
+    path('pedidoDelete/<idpedido>', pedido_delete, name='pedidoDelete'),
+    path('pedidoUpdate/<idpedido>', pedido_update, name='pedidoUpdate'),
     #bodfega
     path('menuBodega/', menuBodega, name='bodegaMenu'),
     path('bodegaNew/', bodega_New, name='bodegaNew'),
