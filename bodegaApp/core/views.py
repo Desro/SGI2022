@@ -1,6 +1,7 @@
 from asyncio.windows_events import NULL
 from dataclasses import dataclass
 from distutils.command.clean import clean
+import email
 from enum import auto
 from itertools import product
 from math import prod
@@ -531,6 +532,58 @@ def pedido_New(request):
     
     return render(request,'core/pedidoNew.html',data)
 
+def generarPDF(request,idpedido):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        store= request.COOKIES['store']
+        template_path = 'core/pdf/pedidopdf.html'       
+        
+        almacen = Almacen.objects.get(idalmacen=store)
+        pedido= Pedido.objects.get(idpedido=idpedido)
+        pedidoLine = PedidoLine.objects.filter(idpedido=idpedido)
+
+        for fila in pedidoLine:
+            codProveedor = fila.codigo
+
+        proveedor = Producto.objects.get(codigo=codProveedor).idproveedor
+        empresa = Empresa.objects.get(nmbempresa=proveedor.rutempresa)
+        detalle=[]
+        sumaTotal= 0
+        for fila in pedidoLine:
+            detalle1=[]
+            detalle1.append(fila.lineid)
+            codigo=fila.codigo
+            detalle1.append(codigo)
+            nombreProducto=Producto.objects.get(codigo=fila.codigo).nmbproducto
+            detalle1.append(nombreProducto)
+            detalle1.append(fila.cantidad)
+            producto = Producto.objects.get(codigo=fila.codigo).preciocompra
+            
+            productoCant = fila.cantidad * producto
+            sumaTotal=sumaTotal + productoCant
+            detalle1.append(producto)
+            detalle1.append(productoCant)
+            detalle.append(detalle1)
+        
+        neto=  round(sumaTotal/1.19)
+        iva = round(neto * 0.19)
+        context = {'proveedor': proveedor,'almacen':almacen,'pedido':pedido,'detalle':detalle,'empresa':empresa,'sumaTotal':sumaTotal,'neto':neto,'iva':iva}
+        
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="NroPedido'+ str(idpedido)+'.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        pdf = pisa.CreatePDF(
+            html, dest=response)
+        
+        # if error then show some funny view
+        if pdf.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+
 #OSCAR
 def pedido_producto(request):
     prov = request.GET.get('idproveedor')
@@ -546,7 +599,7 @@ def pedido_update1(request, idpedido):
         res=int(Pedido.objects.get(idpedido = idpedido).pedidoanulado)
         cas = int(res)
 
-        if cas != 1:           
+        if cas != 0:           
             if request.method == 'POST':
                 form = Pedido1Forms(request.POST,request.FILES,instance=pedido)
                 if form.is_valid():
@@ -578,19 +631,44 @@ def pedido_update1(request, idpedido):
 
 
 
-def pedido_update(request, codigo):
-    producto = Producto.objects.get(codigo = codigo)
-    form = ProductoForm(instance = producto)
+def pedido_update(request, idpedido):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        pedido = Pedido.objects.get(idpedido = idpedido)
+        pedidoLine =PedidoLine.objects.filter(idpedido=idpedido)
 
-    if request.method == 'POST':
-        form = ProductoForm(request.POST,request.FILES,instance=producto)
-        if form.is_valid():
-            form.save()                
-            return redirect(reverse('productoMenu')+ "?ok")
-        else:
-            return redirect(reverse('productoUpdate')+ codigo)
+        for fila in pedidoLine:
+            codProveedor = fila.codigo
 
-    return render(request,'core/productoUpdate.html',{'form':form})
+        proveedor = Producto.objects.get(codigo=codProveedor).idproveedor
+
+        emailProveedor=Proveedor.objects.get(nmbproveedor=proveedor).email
+
+        
+        if request.method == 'POST':
+            file = request.POST.get('file')
+            if file != '':
+                filepdf= request.FILES['file']   
+                send_email(emailProveedor,filepdf,pedido.idpedido)
+            
+            #send_email(email,file)
+         
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'pedido':pedido,
+            'pedidoLine':pedidoLine,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+        } 
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
+    
+
+    return render(request,'core/pedidoUpdate.html',data)
 #------BODEGA-----------------------
 def menuBodega(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
@@ -965,7 +1043,7 @@ def pdfCorreo(request):
             pp= request.POST.get('pp')
             email = CuentaUsuario.objects.get(rutusuario=pp).email
             file = request.FILES['file']              
-            send_email(email,pp,file)
+            #send_email(email,pp,file)
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],

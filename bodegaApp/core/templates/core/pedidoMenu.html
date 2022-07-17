@@ -60,8 +60,9 @@
                                     
                                    
                                     <td>
-                                        <a class="btn btn-primary" href="#">Modificar</a>
+                                        <a class="btn btn-primary" href="{% url 'pedidoUpdate' pedido.idpedido %}">Enviar</a>
                                         <a class="btn btn-warning" href="{% url 'pedidoUpdate1' pedido.idpedido %}">Cambiar Estado</a>
+                                        <a class="btn btn-danger" href="{% url 'generarPDF' pedido.idpedido %}">Generar PDF</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -95,6 +96,9 @@
                         </nav>
                     {% endif %}
                 </div>
+                <form action="">
+                    
+                </form>
             </div>
         </div>
 

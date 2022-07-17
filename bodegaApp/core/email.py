@@ -36,11 +36,10 @@ def send_emailNewEmpleado(mail,idcuentausuario):
     email.send()
 
 
-def send_email(mail,idcuentausuario,file):
-   
-    cuentaUsuario= CuentaUsuario.objects.get(rutusuario=idcuentausuario)
-    context={'mail':cuentaUsuario.email,'nombre': cuentaUsuario.nmbusuario,'apellido':cuentaUsuario.apellidousuario,'idusuario':cuentaUsuario.rutusuario,'pass':cuentaUsuario.password}
-    template = get_template('core/correo/correoNuevoEmpleado.html')
+def send_email(mail,file,idpedido):
+    pedido= Pedido.objects.get(idpedido=idpedido)
+    template = get_template('core/correo/correoPDF.html')
+    context={'pedido':pedido}
     content= template.render(context)
 
     email= EmailMultiAlternatives(
