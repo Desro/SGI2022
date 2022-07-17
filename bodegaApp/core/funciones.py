@@ -57,7 +57,7 @@ def agregarPedido(idpedido, idproveedor):
     idpedido = str(idpedido)
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
-    query ="insert into pedido (idPedido,fechaPedido,pedidoAnulado,pedidoRecibido) values ("+idpedido +",SYSDATE,'1','1')"
+    query ="insert into pedido (idPedido,fechaPedido,pedidoAnulado,pedidoRecibido) values ("+idpedido +",SYSDATE,'1','0')"
     cursor.execute(query)
     #cursor.execute("insert into pedido (idpedido,idproveedor,fechapedido,pedidoanulado,pedidorecibido) values (12, %s,SYSDATE,'1','1')", [idprov])
 
