@@ -96,13 +96,16 @@
                 </div>
 
                 <div>
-                    <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+                    <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Guardar">
+                </div>
+                <div>
+                    <a class="btn btn-primary" href="{% url 'pedidoMenu' %}">ENVIAR</a>
                 </div>
         </form>
     </div> 
 </div>
 {% endblock %}
-{% block scripts %}>
+{% block scripts %}
 <script src="{% static 'js/datepick.js' %}"></script>
 <script>
 

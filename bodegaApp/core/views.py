@@ -18,7 +18,19 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .model import *
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from .pdf import *
 # Create your views here.
+
+
+##----------
+from distutils import core
+import imp
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 def index(request):
     if request.method == 'GET':
@@ -402,6 +414,8 @@ def pedido_New(request):
         print("llega")
         if request.method == 'POST':
             form = request.POST.get("idproveedor")
+            proveedor = request.POST.get("idproveedor")
+            print ("proveedor")
             print(form)
             
             
@@ -448,26 +462,37 @@ def pedido_New(request):
                 ciclo=ciclo +1
 
             #print("fueron " + ciclo+" inserts")
-            """
-            print(form)
+
+            store = request.COOKIES['store']
+            print (proveedor)
             
-            if form.is_valid():
-                print("entra al form is valid")
-           
-                proveedorNom = form.cleaned_data.get("idproveedor")
-                idProveedor= Proveedor.objects.get(nmbproveedor=proveedorNom)
+            template_path = 'core/pdf/pedidopdf.html'
+            proveedor = Proveedor.objects.get(idproveedor=proveedor)
+            empresa = Empresa.objects.get(nmbempresa=proveedor.rutempresa)
+            almacen = Almacen.objects.get(idalmacen=store)
+            pedido= Pedido.objects.get(idpedido=idpedidoNuevo)
+            pedidoLine = PedidoLine.objects.get(idpedido=idpedidoNuevo)
+            producto =Producto.objects.all()
+            context = {'proveedor': proveedor,'almacen':almacen,'pedido':pedido,'pedidoLine':pedidoLine,'producto':producto,'empresa':empresa}
+            
+            # Create a Django response object, and specify content_type as pdf
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="NroPedido'+ str(idpedidoNuevo)+'.pdf"'
+            # find the template and render it.
+            template = get_template(template_path)
+            html = template.render(context)
 
-                
-                nidproveedro = Proveedor.objects.get(nmbproveedor=idproveedor).idproveedor
-                print(proveedorNom)
-                print(idProveedor.idproveedor)
-                idprov=idProveedor.idproveedor
-
-                print(idprov)
-                #crearPedido(1,idprov,2,'1')
-                #agregarPedido(idprov)
-            #return render(request,'core/pedidoNew.html',{'form':form})
-            """
+            # create a pdf
+            pdf = pisa.CreatePDF(
+                html, dest=response)
+            
+            # if error then show some funny view
+            if pdf.err:
+                return HttpResponse('We had some errors <pre>' + html + '</pre>')
+            return response
+            
+                    
+            
         data ={
                 'tipo_usuario': request.COOKIES['tipo_usuario'],
                 'login_status': request.COOKIES['login_status'],
@@ -481,7 +506,7 @@ def pedido_New(request):
         'tipo_usuario': 6666,
         'login_status': False,
         }         
-   
+    
     return render(request,'core/pedidoNew.html',data)
 
 #OSCAR
@@ -879,7 +904,7 @@ def empresa_update(request, rutempresa):
 
 def pdfCorreo(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
-        
+       
         if request.method == 'POST':
             pp= request.POST.get('pp')
             email = CuentaUsuario.objects.get(rutusuario=pp).email
@@ -1009,8 +1034,7 @@ def recepcion_update(request, rutempresa):
 
     return render(request,'core/recepcionUpdate.html',data)
 
-def pedidopdf(request):
-    return render(request,'core/pdf/pedidopdf.html')
+
 
 #----SUCURSAL
 def menuSucursal(request):
@@ -1119,5 +1143,6 @@ def sucursal_update(request, idalmacen):
     return render(request,'core/sucursalUpdate.html',data)
 
 
-
+def pedidopdf(request):
+    return render(request,'core/pdf/pedidopdf.html')
 

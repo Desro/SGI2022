@@ -2,47 +2,62 @@
     <body>
         <div>
             <h1>
-                PEDIDO 
+                PEDIDO  NRO {{pedido.idpedido}}
             </h1>
+        </div>
+        <div class="datosPedido">
+            <div style="background-color:black;color: white;">
+                <p>Datos Pedido</p>
+            </div>
+            <div>
+                <div style="padding:25x ;margin-top: 5px;">
+                    <label>Fecha :  </label>{{pedido.fechapedido}}
+                </div>
+                   
+            </div>
         </div>
         <div class="datosProveedor">
             <div style="background-color:black;color: white;">
                 <p>Datos de Proveedor</p>
             </div>
-            <div style="border-style:solid ;">
+            <div >
                 <div style="padding:25x ;margin-top: 5px;">
-                    <label>Nombre Proveedor  :  </label>1
+                    <label> Rut Empresa  :  {{empresa.rutempresa}}</label>
                 </div>
                 <div style="padding:25x ;margin-top: 5px;">
-                    <label>Telefono Proveedor  :  </label>1
+                    <label>Nombre Proveedor  :  </label>{{proveedor.nmbproveedor}}
+                </div>
+                <div style="padding:25x ;margin-top: 5px;">
+                    <label>Telefono Proveedor  :  </label>{{proveedor.fono}}
                 </div >
                 <div style="padding:25x ;margin-top: 5px;">
-                    <label>Email Proveedor  :  </label>1
+                    <label>Email Proveedor  :  </label>{{proveedor.email}}
                 </div>
                 <div style="padding:25x ;margin-top: 5px;margin-bottom: 5px;">
-                    <label>Persona de Contacto   :  </label>1
+                    <label>Persona de Contacto   :  </label>{{proveedor.personadecontacto}}
                 </div>
                
             </div>
         </div>
-        <div class="datosProveedor">
+        <div class="datosRecepctor">
             <div style="background-color:black;color: white;">
                 <p>Datos de Recepcion</p>
             </div>
             <div>
                 <div style="padding:25x ;margin-top: 5px;">
-                    <label>Nombre Proveedor  :  </label>1
+                    <label>Nombre Almacen :  </label>{{almacen.nmbalmacen}}
                 </div>
                 <div style="padding:25x ;margin-top: 5px;">
-                    <label>Telefono Proveedor  :  </label>1
+                    <label>Codigo Almacen  :  </label>{{almacen.idalmacen}}
                 </div >
                 <div style="padding:25x ;margin-top: 5px;">
-                    <label>Email Proveedor  :  </label>1
+                    <label>Direccion  :  </label>{{almacen.direccion}}
                 </div>
                
                
             </div>
         </div>
+        
         <div class="listaProductos">
             <div style="background-color:black;color: white;padding: 1px;margin-top: 5px;margin-bottom: 5px;text-align: center;font-size: larger;">
                 <p>LISTADO DE PRODUCTOS</p>
@@ -78,10 +93,11 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {for pedidoLine in pedidoLine}   
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td>{{pedidoLine.lineid}}</td>
+                        <td>{{pedidoLine.codigo}}</td>
+                        <td>{{pedidoLine.cantidad}}</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
