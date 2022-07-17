@@ -543,19 +543,26 @@ def pedido_update1(request, idpedido):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         pedido = Pedido.objects.get(idpedido = idpedido)
         form = Pedido1Forms(instance = pedido)
-        print(idpedido)  
-        if request.method == 'POST':
-            form = Pedido1Forms(request.POST,request.FILES,instance=pedido)
-            if form.is_valid():
-                form.save()                   
-                return redirect(reverse('pedidoMenu')+ "?ok")
-            else:
-                return redirect(reverse('pedidoUpdate1') + idpedido)
+        res=int(Pedido.objects.get(idpedido = idpedido).pedidoanulado)
+        cas = int(res)
+
+        if cas != 1:           
+            if request.method == 'POST':
+                form = Pedido1Forms(request.POST,request.FILES,instance=pedido)
+                if form.is_valid():
+                    
+                    form.save()                   
+                    return redirect(reverse('pedidoMenu')+ "?ok")
+                else:
+                    return redirect(reverse('pedidoUpdate1') + idpedido)
+        else:
+            return redirect(reverse('pedidoMenu')+ "?failanulado")
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
             'form':form,
+            'cas':cas,
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         } 
