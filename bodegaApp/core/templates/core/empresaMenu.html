@@ -9,12 +9,12 @@
 {% if tipo_usuario == '1'%} 
 <div class="menuProveedor">
     <div class="btnP  agregarProveedor text-center">
-        <a class="btn btn-primary btn-lg" href="{% url 'empresaNew'%}">Agregar Nueva Empresa de Distribucion</a>
+        <a class="btn text-white btn-lg" style="background-color: #6F2DBD;" href="{% url 'empresaNew'%}">Agregar Nueva Empresa de Distribucion</a>
     </div>
 </div>
 <div class="container justify-content-center">
-    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Listado de Bodegas</h1>
+    <div class="row text-white rounded p-1 mt-1 mb-1" style="text-align: center; background-color:#A663CC;">
+        <h1>Listado de Empresas</h1>
     </div>
     <div class="row">
         {% if 'ok' in request.GET %}
@@ -38,9 +38,9 @@
         <div class="container">
             <div class="row">
                 <div class="table-responsive">
-                    <table id="tabla_productos" class="table table-striped table-hover" >
+                    <table id="tabla_productos" class="table table-striped table-hover" style="background-color:#B9FAF8;">
                         <thead >
-                            <tr class="table-dark">
+                            <tr class="table-responsive text-white" style="background-color: #B298DC;">
                                 <th>Rut Empresa</th>
                                 <th>Nombre</th>
                                 <th>Comuna</th>                        
@@ -58,8 +58,8 @@
                                     <td>{{empresa.direccion}}</td>
         
                                     <td>
-                                        <a class="btn btn-primary" href="{% url 'empresaUpdate' empresa.rutempresa %}">Modificar</a>
-                                        <a class="btn btn-warning"  href="{% url 'empresaDelete' empresa.rutempresa %}">Eliminar</a>
+                                        <a class="btn text-white" style="background-color: #6F2DBD;" href="{% url 'empresaUpdate' empresa.rutempresa %}">Modificar</a>
+                                        <a class="btn btn-danger text-white"  href="{% url 'empresaDelete' empresa.rutempresa %}">Eliminar</a>
                                     </td>
                                 </tr>
                             {% endfor %}

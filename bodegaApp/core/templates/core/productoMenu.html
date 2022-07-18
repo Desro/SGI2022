@@ -10,112 +10,114 @@
 {% if tipo_usuario == '1'%}
 <div class="menuProveedor">
     <div class="btnP  agregarProveedor text-center">
-        <a class="btn btn-primary btn-lg" href="{% url 'productoNew'%}">Agregar Nuevo Producto</a>
+        <a class="btn btn-lg text-white" style="background-color: #6F2DBD;"  href="{% url 'productoNew'%}">Agregar Nuevo Producto</a>
     </div>
 </div>
 <div class="Reporte">
     <div class="btnP  agregarProveedor text-center">
-        <a class="btn btn-primary btn-lg" href="{% url 'generarReportePDFAdmin'%}">Generar Reporte PDF ADMIN</a>
+        <a class="btn btn-lg text-white" style="background-color: #6F2DBD;" href="{% url 'generarReportePDFAdmin'%}">Generar Reporte PDF ADMIN</a>
     </div>
 </div>
 {% elif tipo_usuario == '2'%}
     <div class="Reporte">
         <div class="btnP  agregarProveedor text-center">
-            <a class="btn btn-primary btn-lg" href="{% url 'generarReportePDF'%}">Generar Reporte PDF</a>
+            <a class="btn btn-lg text-white" style="background-color: #6F2DBD;"  href="{% url 'generarReportePDF'%}">Generar Reporte PDF</a>
         </div>
     </div>
 {% endif%}
 <div class="container justify-content-center">
-    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Listado de Producto</h1>
-    </div>
-    <div class="row">
-        {% if 'ok' in request.GET %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Ok!!! </strong>Producto actualizado satisfactoriamente
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="row mt-5">
+        <div class="row text-white rounded p-1 mt-1 mb-1" style="text-align: center; background-color: #A663CC;">
+            <h1>Listado de Producto</h1>
         </div>
-        {% endif %}
-        {% if 'fail' in request.GET %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endif %}
-        <div class="container">
-            <div class="row">
-                <div class="table-responsive">
-                    <table id="tabla_productos" class="table table-striped table-hover" >
-                        <thead >
-                            <tr class="table-dark">
-                                <th>Codigo</th>
-                                <th>Nombre Producto</th>
-                                <th>Stock Minimo</th>
-                                <th>Stock Maximo</th>
-                                <th>Precio de Compra</th>
-                                <th>Precio de Venta</th>
-                                <th>Tipo de Producto</th>
-                                <th>Proveedor</th>
-                                {% if tipo_usuario == '1'%}
-        
-                                <th>Opciones</th>
-                                {%endif%}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for producto in producto %}
-                                <tr>
-                                    <td>{{producto.codigo}}</td>
-                                    <td>{{producto.nmbproducto}}</td>
-                                    <td>{{producto.stockminimo}}</td>
-                                    <td>{{producto.stockmaximo}}</td>
-                                    <td>{{producto.preciocompra}}</td>
-                                    <td>{{producto.precioventa}}</td>
-                                    <td>{{producto.idtipoproducto}}</td>
-                                    <td>{{producto.idproveedor}}</td>
+        <div class="row">
+            {% if 'ok' in request.GET %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Ok!!! </strong>Producto actualizado satisfactoriamente
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% if 'fail' in request.GET %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            <div class="container">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="tabla_productos" class="table table-striped table-hover" >
+                            <thead >
+                                <tr class="table-responsive text-white" style="background-color: #B298DC;">
+                                    <th>Codigo</th>
+                                    <th>Nombre Producto</th>
+                                    <th>Stock Minimo</th>
+                                    <th>Stock Maximo</th>
+                                    <th>Precio de Compra</th>
+                                    <th>Precio de Venta</th>
+                                    <th>Tipo de Producto</th>
+                                    <th>Proveedor</th>
                                     {% if tipo_usuario == '1'%}
-        
-                                    <td>
-                                        <a class="btn btn-primary" href="{% url 'productoUpdate' producto.codigo %}">Modificar</a>
-                                        <a class="btn btn-warning" href="{% url 'productoDelete' producto.codigo %}">Eliminar</a>
-                                    </td>
+            
+                                    <th>Opciones</th>
                                     {%endif%}
-        
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for producto in producto %}
+                                    <tr class="table-responsive" style="background-color:#B9FAF8;">
+                                        <td>{{producto.codigo}}</td>
+                                        <td>{{producto.nmbproducto}}</td>
+                                        <td>{{producto.stockminimo}}</td>
+                                        <td>{{producto.stockmaximo}}</td>
+                                        <td>{{producto.preciocompra}}</td>
+                                        <td>{{producto.precioventa}}</td>
+                                        <td>{{producto.idtipoproducto}}</td>
+                                        <td>{{producto.idproveedor}}</td>
+                                        {% if tipo_usuario == '1'%}
+            
+                                        <td>
+                                            <a class="btn btn-success" href="{% url 'productoUpdate' producto.codigo %}">Modificar</a>
+                                            <a class="btn btn-warning" href="{% url 'productoDelete' producto.codigo %}">Eliminar</a>
+                                        </td>
+                                        {%endif%}
+            
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row justify-content-center text-dark mt-4 mb-4">
+                    {% if producto.has_other_pages %}
+                        <nav aria-label="Paginación Proyectos">
+                            <ul class="pagination">
+                                {% if producto.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ producto.previous_page_number}}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disable"><span class="page-link">&laquo;</span></li>
+                                {% endif %}
+            
+                                {% for i in producto.paginator.page_range %}
+                                    {% if producto.number == i %}
+                                        <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only">(current)</span></span></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></span></li>
+                                    {% endif %}
+                                {% endfor %}
+            
+                                {% if producto.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ producto.next_page_number}}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disable"><span class="page-link">&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
                 </div>
             </div>
-            <div class="row justify-content-center text-dark mt-4 mb-4">
-                {% if producto.has_other_pages %}
-                    <nav aria-label="Paginación Proyectos">
-                        <ul class="pagination">
-                            {% if producto.has_previous %}
-                                <li class="page-item"><a class="page-link" href="?page={{ producto.previous_page_number}}">&laquo;</a></li>
-                            {% else %}
-                                <li class="page-item disable"><span class="page-link">&laquo;</span></li>
-                            {% endif %}
-        
-                            {% for i in producto.paginator.page_range %}
-                                {% if producto.number == i %}
-                                    <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only">(current)</span></span></li>
-                                {% else %}
-                                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></span></li>
-                                {% endif %}
-                            {% endfor %}
-        
-                            {% if producto.has_next %}
-                                <li class="page-item"><a class="page-link" href="?page={{ producto.next_page_number}}">&raquo;</a></li>
-                            {% else %}
-                                <li class="page-item disable"><span class="page-link">&raquo;</span></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                {% endif %}
-            </div>
+    
         </div>
- 
     </div>
 </div>
 {% endblock %}

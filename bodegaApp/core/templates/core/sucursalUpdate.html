@@ -4,11 +4,11 @@
 {% block title %}EDITAR SUCURSAL{% endblock %}
 {% block content %}
 {% if tipo_usuario == '1'%} 
-<div class="container">
-    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
+<div class="container mt-5">
+    <div class="row text-white rounded p-1 mt-1 mb-1" style="text-align: center; background-color: #A663CC;">
         <h1>Editar informacion Sucursal</h1>
     </div>
-    <div class="row">
+    <div class="row" style="background-color: #B9FAF8;">
         {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Ok!!! </strong>Sucursal registrado satisfactoriamente
@@ -54,12 +54,13 @@
                 {{form.direccion.errors}}
             </div>
            
-            <div class="text-center mt-4">
-                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
-                <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
-            </div>
+            <div class="text-center mt-4 mb-4">
+                <input type="submit" class="btn text-white btn-block py-2" style="background-color: #6F2DBD;"id="enviar" value="Enviar">
+                <input type="reset" class="btn btn-danger btn-block py-2"  id="limpiar" value="Limpiar">
+                 </div>
         </form>
     </div>
+    <div class="mt-5"></div>
 </div>
 {%endif%}
 {% endblock %}

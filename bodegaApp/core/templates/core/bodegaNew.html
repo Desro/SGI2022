@@ -1,14 +1,13 @@
 {% extends 'core/plantilla.html' %}
 
 {% load static %}
-{% block title %}REGISTRO BODEGA{% endblock %}
+{% block title %}REGISTRO PROVEEDOR{% endblock %}
 {% block content %}
-{% if tipo_usuario == '1'%} 
-<div class="container">
-    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Registro nuevas Bodega de almacenaje</h1>
+<div class="container mt-5" >
+    <div class="row text-white rounded p-1 mt-1 mb-1 text-center" style="background-color: #A663CC;">
+        <h1>Registro nueva Bodega de Almacenaje</h1>
     </div>
-    <div class="row">
+    <div class="row" style="background-color: #B9FAF8;">
         {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Ok!!! </strong>Producto registrado satisfactoriamente
@@ -24,9 +23,8 @@
         <!-- Formulario de contacto -->                            
         <form action="" method="POST" id="formulario" enctype="multipart/form-data">
             {% csrf_token %}
-          
             <div class="form-group mb-3">
-                <label class="fw-bold">Almacen:</label>
+                <label class="fw-bold">Almacen: </label>
                 <div class="input-group">
                     {{form.idalmacen}}
                 </div>                
@@ -41,11 +39,12 @@
             </div>
            
             <div class="text-center mt-4">
-                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+                <input type="submit" class="btn btn-block py-2 text-white" style="background-color: #6F2DBD;" id="enviar" value="Enviar">
                 <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
             </div>
+            <div class="mt-3"></div>
         </form>
     </div>
+    <div class="mt-5"></div>
 </div>
-{%endif%}
 {% endblock %}

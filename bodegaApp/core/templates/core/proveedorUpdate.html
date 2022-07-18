@@ -3,12 +3,11 @@
 {% load static %}
 {% block title %}EDITAR PROVEEDOR{% endblock %}
 {% block content %}
-{% if tipo_usuario == '1'%} 
 <div class="container">
-    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Editar informacion Proveedores</h1>
+    <div class="row text-white rounded p-1 mt-5 mb-1" style="background-color: #A663CC; text-align:center;">
+        <h1>Editar informacion del Proveedores</h1>
     </div>
-    <div class="row">
+    <div class="row" style="background-color: #B9FAF8;">
         {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Oh yeah!!! </strong>Producto registrado satisfactoriamente
@@ -60,11 +59,12 @@
                 {{form.personadecontacto.errors}}
             </div>
             <div class="text-center mt-4">
-                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+                <input type="submit" class="btn text-white btn-block py-2" style="background-color: #6F2DBD;" id="enviar" value="Enviar">
                 <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
             </div>
+            <div class="mt-3"></div>
         </form>
     </div>
+    <div class="mt-5"></div>
 </div>
-{%endif%}
 {% endblock %}

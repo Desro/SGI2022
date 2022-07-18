@@ -1,12 +1,10 @@
-html, body{
-    margin:0px;
-    height:100%;
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 
-.navbar{
-    background-color: #DAF7A6;
-}
 .navbar a{
     color: black;
 }
@@ -18,4 +16,13 @@ html, body{
         margin:0px;  
         height:100%;
         
+}
+
+.dropdown{
+    float: right;
+    position: relative;
+}
+
+.footer{
+    margin-top: auto;
 }

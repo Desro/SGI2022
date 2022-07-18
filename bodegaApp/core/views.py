@@ -1302,7 +1302,7 @@ def detalleProductoPDF(request):
         print(reporteProducto)
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="NroPedido.pdf"'
+        response['Content-Disposition'] = 'attachment; filename="reporteProductoAdministrador.pdf"'
         # find the template and render it.
         template = get_template(template_path)
         html = template.render(context)
@@ -1336,7 +1336,7 @@ def detalleProductoPDFAdmin(request):
         print(reporteProducto)
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="NroPedido.pdf"'
+        response['Content-Disposition'] = 'attachment; filename="reporteProducto.pdf"'
         # find the template and render it.
         template = get_template(template_path)
         html = template.render(context)
