@@ -1281,11 +1281,47 @@ def pedidopdf(request):
 def detalleProductoPDF(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         store= request.COOKIES['store']
-        template_path = 'core/pdf/reportePDF.html'       
-        
-        
+        template_path = 'core/pdf/reportePDF.html'              
         reporteProducto = []
         for fila in estadoProductoBodega():
+                bodega =Bodega.objects.get(idbodega=fila[1]).idalmacen
+                store1 = Almacen.objects.get(nmbalmacen=bodega)
+                if store1 == store:
+                    print(bodega)
+                    det=[]
+                    det.append(fila[0])
+                    nmbP=Producto.objects.get(codigo=fila[0])
+                    det.append(nmbP.nmbproducto)
+                    det.append(fila[1])
+                    det.append(fila[2])
+                    det.append(nmbP.stockminimo)
+                    det.append(nmbP.stockmaximo)
+                    reporteProducto.append(det)
+        context = {'detalle':reporteProducto}
+        
+        print(reporteProducto)
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="NroPedido.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        pdf = pisa.CreatePDF(
+            html, dest=response)
+        
+        # if error then show some funny view
+        if pdf.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+
+def detalleProductoPDFAdmin(request):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
+        store= request.COOKIES['store']
+        template_path = 'core/pdf/reportePDF.html'              
+        reporteProducto = []
+        for fila in estadoProductoBodega():         
             det=[]
             det.append(fila[0])
             nmbP=Producto.objects.get(codigo=fila[0])

@@ -15,9 +15,15 @@
 </div>
 <div class="Reporte">
     <div class="btnP  agregarProveedor text-center">
-        <a class="btn btn-primary btn-lg" href="{% url 'generarReportePDF'%}">Generar Reporte PDF</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'generarReportePDFAdmin'%}">Generar Reporte PDF ADMIN</a>
     </div>
 </div>
+{% elif tipo_usuario == '2'%}
+    <div class="Reporte">
+        <div class="btnP  agregarProveedor text-center">
+            <a class="btn btn-primary btn-lg" href="{% url 'generarReportePDF'%}">Generar Reporte PDF</a>
+        </div>
+    </div>
 {% endif%}
 <div class="container justify-content-center">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
