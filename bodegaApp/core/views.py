@@ -649,13 +649,12 @@ def pedido_update(request, idpedido):
                 send_email(emailProveedor,filepdf,pedido.idpedido)
             
             #send_email(email,file)
-         
+
         data ={
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            'pedido':pedido,
-            'pedidoLine':pedidoLine,
+            
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         } 
@@ -664,9 +663,101 @@ def pedido_update(request, idpedido):
         'tipo_usuario': 6666,
         'login_status': False,
     }  
+         
+    return render(request,'core/productoUpdate.html',data)
+
+
+def pedido_recepcion(request, idpedido):
+    if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:  
+        pedido = Pedido.objects.get(idpedido = idpedido)
+        id = pedido.idpedido
+        listPedidoLine=[]
+        pedidoLine= PedidoLine.objects.filter(idpedido= idpedido)
+        codigo = NULL
+
+        for i in pedidoLine:
+                lista1=[]
+                lista1.append(id) 
+                lista1.append(i.codigo)
+                nomProd = Producto.objects.get(codigo=i.codigo).nmbproducto
+                lista1.append(nomProd)
+                lista1.append(i.lineid)
+                lista1.append(i.cantidad)
+
+                listPedidoLine.append(lista1)
+                print(listPedidoLine)
+
+        if request.method == 'POST':
+            codigo = request.POST.getlist("codigoProducto")
+            #idBodega = request.POST.getlist("bodega")
+            idpedido = request.POST.getlist("idpedido")
+            nroLote = request.POST.getlist("nroLote")
+            fechaVencimiento = request.POST.getlist("fechaVencimiento")
+            cantidad = request.POST.getlist("cantidad")
+
+            bodegacook =request.COOKIES['store']
+
+            ciclo=0
+            for i in idpedido:
+                cod=codigo[ciclo]
+                #bod=idBodega[ciclo]
+                ped=idpedido[ciclo]
+                lote=nroLote[ciclo]
+                ven=fechaVencimiento[ciclo]
+                anio= ven[0:4]
+                mes = ven[5:7]
+                dia = ven[8:10]
+                fech = dia+'/'+mes+'/'+anio
+                cant=cantidad[ciclo]
+                ciclo=ciclo +1
+
+                print(cod)
+                #print(bod)
+                print(ped)
+                print(lote)
+                print(fech)
+                print(cant)
+                print(bodegacook)
+                agregarProductoLine(cod, bodegacook, ped, lote, fech, cant)
+
+
+            
+            #for i in request.POST
+            
+            
+            return redirect(to="pedidoMenu")
+            
+           
+        
+        
+        data ={
+            'tipo_usuario': request.COOKIES['tipo_usuario'],
+            'login_status': request.COOKIES['login_status'],
+            'store': request.COOKIES['store'],
+            'pedido':pedido,
+            'pedidoLine':pedidoLine,
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+            'nmbusuario': request.COOKIES['nmbusuario'],
+            'apellidousuario': request.COOKIES['apellidousuario'],
+            'idped':id,
+            'listPedidoLine':listPedidoLine,
+            
+        } 
+    else:
+        data = {
+        'tipo_usuario': 6666,
+        'login_status': False,
+    }  
     
 
-    return render(request,'core/pedidoUpdate.html',data)
+    
+    return render(request,'core/pedidoRecepcion.html',data)
+
+
+
+
+
 #------BODEGA-----------------------
 def menuBodega(request):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:

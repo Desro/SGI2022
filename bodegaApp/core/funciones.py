@@ -88,3 +88,7 @@ def estadoProductoBodega():
         
     cursor.close()
     return lista
+def agregarProductoLine(codigo, idBodega, idpedido, nroLote, fechaVencimiento, cantidad):
+    django_cursor=connection.cursor()
+    cursor  = django_cursor.connection.cursor()
+    cursor.callproc("SP_AGREGAR_PRODUCTO_LINE",[codigo, idBodega, idpedido, nroLote, fechaVencimiento, cantidad])

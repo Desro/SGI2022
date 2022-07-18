@@ -1,26 +1,24 @@
 {% extends 'core/plantilla.html' %}
-
 {% load static %}
-{% block title %}Enviar PEDIDO{% endblock %}
+{% block title %}ENVIAR PEDIDO{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
-        <h1>Cambiar Estados de Pedido</h1>
+        <h1>Enviar Pedido</h1>
     </div>
     <div class="row">
         {% if 'ok' in request.GET %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
+                
                 <strong>OK!!! </strong>Producto registrado satisfactoriamente
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
-        {% if 'fail' in request.GET %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
+
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
-        
+      
         <!-- Formulario de contacto -->
         <div class="form-group">
             <label class="fw-bold">Codigo Pedido:</label>
@@ -70,5 +68,3 @@
             </form>                   
         
     </div>
-</div>
-{% endblock %}

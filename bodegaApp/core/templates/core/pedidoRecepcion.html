@@ -1,0 +1,74 @@
+{% extends 'core/plantilla.html' %}
+
+{% load static %}
+{% block title %}RECEPCION PEDIDO{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row bg-dark text-white rounded p-5 mt-4 mb-4">
+        <h1>Cambiar Estados de Pedido</h1>
+    </div>
+    <div class="row">
+        {% if 'ok' in request.GET %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Oh yeah!!! </strong>Producto registrado satisfactoriamente
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        {% if 'fail' in request.GET %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ups!!! </strong>En estos momentos no podemos atender a tu solicitud... inténtalo más tarde
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        <!-- Formulario de contacto -->                            
+        <form action="" method="POST" id="formulario" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="table-responsive">
+                <table  class="table table-striped table-hover" >
+                    <thead >
+                        <tr class="table-dark">
+                            <th>Numero Pedido</th>
+                            <th>Codigo producto</th>
+                            <th>Nombre producto</th>
+                            <th>Cantidad pedida</th>
+                            <th>Cantidad Recibida</th>
+                            <th>Nro de lote</th>
+                            <th>Fecha vencimiento</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in listPedidoLine %}
+                            <tr>
+                                <td><input type="text" value="{{pedido.0}}" name="idpedido" readonly></td>
+                                <td><input type="text" value="{{pedido.1}}" name="codigoProducto" readonly></td>
+                                <td><input type="text" value="{{pedido.2}}" name="nomProducto" readonly></td>
+                                <td><input type="text" value="{{pedido.4}}" name="cantidad" readonly></td>
+                                <td><input type="text" name="cantRecibida" name="cantRecibida"></td>
+                                <td><input type="text" name="nroLote" name="nroLote"></td>
+                                <!--<td><input type="text" name="bodega" name="bodega"></td>-->
+                                <td><input type="date" name="fechaVencimiento" name="fechaVencimiento"></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            
+
+            <div class="text-center mt-4">
+               
+                <input type="submit" class="btn btn-primary btn-block py-2" id="enviar" value="Enviar">
+                <input type="reset" class="btn btn-danger btn-block py-2" id="limpiar" value="Limpiar">
+
+                
+            </div>
+        </form>
+
+        
+
+
+            
+    </div>
+</div>
+{% endblock %}
