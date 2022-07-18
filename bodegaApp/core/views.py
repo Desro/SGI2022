@@ -629,7 +629,7 @@ def pedido_update1(request, idpedido):
     return render(request,'core/pedidoUpdate1.html',data)
     
 
-def pedido_update(request, idpedido):
+def mandarCorreoPDF(request, idpedido):
     if 'tipo_usuario' in request.COOKIES and 'login_status' in request.COOKIES and 'store' in request.COOKIES:
         pedido = Pedido.objects.get(idpedido = idpedido)
         pedidoLine =PedidoLine.objects.filter(idpedido=idpedido)
@@ -654,7 +654,8 @@ def pedido_update(request, idpedido):
             'tipo_usuario': request.COOKIES['tipo_usuario'],
             'login_status': request.COOKIES['login_status'],
             'store': request.COOKIES['store'],
-            
+            'pedido':pedido,
+            'pedidoLine':pedidoLine,
             'nmbusuario': request.COOKIES['nmbusuario'],
             'apellidousuario': request.COOKIES['apellidousuario'],
         } 
@@ -664,7 +665,7 @@ def pedido_update(request, idpedido):
         'login_status': False,
     }  
          
-    return render(request,'core/productoUpdate.html',data)
+    return render(request,'core/pedidoCorreo.html',data)
 
 
 def pedido_recepcion(request, idpedido):
@@ -688,38 +689,45 @@ def pedido_recepcion(request, idpedido):
                 print(listPedidoLine)
 
         if request.method == 'POST':
-            codigo = request.POST.getlist("codigoProducto")
-            #idBodega = request.POST.getlist("bodega")
-            idpedido = request.POST.getlist("idpedido")
-            nroLote = request.POST.getlist("nroLote")
-            fechaVencimiento = request.POST.getlist("fechaVencimiento")
-            cantidad = request.POST.getlist("cantidad")
 
-            bodegacook =request.COOKIES['store']
+            res=int(Pedido.objects.get(idpedido = idpedido).pedidorecibido)
+            cas = int(res)
 
-            ciclo=0
-            for i in idpedido:
-                cod=codigo[ciclo]
-                #bod=idBodega[ciclo]
-                ped=idpedido[ciclo]
-                lote=nroLote[ciclo]
-                ven=fechaVencimiento[ciclo]
-                anio= ven[0:4]
-                mes = ven[5:7]
-                dia = ven[8:10]
-                fech = dia+'/'+mes+'/'+anio
-                cant=cantidad[ciclo]
-                ciclo=ciclo +1
+            if cas != 0:  
+                codigo = request.POST.getlist("codigoProducto")
+                #idBodega = request.POST.getlist("bodega")
+                idpedido = request.POST.getlist("idpedido")
+                nroLote = request.POST.getlist("nroLote")
+                fechaVencimiento = request.POST.getlist("fechaVencimiento")
+                cantidad = request.POST.getlist("cantidad")
 
-                print(cod)
-                #print(bod)
-                print(ped)
-                print(lote)
-                print(fech)
-                print(cant)
-                print(bodegacook)
-                agregarProductoLine(cod, bodegacook, ped, lote, fech, cant)
+                bodegacook =request.COOKIES['store']
 
+                ciclo=0
+                for i in idpedido:
+                    cod=codigo[ciclo]
+                    #bod=idBodega[ciclo]
+                    ped=idpedido[ciclo]
+                    lote=nroLote[ciclo]
+                    ven=fechaVencimiento[ciclo]
+                    anio= ven[0:4]
+                    mes = ven[5:7]
+                    dia = ven[8:10]
+                    fech = dia+'/'+mes+'/'+anio
+                    cant=cantidad[ciclo]
+                    ciclo=ciclo +1
+
+                    print(cod)
+                    #print(bod)
+                    print(ped)
+                    print(lote)
+                    print(fech)
+                    print(cant)
+                    print(bodegacook)
+                    agregarProductoLine(cod, bodegacook, ped, lote, fech, cant)
+
+            else:
+                 return redirect(reverse('pedidoMenu')+ "?fail")
 
             
             #for i in request.POST

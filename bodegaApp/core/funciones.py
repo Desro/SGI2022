@@ -92,3 +92,11 @@ def agregarProductoLine(codigo, idBodega, idpedido, nroLote, fechaVencimiento, c
     django_cursor=connection.cursor()
     cursor  = django_cursor.connection.cursor()
     cursor.callproc("SP_AGREGAR_PRODUCTO_LINE",[codigo, idBodega, idpedido, nroLote, fechaVencimiento, cantidad])
+
+
+
+def actualizarPediudoEstado(idpedido):
+        django_cursor=connection.cursor()
+        cursor  = django_cursor.connection.cursor()
+        query ="update pedido set pedidoRecibido = 1 where idpedido ="+idpedido+")"
+        cursor.execute(query)
