@@ -50,6 +50,7 @@ def estadoProducto():
         
     cursor.close()
     return lista
+    
 
 #######OSCAR
 def agregarPedido(idpedido, idproveedor):
@@ -72,3 +73,18 @@ def agregarPedidoProducto(idpedido,codProduc,lineId,cantidad):
     cursor.callproc("SP_AGREGAR_PEDIDO_LINE",[idpedido,codProduc,lineId,cantidad])
     #queryLine = "insert into pedido_line (idPedido, codigo, lineId, cantidad) values (" + idpedido + ", '" + codProduc + "', " + lineId + ", " + cantidad + ")"
    #cursor.execute(queryLine)
+
+def estadoProductoBodega():
+    django_cursor=connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur=django_cursor.connection.cursor()
+
+    cursor.callproc("SP_ESTADO_PRODUCTO_BODEGA",[out_cur])
+
+    lista = []
+
+    for fila in out_cur:
+        lista.append(fila)
+        
+    cursor.close()
+    return lista

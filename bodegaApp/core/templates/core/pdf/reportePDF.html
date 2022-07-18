@@ -1,0 +1,59 @@
+<html>
+    <body>
+        <div>
+            <h1>
+                REPORTE PRODUCTO
+            </h1>
+        </div>
+        
+        <div class="listaProductos">
+            <div style="background-color:black;color: white;padding: 1px;margin-top: 5px;margin-bottom: 5px;text-align: center;font-size: larger;">
+                <p>LISTADO DE PRODUCTOS</p>
+            </div>
+            <div class="table">
+                <style>
+                    .tablaProductos {
+                        border:1px solid #C0C0C0;
+                        border-collapse:collapse;
+                        padding:5px;
+                        width: 100%;
+                    }
+                    .tablaProductos th {
+                        border:1px solid #C0C0C0;
+                        padding:5px;
+                        background:#F0F0F0;
+                    }
+                    .tablaProductos td {
+                        border:1px solid #C0C0C0;
+                        padding:5px;
+                    }
+                    
+                </style>
+                <table class="tablaProductos">
+                    <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre Producto</th>
+                        <th>Bodega</th>
+                        <th>Cantidad</th>
+                        <th>Cantidad Minima</th>
+                        <th>Cantidad Maxima</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for detalle in detalle %}                     
+                    <tr>                        
+                        <td>{{detalle.0}}</td>
+                        <td>{{detalle.1}}</td>
+                        <td>{{detalle.2}}</td>
+                        <td>{{detalle.3}} </td> 
+                        <td>{{detalle.4}} </td>}
+                        <td>{{detalle.5}} </td>                                                                                                                                                         
+                    </tr>                       
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

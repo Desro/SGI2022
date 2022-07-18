@@ -71,4 +71,6 @@ urlpatterns = [
     path('sucursalNew/', sucursal_New, name='sucursalNew'),
     path('sucursalDelete/<idalmacen>', sucursal_delete, name='sucursalDelete'),
     path('sucursalUpdate/<idalmacen>', sucursal_update, name='sucursalUpdate'),
+
+    path('generarReportePDF/',detalleProductoPDF,name='generarReportePDF'),
 ]
